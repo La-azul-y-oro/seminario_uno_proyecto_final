@@ -1,0 +1,17 @@
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\bin\Debug\net8.0-windows\desktop_app.exe
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\bin\Debug\net8.0-windows\desktop_app.deps.json
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\bin\Debug\net8.0-windows\desktop_app.runtimeconfig.json
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\bin\Debug\net8.0-windows\desktop_app.dll
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\bin\Debug\net8.0-windows\desktop_app.pdb
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\Seminario_uno.Form1.resources
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\desktop_app.csproj.GenerateResource.cache
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\desktop_app.GeneratedMSBuildEditorConfig.editorconfig
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\desktop_app.AssemblyInfoInputs.cache
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\desktop_app.AssemblyInfo.cs
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\desktop_app.csproj.CoreCompileInputs.cache
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\desktop_app.sourcelink.json
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\desktop_app.dll
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\refint\desktop_app.dll
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\desktop_app.pdb
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\desktop_app.genruntimeconfig.cache
+E:\REPOSITORIOS\seminario_uno_proyecto_final\.net\desktop_app\obj\Debug\net8.0-windows\ref\desktop_app.dll
