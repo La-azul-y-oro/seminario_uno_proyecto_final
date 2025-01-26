@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "E:\\REPOSITORIOS\\seminario_uno_proyecto_final\\.net\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{60DFE5A8-B17E-4398-B700-A440CBF7FB3D}|desktop_app\\desktop_app.csproj|e:\\repositorios\\seminario_uno_proyecto_final\\.net\\desktop_app\\desktop_app.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{60DFE5A8-B17E-4398-B700-A440CBF7FB3D}|desktop_app\\desktop_app.csproj|solutionrelative:desktop_app\\desktop_app.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|e:\\repositorios\\seminario_uno_proyecto_final\\.net\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|e:\\repositorios\\seminario_uno_proyecto_final\\.net\\api\\services\\implementations\\conceptservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\services\\implementations\\conceptservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "desktop_app",
-              "DocumentMoniker": "E:\\REPOSITORIOS\\seminario_uno_proyecto_final\\.net\\desktop_app\\desktop_app.csproj",
-              "RelativeDocumentMoniker": "desktop_app\\desktop_app.csproj",
-              "ToolTip": "E:\\REPOSITORIOS\\seminario_uno_proyecto_final\\.net\\desktop_app\\desktop_app.csproj",
-              "RelativeToolTip": "desktop_app\\desktop_app.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-01-14T00:48:28.366Z",
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\REPOSITORIOS\\seminario_uno_proyecto_final\\.net\\api\\Program.cs",
+              "RelativeDocumentMoniker": "api\\Program.cs",
+              "ToolTip": "E:\\REPOSITORIOS\\seminario_uno_proyecto_final\\.net\\api\\Program.cs",
+              "RelativeToolTip": "api\\Program.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABAAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T16:06:53.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ConceptService.cs",
+              "DocumentMoniker": "E:\\REPOSITORIOS\\seminario_uno_proyecto_final\\.net\\api\\Services\\Implementations\\ConceptService.cs",
+              "RelativeDocumentMoniker": "api\\Services\\Implementations\\ConceptService.cs",
+              "ToolTip": "E:\\REPOSITORIOS\\seminario_uno_proyecto_final\\.net\\api\\Services\\Implementations\\ConceptService.cs",
+              "RelativeToolTip": "api\\Services\\Implementations\\ConceptService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-26T16:05:54.551Z",
               "EditorCaption": ""
             }
           ]
