@@ -1,0 +1,22 @@
+# Visual Studio
+.vs/
+
+# Build output
+bin/
+obj/
+
+# User-specific files
+*.user
+
+# Build cache and temporary files
+*.cache
+*.dll
+*.exe
+*.pdb
+*.bak
+*.json
+*.ref/
+
+# Document Layout
+DocumentLayout.*
+
