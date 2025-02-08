@@ -12,6 +12,7 @@ string connectionString = builder.Configuration.GetConnectionString("MySqlConnec
 
 // Configuración de servicios
 builder.Services.AddScoped<IGenericService<Concept, int>, ConceptService>();
+builder.Services.AddScoped<IGenericService<Supplier, long>, SupplierService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
