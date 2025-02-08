@@ -11,10 +11,23 @@ namespace api.Context
 
         public DbSet<Supplier> Supplier { get; set; }
 
+        public DbSet<Consortium> Consortium { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Supplier>()
                    .ToTable("supplier", t => t.HasCheckConstraint("CK_CUIT", "[Cuit] BETWEEN 1000000000 AND 99999999999"));
+
+            modelBuilder.Entity<Consortium>()
+                .ToTable("consortium")
+                .Property(c => c.Name)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            modelBuilder.Entity<Consortium>()
+                .Property(c => c.Address)
+                .IsRequired()
+                .HasMaxLength(255);
         }
     }
 }
