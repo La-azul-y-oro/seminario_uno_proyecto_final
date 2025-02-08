@@ -5,13 +5,16 @@ USE consortium;
 -- Table: user
 CREATE TABLE user (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    document_type ENUM('cuil', 'cuit', 'dni') NOT NULL,
+    document_number BIGINT NOT NULL,
     email VARCHAR(255) NOT NULL,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
     role ENUM('admin', 'usuario') NOT NULL,
     password VARCHAR(255) NOT NULL,
     phone VARCHAR(20),
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
     active boolean NOT NULL default true
+    CONSTRAINT check_doc_number CHECK (document_number BETWEEN 10000000 AND 99999999999)
 );
 
 -- Table: consortium
@@ -29,8 +32,9 @@ CREATE TABLE functional_unit (
     balance DECIMAL(12, 2) NOT NULL,
     factor DECIMAL(5, 2) NOT NULL,
     consortium_id INT NOT NULL,
+    active boolean NOT NULL default true,
     FOREIGN KEY (consortium_id) REFERENCES consortium(id),
-    active boolean NOT NULL default true
+    CONSTRAINT unit_consortium UNIQUE (name, consortium_id)
 );
 
 -- Table: user_unit
@@ -45,11 +49,12 @@ CREATE TABLE user_unit (
 
 -- Table: supplier
 CREATE TABLE supplier (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    cuit BIGINT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     phone VARCHAR(20),
     email VARCHAR(255),
     active boolean NOT NULL default true
+    CONSTRAINT check_cuit CHECK (document_number BETWEEN 1000000000 AND 99999999999)
 );
 
 -- Table: concept
@@ -67,11 +72,11 @@ CREATE TABLE movement (
     type ENUM('ingreso', 'egreso') NOT NULL,
     receipt VARCHAR(255),
     consortium_id INT NOT NULL,
-    supplier_id INT,
+    supplier_cuit BIGINT NOT NULL,
     concept_id INT NOT NULL,
     functional_unit_id INT NOT NULL,
     FOREIGN KEY (consortium_id) REFERENCES consortium(id),
-    FOREIGN KEY (supplier_id) REFERENCES supplier(id),
+    FOREIGN KEY (supplier_cuit) REFERENCES supplier(cuit),
     FOREIGN KEY (concept_id) REFERENCES concept(id),
     FOREIGN KEY (functional_unit_id) REFERENCES functional_unit(id),
     active boolean NOT NULL default true
