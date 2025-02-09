@@ -4,7 +4,7 @@ using api.Services.Interfaces;
 
 namespace api.Services.Implementations
 {
-    public class SupplierService : IGenericService<Supplier, long>
+    public class SupplierService : IGenericService<Supplier, int>
     {
         private readonly ApplicationDbContext _context;
 
@@ -18,7 +18,7 @@ namespace api.Services.Implementations
             return _context.Supplier.Where(c => c.Active).ToList();
         }
 
-        public Supplier GetById(long id)
+        public Supplier GetById(int id)
         {
             var supplier = _context.Supplier.Find(id);
             if (supplier == null || !supplier.Active)
@@ -33,7 +33,7 @@ namespace api.Services.Implementations
             _context.SaveChanges();
         }
 
-        public void Update(long id, Supplier entity)
+        public void Update(int id, Supplier entity)
         {
             var supplier = _context.Supplier.Find(id);
             if (supplier == null || !supplier.Active)
@@ -46,7 +46,7 @@ namespace api.Services.Implementations
             _context.SaveChanges();
         }
 
-        public void Delete(long id)
+        public void Delete(int id)
         {
             var supplier = _context.Supplier.Find(id);
             if (supplier == null || !supplier.Active)

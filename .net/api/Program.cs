@@ -12,8 +12,18 @@ string connectionString = builder.Configuration.GetConnectionString("MySqlConnec
 
 // Configuración de servicios
 builder.Services.AddScoped<IGenericService<Concept, int>, ConceptService>();
-builder.Services.AddScoped<IGenericService<Supplier, long>, SupplierService>();
+builder.Services.AddScoped<IGenericService<Supplier, int>, SupplierService>();
 builder.Services.AddScoped<IGenericService<Consortium, int>, ConsortiumService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigin", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -35,6 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1"));
 }
 
+app.UseCors("AllowAnyOrigin");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

@@ -48,9 +48,10 @@ CREATE TABLE user_unit (
 
 -- Table: supplier
 CREATE TABLE supplier (
-    cuit BIGINT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cuit BIGINT UNIQUE,
     name VARCHAR(255) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
+    phone BIGINT NOT NULL,
     email VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE
 );

@@ -1,0 +1,11 @@
+@import "primeicons/primeicons.css";
+
+.input-invalid{
+    color: #a94442;
+}
+
+.disableItem,
+.disableItem button{
+    cursor: default;
+    opacity: 0.5;
+}
