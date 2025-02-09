@@ -1,0 +1,23 @@
+<app-page
+    [title]="title"
+    [labelButtonAdd]="labelButtonAdd"
+    [data]="dataList"
+    [cols]="columns"
+    [buttonConfig]="buttonConfig"
+    [isLoading]="isLoading"
+    [hasError]="hasError"
+    [isEmpty]="isEmpty"
+    (onCreate)="openForm()"
+/>
+<app-toast #toast />
+<app-confirm-dialog 
+    #dialog
+    (onConfirm)="deleteItem($event)"
+    />
+<app-consortium-form 
+    #form
+    [data]="dataObject"
+    (onSave)="save($event)"
+    (onUpdate)="update($event)"
+    />
+

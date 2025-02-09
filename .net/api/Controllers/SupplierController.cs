@@ -8,9 +8,9 @@ namespace api.Controllers
     [ApiController]
     public class SupplierController : ControllerBase
     {
-        private readonly IGenericService<Supplier, long> _supplierService;
+        private readonly IGenericService<Supplier, int> _supplierService;
 
-        public SupplierController(IGenericService<Supplier, long> supplierService)
+        public SupplierController(IGenericService<Supplier, int> supplierService)
         {
             _supplierService = supplierService;
         }
@@ -24,12 +24,12 @@ namespace api.Controllers
         }
 
         // GET: api/supplier/5
-        [HttpGet("{cuit}")]
-        public ActionResult<Supplier> GetByCuit(long cuit)
+        [HttpGet("{id}")]
+        public ActionResult<Supplier> GetById(int id)
         {
             try
             {
-                var supplier = _supplierService.GetById(cuit);
+                var supplier = _supplierService.GetById(id);
                 return Ok(supplier);
             }
             catch (KeyNotFoundException)
@@ -48,12 +48,12 @@ namespace api.Controllers
             }
 
             _supplierService.Create(supplier);
-            return CreatedAtAction(nameof(GetByCuit), new { cuit = supplier.Cuit }, supplier);
+            return CreatedAtAction(nameof(GetById), new { id = supplier.Id }, supplier);
         }
 
         // PUT: api/supplier/5
-        [HttpPut("{cuit}")]
-        public ActionResult Update(long cuit, [FromBody] Supplier supplier)
+        [HttpPut("{id}")]
+        public ActionResult Update(int id, [FromBody] Supplier supplier)
         {
             if (supplier == null)
             {
@@ -62,7 +62,7 @@ namespace api.Controllers
 
             try
             {
-                _supplierService.Update(cuit, supplier);
+                _supplierService.Update(id, supplier);
                 return NoContent();  // 204 No Content
             }
             catch (KeyNotFoundException)
@@ -72,12 +72,12 @@ namespace api.Controllers
         }
 
         // DELETE: api/supplier/5
-        [HttpDelete("{cuit}")]
-        public ActionResult Delete(long cuit)
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
         {
             try
             {
-                _supplierService.Delete(cuit);
+                _supplierService.Delete(id);
                 return NoContent();  // 204 No Content
             }
             catch (KeyNotFoundException)

@@ -1,0 +1,9 @@
+<app-form 
+    #form
+    [titleOnCreate]="'Crear consorcio'"
+    [titleOnUpdate]="'Actualizar consorcio'"
+    [fields]="fields"
+    (onSave)="saveData($event)"
+    (onUpdate)="updateData($event)"
+    [data]="data"
+/>

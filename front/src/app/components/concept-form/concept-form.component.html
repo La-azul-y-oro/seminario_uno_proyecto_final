@@ -1,0 +1,9 @@
+<app-form 
+    #form
+    [titleOnCreate]="'Crear concepto'"
+    [titleOnUpdate]="'Actualizar concepto'"
+    [fields]="fields"
+    (onSave)="saveData($event)"
+    (onUpdate)="updateData($event)"
+    [data]="data"
+/>
