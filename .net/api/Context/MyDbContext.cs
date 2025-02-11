@@ -13,6 +13,8 @@ namespace api.Context
 
         public DbSet<Consortium> Consortium { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Supplier>()
