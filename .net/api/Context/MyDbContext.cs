@@ -13,7 +13,7 @@ namespace api.Context
 
         public DbSet<Consortium> Consortium { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
