@@ -1,29 +1,34 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace api.Models
 {
     public class User
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public required string name { get; set; }
+        [Column("first_name")]
+        public required string FirstName { get; set; }
 
-        public required string lastName { get; set; }
+        [Column("last_name")]
+        public required string LastName { get; set; }
 
-        public required string email { get; set; }
+        public required string Email { get; set; }
 
-        public required string password { get; set; }
+        public required string Password { get; set; }
 
-        public required DocumentType documentType { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        [Column("document_type")]
+        public DocumentType DocumentType { get; set; }
 
-        [Column(TypeName = "BIGINT")]
-        public required long documentNumber { get; set; }
+        [Column("document_number", TypeName = "BIGINT")]
+        public required long DocumentNumber { get; set; }
 
-        [Column(TypeName = "BIGINT")]
-        public long telephoneNumber { get; set; }
+        public required string Phone { get; set; }
 
-        public Role role { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public Role Role { get; set; }
 
-        public bool active { get; set; } = true;
+        public bool Active { get; set; } = true;
     }
 }

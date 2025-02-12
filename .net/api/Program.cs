@@ -14,6 +14,7 @@ string connectionString = builder.Configuration.GetConnectionString("MySqlConnec
 builder.Services.AddScoped<IGenericService<Concept, int>, ConceptService>();
 builder.Services.AddScoped<IGenericService<Supplier, int>, SupplierService>();
 builder.Services.AddScoped<IGenericService<Consortium, int>, ConsortiumService>();
+builder.Services.AddScoped<IGenericService<User, int>, UserService>();
 
 builder.Services.AddCors(options =>
 {
