@@ -1,4 +1,5 @@
 ﻿using api.Models;
+using api.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,21 +9,29 @@ namespace api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-
-        public UserController() { }
+        private readonly IGenericService<User, int> _userService;
+        public UserController(IGenericService<User, int> userService) { 
+            _userService = userService;
+        }
 
         [HttpGet]
         public ActionResult<IEnumerable<User>> GetAll()
         {
-            //UserService.GetAll()
-            return Ok();
+            var users = _userService.GetAll();
+            return Ok(users);
         }
 
         [HttpGet("{id}")]
         public ActionResult<User> GetById(int id)
         {
-            //UserService.GetById()
-            return Ok();
+            try
+            {
+                var user = _userService.GetById(id);
+                return Ok(user);
+            } catch(KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
@@ -32,25 +41,38 @@ namespace api.Controllers
                 return BadRequest();
             }
 
-            //UserService.create
-            return CreatedAtAction(nameof(GetById), new { id = user.id }, user);
+            _userService.Create(user);
+            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
 
-        [HttpPut]
-        public ActionResult<User> Update([FromBody] User user){
+        [HttpPut("{id}")]
+        public ActionResult<User> Update(int id, [FromBody] User user){
             if(user == null)
             {
                 return BadRequest();
             }
 
-            // UserService.update
-            return Ok();
+            try
+            {
+                _userService.Update(id, user);
+                return NoContent();
+            }
+            catch(KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete("{id}")]
         public ActionResult Delete(int id){
-            //UserService.delete
-            return Ok();
+            try
+            {
+                _userService.Delete(id);
+                return NoContent();                
+            }
+            catch(KeyNotFoundException) { 
+                return NotFound();
+            }
         }
     }
 }

@@ -5,10 +5,10 @@ USE consortium;
 -- Table: user
 CREATE TABLE user (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    document_type ENUM('cuil', 'cuit', 'dni') NOT NULL,
+    document_type ENUM('DNI', 'CUIT', 'CUIL') NOT NULL,
     document_number BIGINT NOT NULL,
     email VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'usuario') NOT NULL,
+    role ENUM('CLIENT', 'STAFF', 'ADMIN') NOT NULL,
     password VARCHAR(255) NOT NULL,
     phone VARCHAR(20),
     first_name VARCHAR(255) NOT NULL,

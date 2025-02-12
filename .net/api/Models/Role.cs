@@ -2,8 +2,8 @@
 {
     public enum Role
     {
-        Client,
-        Staff,
-        Admin
+        CLIENT,
+        STAFF,
+        ADMIN
     }
 }

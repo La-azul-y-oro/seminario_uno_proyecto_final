@@ -3,6 +3,7 @@
     public enum DocumentType
     {
         DNI,
-        CUIT
+        CUIT,
+        CUIL
     }
 }
