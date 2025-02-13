@@ -3,28 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\services\\implementations\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\services\\implementations\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\models\\documenttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\models\\documenttype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\models\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\models\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\context\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\context\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,84 +14,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Role.cs",
-              "DocumentMoniker": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Models\\Role.cs",
-              "RelativeDocumentMoniker": "api\\Models\\Role.cs",
-              "ToolTip": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Models\\Role.cs",
-              "RelativeToolTip": "api\\Models\\Role.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-12T15:10:06.835Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DocumentType.cs",
-              "DocumentMoniker": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Models\\DocumentType.cs",
-              "RelativeDocumentMoniker": "api\\Models\\DocumentType.cs",
-              "ToolTip": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Models\\DocumentType.cs",
-              "RelativeToolTip": "api\\Models\\DocumentType.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-12T15:09:58.649Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Program.cs",
-              "RelativeDocumentMoniker": "api\\Program.cs",
-              "ToolTip": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Program.cs",
-              "RelativeToolTip": "api\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-12T15:04:05.07Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Services\\Implementations\\UserService.cs",
-              "RelativeDocumentMoniker": "api\\Services\\Implementations\\UserService.cs",
-              "ToolTip": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Services\\Implementations\\UserService.cs",
-              "RelativeToolTip": "api\\Services\\Implementations\\UserService.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAkwDEAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-11T16:25:50.243Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "api\\Controllers\\UserController.cs",
-              "ToolTip": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Controllers\\UserController.cs",
-              "RelativeToolTip": "api\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAEUAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T23:48:50.762Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Models\\User.cs",
-              "RelativeDocumentMoniker": "api\\Models\\User.cs",
-              "ToolTip": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Models\\User.cs",
-              "RelativeToolTip": "api\\Models\\User.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAgwBcAAAA4AAAAAAAAAA==",
+              "Title": "MyDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Context\\MyDbContext.cs",
+              "RelativeDocumentMoniker": "api\\Context\\MyDbContext.cs",
+              "ToolTip": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Context\\MyDbContext.cs",
+              "RelativeToolTip": "api\\Context\\MyDbContext.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAuwBoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-10T23:06:36.766Z",
+              "WhenOpened": "2025-02-13T14:46:13.234Z",
               "EditorCaption": ""
             }
           ]
