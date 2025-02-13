@@ -3,8 +3,25 @@
   "WorkspaceRootPath": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\",
   "Documents": [
     {
+<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\context\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\context\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+=======
+      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\services\\implementations\\functionalunitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\services\\implementations\\functionalunitservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\models\\functionalunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\models\\functionalunit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|c:\\users\\ceron\\onedrive\\escritorio\\aus\\seminario1\\proyecto final\\seminario_uno_proyecto_final\\.net\\api\\controllers\\functionalunitcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C33F20AB-651B-443C-9B12-9BD423616FEF}|api\\api.csproj|solutionrelative:api\\controllers\\functionalunitcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+>>>>>>> 8262646 (feat(CU-86b3gtpt8): implemented FunctionalUnit Service and Controller)
     }
   ],
   "DocumentGroupContainers": [
@@ -14,6 +31,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
+<<<<<<< HEAD
           "SelectedChildIndex": 0,
           "Children": [
             {
@@ -27,6 +45,60 @@
               "ViewState": "AgIAAAoAAAAAAAAAAAAuwBoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-13T14:46:13.234Z",
+=======
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Program.cs",
+              "RelativeDocumentMoniker": "api\\Program.cs",
+              "ToolTip": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Program.cs",
+              "RelativeToolTip": "api\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T20:54:03.536Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FunctionalUnitService.cs",
+              "DocumentMoniker": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Services\\Implementations\\FunctionalUnitService.cs",
+              "RelativeDocumentMoniker": "api\\Services\\Implementations\\FunctionalUnitService.cs",
+              "ToolTip": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Services\\Implementations\\FunctionalUnitService.cs",
+              "RelativeToolTip": "api\\Services\\Implementations\\FunctionalUnitService.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAnwDQAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T19:44:51.386Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FunctionalUnitController.cs",
+              "DocumentMoniker": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Controllers\\FunctionalUnitController.cs",
+              "RelativeDocumentMoniker": "api\\Controllers\\FunctionalUnitController.cs",
+              "ToolTip": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Controllers\\FunctionalUnitController.cs",
+              "RelativeToolTip": "api\\Controllers\\FunctionalUnitController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE8AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T19:18:36.377Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FunctionalUnit.cs",
+              "DocumentMoniker": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Models\\FunctionalUnit.cs",
+              "RelativeDocumentMoniker": "api\\Models\\FunctionalUnit.cs",
+              "ToolTip": "C:\\Users\\ceron\\OneDrive\\Escritorio\\AUS\\Seminario1\\Proyecto Final\\seminario_uno_proyecto_final\\.net\\api\\Models\\FunctionalUnit.cs",
+              "RelativeToolTip": "api\\Models\\FunctionalUnit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-13T15:45:02.071Z",
+>>>>>>> 8262646 (feat(CU-86b3gtpt8): implemented FunctionalUnit Service and Controller)
               "EditorCaption": ""
             }
           ]
