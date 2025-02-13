@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api.Models
 {
+    [Table("functional_unit")]
     public class FunctionalUnit
     {
         public int Id { get; set; }
@@ -16,6 +17,7 @@ namespace api.Models
         [Column(TypeName = "decimal(5,2)")]
         public required long Factor { get; set; }
 
+        [Column("consortium_id")]
         public required int ConsortiumId { get; set; }
 
         public bool Active { get; set; } = true;
