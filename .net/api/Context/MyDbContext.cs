@@ -15,6 +15,8 @@ namespace api.Context
 
         public DbSet<User> User { get; set; }
 
+        public DbSet<FunctionalUnit> FunctionalUnit { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
@@ -24,6 +26,11 @@ namespace api.Context
             modelBuilder.Entity<User>()
                 .Property(u => u.Role)
                 .HasConversion<string>();
-        }
+
+            modelBuilder.Entity<FunctionalUnit>()
+                .HasIndex(fu => new { fu.Name, fu.ConsortiumId })
+                .IsUnique();
+
+            base.OnModelCreating(modelBuilder);
     }
 }
