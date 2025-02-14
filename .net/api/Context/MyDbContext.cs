@@ -32,5 +32,6 @@ namespace api.Context
                 .IsUnique();
 
             base.OnModelCreating(modelBuilder);
+        }
     }
 }
