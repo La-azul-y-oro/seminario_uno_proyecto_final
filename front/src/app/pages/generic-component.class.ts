@@ -98,6 +98,7 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
       next: () => {
         this.toast.showSuccessDelete();
         this.dataList = this.dataList.filter(item => (item as any).id !== id);
+        if(this.dataList.length == 0) this.isEmpty = true;
       },
       error: error => {
         this.toast.showErrorDelete();
@@ -107,6 +108,7 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
   }
 
   handlePostCreate(response: TResponse) {
+    this.isEmpty = false;
     this.dataList = [...this.dataList, response];
     this.form.resetAndHideForm();
   }

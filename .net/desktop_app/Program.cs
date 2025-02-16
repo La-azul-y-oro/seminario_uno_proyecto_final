@@ -1,4 +1,4 @@
-namespace Seminario_uno
+namespace PracticaSeminario
 {
     internal static class Program
     {
@@ -8,10 +8,10 @@ namespace Seminario_uno
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new formLogin());
+            Application.Run(new FormMain());
         }
     }
 }
