@@ -1,6 +1,6 @@
-﻿using api.Models;
+﻿using api.Mappers;
+using api.Models;
 using api.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -9,25 +9,28 @@ namespace api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IGenericService<User, int> _userService;
-        public UserController(IGenericService<User, int> userService) { 
+        private readonly IUserService _userService;
+        private readonly UserMapper _userMapper;
+        public UserController(IUserService userService, UserMapper userMapper) { 
             _userService = userService;
+            _userMapper = userMapper;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<User>> GetAll()
+        public ActionResult<IEnumerable<UserResponse>> GetAll()
         {
             var users = _userService.GetAll();
-            return Ok(users);
+            var usersResponse = users.Select(u => _userMapper.GetUserResponse(u)).ToList();
+            return Ok(usersResponse);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<User> GetById(int id)
+        public ActionResult<UserResponse> GetById(int id)
         {
             try
             {
                 var user = _userService.GetById(id);
-                return Ok(user);
+                return Ok(_userMapper.GetUserResponse(user));
             } catch(KeyNotFoundException)
             {
                 return NotFound();
@@ -35,25 +38,28 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<User> Create([FromBody] User user)
+        public ActionResult<UserResponse> Create([FromBody] UserRequest userRequest)
         {
-            if(user == null) {
+            if(userRequest == null) {
                 return BadRequest();
             }
-
+            var user = _userMapper.GetUserEntity(userRequest);
             _userService.Create(user);
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+
+            return CreatedAtAction(nameof(GetById), new { id = user.Id }, _userMapper.GetUserResponse(user));
         }
 
         [HttpPut("{id}")]
-        public ActionResult<User> Update(int id, [FromBody] User user){
-            if(user == null)
+        public ActionResult<UserResponse> Update(int id, [FromBody] UserRequest userRequest)
+        {
+            if(userRequest == null)
             {
                 return BadRequest();
             }
 
             try
             {
+                var user = _userMapper.GetUserEntity(userRequest);
                 _userService.Update(id, user);
                 return NoContent();
             }

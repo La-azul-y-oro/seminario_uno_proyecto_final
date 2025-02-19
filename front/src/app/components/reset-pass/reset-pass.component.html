@@ -1,0 +1,90 @@
+<p-dialog
+  header="{{ title }}"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ maxWidth: '600px' }"
+  focusOnShow="false"
+  (onHide)="resetAll()"
+>
+    <div class="d-flex flex-column justify-content-center align-items-center mt-4">
+      <form [formGroup]="tokenForm">
+        <div class="mb-5">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="token"
+              formControlName="token"
+              type="text"
+              placeholder="Ingrese su token"
+            />
+            <label for="token">Token</label>
+          </p-floatLabel>
+          <small *ngIf="hasError('token', tokenForm)" class="input-invalid">
+            El token es obligatorio
+          </small>
+        </div>
+
+        <div class="mb-3">
+          <p-floatLabel>
+            <p-password
+              id="newPassword"
+              formControlName="newPassword"
+              placeholder="Ingrese su nueva contraseña"
+              toggleMask="true"
+              feedback="false"
+            />
+            <label for="newPassword">Contraseña</label>
+          </p-floatLabel>
+          <small
+            *ngIf="hasError('newPassword', tokenForm)"
+            class="input-invalid"
+          >
+            Contraseña obligatoria.
+          </small>
+        </div>
+
+        <div class="text-center mt-3 mb-1">
+          <p-button
+            type="submit"
+            label="Resetear contraseña"
+            (onClick)="sendToken()"
+            class="w-100"
+            [loading]="loading" 
+          />
+        </div>
+      </form>
+    </div>
+    <p-divider />
+
+    <div class="d-flex flex-column justify-content-center align-items-center mt-4">
+      <form [formGroup]="sendEmailForm">
+        <div class="mb-3">
+          <p-floatLabel>
+            <input
+              pInputText
+              id="email"
+              formControlName="email"
+              type="text"
+              placeholder="Ingrese su email"
+            />
+            <label for="email">Email</label>
+          </p-floatLabel>
+          <small *ngIf="hasError('email', sendEmailForm)" class="input-invalid">
+            Email inválido.
+          </small>
+        </div>
+
+        <div class="text-center">
+          <p-button
+            type="submit"
+            label="Recibir token"
+            (onClick)="sendEmail()"
+            class="w-100"
+            severity="help"
+            [loading]="loading"
+          />
+        </div>
+      </form>
+    </div>
+
+</p-dialog>

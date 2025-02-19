@@ -1,0 +1,8 @@
+<p-menubar [model]="items" [style]="menubarStyle"/>
+<app-update-pass
+    [visible]="visibleUpdate"
+    (onCloseDialog)="visibleUpdate = false"
+    (onToastEmit)="showToast($event)"
+>
+
+</app-update-pass>

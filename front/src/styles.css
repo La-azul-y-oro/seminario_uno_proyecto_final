@@ -2,6 +2,22 @@
 
 .input-invalid{
     color: #a94442;
+    font-weight: bold;
+}
+
+.bg_html::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('./assets/buildings.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    opacity: 0.2;
+    z-index: -1;
 }
 
 .disableItem,

@@ -1,0 +1,82 @@
+<p-dialog
+  header="{{ title }}"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ minWidth: '400px', maxWidth: '700px' }"
+  focusOnShow="false"
+  (onHide)="resetAll()"
+>
+  <div
+    class="d-flex flex-column justify-content-center align-items-center mt-4"
+  >
+    <form [formGroup]="form">
+      <div class="mb-5">
+        <p-floatLabel>
+          <p-password
+            id="currentPassword"
+            formControlName="currentPassword"
+            placeholder="Contraseña actual"
+            toggleMask="true"
+            feedback="false"
+          />
+          <label for="currentPassword">Contraseña actual</label>
+        </p-floatLabel>
+        <small *ngIf="hasError('currentPassword')" class="input-invalid">
+          Dato obligatorio
+        </small>
+      </div>
+
+      <div class="mb-5">
+        <p-floatLabel>
+          <p-password
+            id="newPassword"
+            formControlName="newPassword"
+            placeholder="Nueva contraseña"
+            toggleMask="true"
+            feedback="false"
+          />
+          <label for="newPassword">Nueva contraseña</label>
+        </p-floatLabel>
+        <small *ngIf="hasError('newPassword')" class="input-invalid">
+          Dato obligatorio
+        </small>
+      </div>
+
+      <div class="mb-5">
+        <p-floatLabel>
+          <p-password
+            id="repeatNewPassword"
+            formControlName="repeatNewPassword"
+            placeholder="Repita nueva contraseña"
+            toggleMask="true"
+            feedback="false"
+          />
+          <label for="repeatNewPassword">Repetir Contraseña</label>
+        </p-floatLabel>
+        <small *ngIf="hasError('repeatNewPassword')" class="input-invalid">
+          Dato obligatorio.
+        </small>
+        <small *ngIf="hasErrorRepeatPass()" class="input-invalid">
+          Las contraseñas no coinciden
+        </small>
+      </div>
+
+      <div class="text-end">
+        <p-button
+          class="me-2"
+          label="Cancelar"
+          severity="secondary"
+          (onClick)="resetAll()"
+        />
+        <p-button
+          type="submit"
+          class="ms-2"
+          label="Enviar"
+          (onClick)="sendToken()"
+          [loading]="loading"
+          [disabled]="!isFormValid()"
+        />
+      </div>
+    </form>
+  </div>
+</p-dialog>
