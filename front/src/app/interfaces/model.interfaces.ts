@@ -53,13 +53,28 @@ export interface SupplierResponse{
 
 
 export enum Role {
-    ROLE_ADMIN = 'admin',
-    ROLE_USER = 'usuario'
+    ADMIN = 'Admin',
+    STAFF = 'Staff',
+    CLIENT = 'Cliente'
 }
 
-type RoleKey = "ROLE_ADMIN" | "ROLE_USER" 
+type RoleKey = "ADMIN" | "STAFF" | "CLIENT"
 
-export interface EmployeeLogin {
-    email:string,
-    password:string
+export interface UserLogin {
+    username: string,
+    password: string
+}
+
+export interface ForgotPasswordRequest {
+    email: string,
+}
+
+export interface ResetPasswordRequest {
+    token: string,
+    newPassword: string
+}
+
+export interface ChangePasswordRequest{
+    currentPassword: string,
+    newPassword: string
 }

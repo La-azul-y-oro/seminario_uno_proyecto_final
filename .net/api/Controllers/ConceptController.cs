@@ -1,11 +1,13 @@
 ﻿using api.Models;
 using api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ConceptController : ControllerBase
     {
         private readonly IGenericService<Concept, int> _conceptService;

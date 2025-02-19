@@ -1,12 +1,15 @@
 ﻿using api.Context;
 using api.Models;
 using api.Services.Interfaces;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Services.Implementations
 {
-    public class UserService : IGenericService<User, int>
+    public class UserService : IUserService
     {
         private readonly ApplicationDbContext _context;
+
 
         public UserService(ApplicationDbContext context)
         {
@@ -15,7 +18,8 @@ namespace api.Services.Implementations
 
         public IEnumerable<User> GetAll()
         {
-            return _context.User.Where(c => c.Active).ToList();
+            var users = _context.User.Where(c => c.Active).ToList();
+            return users;
         }
 
         public User GetById(int id)
@@ -45,6 +49,10 @@ namespace api.Services.Implementations
             _context.SaveChanges();
         }
 
+        public void Update(User user)
+        {
+             _context.SaveChanges();
+        }
         public void Create(User entity)
         {
             Console.Write(entity);
@@ -64,6 +72,32 @@ namespace api.Services.Implementations
             user.Active = false;
             _context.SaveChanges();
         }
+
+        public User GetByEmail(string email)
+        {
+            var user = _context.User.FirstOrDefault(u => u.Email == email);
+            if (user == null || !user.Active)
+            {
+                return null;
+            }
+            return user;
+        }
+
+
+        public User GetByResetToken(string resetToken)
+        {
+            var user = _context.User.FirstOrDefault(u => u.ResetPasswordToken == resetToken);
+            if (user == null || !user.Active)
+            {
+                throw new KeyNotFoundException();
+            }
+            return user;
+        }
+
+        //public async Task<User?> GetByResetTokenAsync(string token)
+        //{
+        //    return await _context.User.FirstOrDefaultAsync(u => u.ResetPasswordToken == token);
+        //}
 
     }
 }

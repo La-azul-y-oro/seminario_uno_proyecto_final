@@ -13,7 +13,9 @@ CREATE TABLE user (
     phone VARCHAR(20),
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
-    active BOOLEAN NOT NULL DEFAULT TRUE
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    reset_password_token VARCHAR(255) NULL,
+    reset_token_xpiration DATETIME NULL
 );
 
 -- Table: consortium
