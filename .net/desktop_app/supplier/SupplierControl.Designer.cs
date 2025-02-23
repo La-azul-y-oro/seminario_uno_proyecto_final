@@ -1,6 +1,6 @@
-﻿namespace desktop_app.concept
+﻿namespace desktop_app.supplier
 {
-    partial class ConceptControl
+    partial class SupplierControl
     {
         /// <summary> 
         /// Variable del diseñador necesaria.

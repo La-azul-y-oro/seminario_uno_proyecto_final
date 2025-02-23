@@ -1,8 +1,7 @@
-﻿using System.Windows.Forms;
-using desktop_app;
-using desktop_app.auth;
+﻿using desktop_app.auth;
 using desktop_app.concept;
 using desktop_app.services;
+using desktop_app.supplier;
 
 namespace PracticaSeminario
 {
@@ -10,6 +9,8 @@ namespace PracticaSeminario
     {
         private readonly AuthService _authService = new AuthService();
         private readonly ApiService _apiService;
+        private Control? _currentControl;
+
         public FormMain()
         {
             InitializeComponent();
@@ -27,7 +28,7 @@ namespace PracticaSeminario
             if (appLogin.ShowDialog() == DialogResult.OK)
             {
                 this.LoadUserData();
-                this.ShowControl(new ConceptControl(_apiService));
+                ShowControl(new ConceptControl(_apiService));
             }
             else
             {
@@ -35,12 +36,20 @@ namespace PracticaSeminario
             }
         }
 
-        private void ShowControl(UserControl control)
+        private void ShowControl(Control control)
         {
+            if (_currentControl != null)
+            {
+                this.Controls.Remove(_currentControl);
+                _currentControl.Dispose();
+            }
+
+            _currentControl = control;
             pnlContainer.Controls.Clear();
             control.Dock = DockStyle.Fill;
             pnlContainer.Controls.Add(control);
         }
+
 
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -49,10 +58,19 @@ namespace PracticaSeminario
 
         private void tsmChangePass_Click(object sender, EventArgs e)
         {
-
             var changePassForm = new ChangePassForm(_authService);
             changePassForm.ShowDialog();
 
+        }
+
+        private void tsmiConceptos_Click(object sender, EventArgs e)
+        {
+            ShowControl(new ConceptControl(_apiService));
+        }
+
+        private void tsmiSupplier_Click(object sender, EventArgs e)
+        {
+            ShowControl(new SupplierControl(_apiService));
         }
     }
 }

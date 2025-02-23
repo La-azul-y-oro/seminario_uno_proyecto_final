@@ -34,6 +34,7 @@
             btnUpdate = new Button();
             btnCreate = new Button();
             btnUpdateList = new Button();
+            labelEntity = new Label();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEntity).BeginInit();
             SuspendLayout();
@@ -42,22 +43,24 @@
             // 
             tableLayoutPanel1.ColumnCount = 4;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 130F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 114F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 114F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 114F));
             tableLayoutPanel1.Controls.Add(dgvEntity, 0, 1);
             tableLayoutPanel1.Controls.Add(btnDelete, 3, 0);
             tableLayoutPanel1.Controls.Add(btnUpdate, 2, 0);
             tableLayoutPanel1.Controls.Add(btnCreate, 1, 0);
             tableLayoutPanel1.Controls.Add(btnUpdateList, 2, 2);
+            tableLayoutPanel1.Controls.Add(labelEntity, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 38F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tableLayoutPanel1.Size = new Size(1152, 555);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 49F));
+            tableLayoutPanel1.Size = new Size(1008, 416);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // dgvEntity
@@ -70,11 +73,12 @@
             dgvEntity.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableLayoutPanel1.SetColumnSpan(dgvEntity, 4);
             dgvEntity.Dock = DockStyle.Fill;
-            dgvEntity.Location = new Point(3, 53);
+            dgvEntity.Location = new Point(3, 40);
+            dgvEntity.Margin = new Padding(3, 2, 3, 2);
             dgvEntity.Name = "dgvEntity";
             dgvEntity.ReadOnly = true;
             dgvEntity.RowHeadersWidth = 51;
-            dgvEntity.Size = new Size(1146, 434);
+            dgvEntity.Size = new Size(1002, 325);
             dgvEntity.TabIndex = 0;
             // 
             // btnDelete
@@ -83,10 +87,10 @@
             btnDelete.Dock = DockStyle.Fill;
             btnDelete.Font = new Font("Segoe UI", 12F);
             btnDelete.ForeColor = SystemColors.ButtonHighlight;
-            btnDelete.Location = new Point(1032, 5);
-            btnDelete.Margin = new Padding(10, 5, 10, 5);
+            btnDelete.Location = new Point(903, 4);
+            btnDelete.Margin = new Padding(9, 4, 9, 4);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(110, 40);
+            btnDelete.Size = new Size(96, 30);
             btnDelete.TabIndex = 3;
             btnDelete.Text = "Eliminar";
             btnDelete.UseVisualStyleBackColor = false;
@@ -96,10 +100,10 @@
             btnUpdate.BackColor = Color.LightSkyBlue;
             btnUpdate.Dock = DockStyle.Fill;
             btnUpdate.Font = new Font("Segoe UI", 12F);
-            btnUpdate.Location = new Point(902, 5);
-            btnUpdate.Margin = new Padding(10, 5, 10, 5);
+            btnUpdate.Location = new Point(789, 4);
+            btnUpdate.Margin = new Padding(9, 4, 9, 4);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(110, 40);
+            btnUpdate.Size = new Size(96, 30);
             btnUpdate.TabIndex = 2;
             btnUpdate.Text = "Actualizar";
             btnUpdate.UseVisualStyleBackColor = false;
@@ -110,10 +114,10 @@
             btnCreate.Dock = DockStyle.Fill;
             btnCreate.Font = new Font("Segoe UI", 12F);
             btnCreate.ForeColor = SystemColors.ButtonHighlight;
-            btnCreate.Location = new Point(772, 5);
-            btnCreate.Margin = new Padding(10, 5, 10, 5);
+            btnCreate.Location = new Point(675, 4);
+            btnCreate.Margin = new Padding(9, 4, 9, 4);
             btnCreate.Name = "btnCreate";
-            btnCreate.Size = new Size(110, 40);
+            btnCreate.Size = new Size(96, 30);
             btnCreate.TabIndex = 1;
             btnCreate.Text = "Nuevo";
             btnCreate.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -125,22 +129,35 @@
             btnUpdateList.Dock = DockStyle.Fill;
             btnUpdateList.Font = new Font("Segoe UI", 12F);
             btnUpdateList.ImageAlign = ContentAlignment.BottomLeft;
-            btnUpdateList.Location = new Point(912, 495);
-            btnUpdateList.Margin = new Padding(20, 5, 20, 5);
+            btnUpdateList.Location = new Point(798, 371);
+            btnUpdateList.Margin = new Padding(18, 4, 18, 4);
             btnUpdateList.Name = "btnUpdateList";
-            btnUpdateList.Size = new Size(220, 55);
+            btnUpdateList.Size = new Size(192, 41);
             btnUpdateList.TabIndex = 4;
             btnUpdateList.Text = "Actualizar listado";
             btnUpdateList.UseVisualStyleBackColor = true;
             // 
+            // labelEntity
+            // 
+            labelEntity.AutoSize = true;
+            labelEntity.Dock = DockStyle.Fill;
+            labelEntity.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelEntity.Location = new Point(3, 0);
+            labelEntity.Name = "labelEntity";
+            labelEntity.Size = new Size(660, 38);
+            labelEntity.TabIndex = 5;
+            labelEntity.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // BaseUserControl
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tableLayoutPanel1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "BaseUserControl";
-            Size = new Size(1152, 555);
+            Size = new Size(1008, 416);
             tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvEntity).EndInit();
             ResumeLayout(false);
         }
@@ -153,5 +170,6 @@
         private Button btnUpdate;
         private Button btnDelete;
         private Button btnUpdateList;
+        private Label labelEntity;
     }
 }
