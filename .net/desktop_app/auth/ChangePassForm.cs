@@ -28,11 +28,11 @@ namespace desktop_app.auth
             var NewPass = tbNewPass.Text;
             var NewPassRepeat = tbNewPassRepeat.Text;
 
-            var ContainsCurrent = string.IsNullOrWhiteSpace(CurrentPass) || string.IsNullOrWhiteSpace(CurrentPass);
-            var ContainsNewPass = string.IsNullOrWhiteSpace(NewPass) || string.IsNullOrWhiteSpace(NewPass);
-            var ContainsNewPassRepeat = string.IsNullOrWhiteSpace(NewPassRepeat) || string.IsNullOrWhiteSpace(NewPassRepeat);
+            var ContainsCurrent = !string.IsNullOrWhiteSpace(CurrentPass);
+            var ContainsNewPass = !string.IsNullOrWhiteSpace(NewPass);
+            var ContainsNewPassRepeat = !string.IsNullOrWhiteSpace(NewPassRepeat);
 
-            if (ContainsCurrent || ContainsNewPass || ContainsNewPassRepeat)
+            if (!ContainsCurrent || !ContainsNewPass || !ContainsNewPassRepeat)
             {
                 MessageBox.Show("Todos los campos son obligatorios", "Contraseña", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

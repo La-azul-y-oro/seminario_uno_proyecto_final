@@ -1,18 +1,19 @@
 ﻿using desktop_app.models;
 using desktop_app.services;
 
-namespace desktop_app.concept
+namespace desktop_app.supplier
 {
-    public partial class ConceptControl : BaseUserControl
+    public partial class SupplierControl : BaseUserControl
     {
-        public ConceptControl(ApiService apiService) : base(apiService)
+        public SupplierControl(ApiService apiService) : base(apiService)
         {
             InitializeComponent();
-            NewClicked += (s, e) => OpenConceptForm(null);
-            EditClicked += (s, e) => EditSelectedConcept();
-            DeleteClicked += (s, e) => DeleteSelectedConcept();
-            UpdateListClicked += async (s, e) => await LoadDataAsync();
-            setLabelEntity("CONCEPTOS");
+  
+                NewClicked += (s, e) => OpenSupplierForm(null);
+                EditClicked += (s, e) => EditSelectedSupplier();
+                DeleteClicked += (s, e) => DeleteSelectedSupplier();
+                UpdateListClicked += async (s, e) => await LoadDataAsync();
+                setLabelEntity("PROVEEDORES");
         }
 
         public override async void LoadData()
@@ -25,11 +26,11 @@ namespace desktop_app.concept
             dgvEntity.DataSource = await GetAll();
         }
 
-        private async Task<List<Concept>> GetAll()
+        private async Task<List<Supplier>> GetAll()
         {
             try
             {
-                return await _apiService.GetAllAsync<Concept>("concept");
+                return await _apiService.GetAllAsync<Supplier>("supplier");
             }
             catch (Exception ex)
             {
@@ -38,22 +39,21 @@ namespace desktop_app.concept
             }
         }
 
-        private void OpenConceptForm(Concept? concept)
+        private void OpenSupplierForm(Supplier? supplier)
         {
-            using var form = new ConceptForm(_apiService, concept);
-            
+            using var form = new SupplierForm(_apiService, supplier);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 LoadData();
             }
         }
 
-        private void EditSelectedConcept()
+        private void EditSelectedSupplier()
         {
             if (dgvEntity.SelectedRows.Count > 0)
             {
-                var concept = (Concept)dgvEntity.SelectedRows[0].DataBoundItem;
-                OpenConceptForm(concept);
+                var supplier = (Supplier)dgvEntity.SelectedRows[0].DataBoundItem;
+                OpenSupplierForm(supplier);
             }
             else
             {
@@ -61,17 +61,17 @@ namespace desktop_app.concept
             }
         }
 
-        private async void DeleteSelectedConcept()
+        private async void DeleteSelectedSupplier()
         {
             if (dgvEntity.SelectedRows.Count > 0)
             {
-                var concept = (Concept)dgvEntity.SelectedRows[0].DataBoundItem;
+                var supplier = (Supplier)dgvEntity.SelectedRows[0].DataBoundItem;
 
-                var confirm = MessageBox.Show($"¿Está seguro de eliminar este registro? ({concept.Name})", "Confirmación", MessageBoxButtons.YesNo);
+                var confirm = MessageBox.Show($"¿Está seguro de eliminar este registro? ({supplier.Name})", "Confirmación", MessageBoxButtons.YesNo);
 
                 if (confirm == DialogResult.Yes)
                 {
-                    await _apiService.DeleteAsync("concept", concept.Id);
+                    await _apiService.DeleteAsync("supplier", supplier.Id);
                     LoadData();
                 }
             }

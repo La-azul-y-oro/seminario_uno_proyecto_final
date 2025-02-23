@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using desktop_app.services;
-using System.Xml.Linq;
+﻿using desktop_app.services;
 using desktop_app.models;
 
 namespace desktop_app.concept
@@ -37,7 +27,7 @@ namespace desktop_app.concept
         {
             string Name = txtName.Text;
 
-            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Name))
+            if (string.IsNullOrWhiteSpace(Name))
             {
                 MessageBox.Show("El concepto no puede ser nulo o en blanco", "Concepto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;

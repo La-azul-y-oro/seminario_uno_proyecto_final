@@ -32,13 +32,13 @@
             tableLayoutPanel1 = new TableLayoutPanel();
             mnsPrincipal = new MenuStrip();
             mnuArchivo = new ToolStripMenuItem();
+            tsmChangePass = new ToolStripMenuItem();
             tsmSalir = new ToolStripMenuItem();
             mnuModulos = new ToolStripMenuItem();
             tsmiConceptos = new ToolStripMenuItem();
             tsmiUsuarios = new ToolStripMenuItem();
-            tsmiServicios = new ToolStripMenuItem();
+            tsmiSupplier = new ToolStripMenuItem();
             labelUserInfo = new Label();
-            tsmChangePass = new ToolStripMenuItem();
             tableLayoutPanel1.SuspendLayout();
             mnsPrincipal.SuspendLayout();
             SuspendLayout();
@@ -86,6 +86,13 @@
             mnuArchivo.Size = new Size(75, 25);
             mnuArchivo.Text = "Archivo";
             // 
+            // tsmChangePass
+            // 
+            tsmChangePass.Name = "tsmChangePass";
+            tsmChangePass.Size = new Size(219, 26);
+            tsmChangePass.Text = "Cambiar contraseña";
+            tsmChangePass.Click += tsmChangePass_Click;
+            // 
             // tsmSalir
             // 
             tsmSalir.Name = "tsmSalir";
@@ -95,7 +102,7 @@
             // 
             // mnuModulos
             // 
-            mnuModulos.DropDownItems.AddRange(new ToolStripItem[] { tsmiConceptos, tsmiUsuarios, tsmiServicios });
+            mnuModulos.DropDownItems.AddRange(new ToolStripItem[] { tsmiConceptos, tsmiSupplier, tsmiUsuarios });
             mnuModulos.Name = "mnuModulos";
             mnuModulos.Size = new Size(83, 25);
             mnuModulos.Text = "Módulos";
@@ -103,20 +110,22 @@
             // tsmiConceptos
             // 
             tsmiConceptos.Name = "tsmiConceptos";
-            tsmiConceptos.Size = new Size(153, 26);
+            tsmiConceptos.Size = new Size(180, 26);
             tsmiConceptos.Text = "Conceptos";
+            tsmiConceptos.Click += tsmiConceptos_Click;
             // 
             // tsmiUsuarios
             // 
             tsmiUsuarios.Name = "tsmiUsuarios";
-            tsmiUsuarios.Size = new Size(153, 26);
+            tsmiUsuarios.Size = new Size(180, 26);
             tsmiUsuarios.Text = "Usuarios";
             // 
-            // tsmiServicios
+            // tsmiSupplier
             // 
-            tsmiServicios.Name = "tsmiServicios";
-            tsmiServicios.Size = new Size(153, 26);
-            tsmiServicios.Text = "Servicios";
+            tsmiSupplier.Name = "tsmiSupplier";
+            tsmiSupplier.Size = new Size(180, 26);
+            tsmiSupplier.Text = "Proveedores";
+            tsmiSupplier.Click += tsmiSupplier_Click;
             // 
             // labelUserInfo
             // 
@@ -127,13 +136,6 @@
             labelUserInfo.Size = new Size(494, 40);
             labelUserInfo.TabIndex = 4;
             labelUserInfo.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // tsmChangePass
-            // 
-            tsmChangePass.Name = "tsmChangePass";
-            tsmChangePass.Size = new Size(219, 26);
-            tsmChangePass.Text = "Cambiar contraseña";
-            tsmChangePass.Click += tsmChangePass_Click;
             // 
             // FormMain
             // 
@@ -164,7 +166,7 @@
         private ToolStripMenuItem mnuModulos;
         private ToolStripMenuItem tsmiConceptos;
         private ToolStripMenuItem tsmiUsuarios;
-        private ToolStripMenuItem tsmiServicios;
+        private ToolStripMenuItem tsmiSupplier;
         private Label labelUserInfo;
         private ToolStripMenuItem tsmChangePass;
     }
