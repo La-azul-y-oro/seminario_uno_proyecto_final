@@ -35,11 +35,18 @@ namespace desktop_app.concept
 
         private async void btnAccept_Click(object sender, EventArgs e)
         {
+            string Name = txtName.Text;
+
+            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Name))
+            {
+                MessageBox.Show("El concepto no puede ser nulo o en blanco", "Concepto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             try
             {
                 var newConcept = new Concept
                 {
-                    Name = txtName.Text,
+                    Name = Name,
                     Active = true,
                 };
 
@@ -60,11 +67,6 @@ namespace desktop_app.concept
             {
                 MessageBox.Show($"Error: {ex.Message}");
             }
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            Close();
         }
     }
 }
