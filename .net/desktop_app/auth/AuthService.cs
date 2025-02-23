@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -44,6 +45,30 @@ namespace desktop_app.auth
                 throw new Exception($"Error while trying login: {ex.Message}");
             }
         }
+
+        public async Task<bool> ChangePasswordAsync(ChangePasswordRequest changePasswordDto)
+        {
+            HttpContent content = JsonUtil.Serialize(changePasswordDto);
+
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+
+                HttpResponseMessage response = await _httpClient.PostAsync("change-password", content);
+
+                if ((int)response.StatusCode >= 400 && (int)response.StatusCode < 500)
+                    return false;
+
+                response.EnsureSuccessStatusCode();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error while changing password: {ex.Message}");
+            }
+        }
+
 
 
         public void SetToken(string token)

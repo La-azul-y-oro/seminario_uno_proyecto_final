@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using desktop_app;
 using desktop_app.auth;
+using desktop_app.concept;
 using desktop_app.services;
 
 namespace PracticaSeminario
@@ -44,6 +45,14 @@ namespace PracticaSeminario
         private void salirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Dispose();
+        }
+
+        private void tsmChangePass_Click(object sender, EventArgs e)
+        {
+
+            var changePassForm = new ChangePassForm(_authService);
+            changePassForm.ShowDialog();
+
         }
     }
 }
