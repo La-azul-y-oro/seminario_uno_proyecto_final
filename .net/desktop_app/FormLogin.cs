@@ -1,24 +1,52 @@
+using System.Text.Json;
+using api.Auth;
+using desktop_app.auth;
+
 namespace PracticaSeminario
 {
     public partial class FormLogin : Form
     {
-        public FormLogin()
+        private AuthService _authService;
+        public FormLogin(AuthService authService)
         {
+            _authService = authService;
             InitializeComponent();
         }
 
-        private void btnIngresar_Click(object sender, EventArgs e)
+        private async void btnIngresar_Click(object sender, EventArgs e)
         {
-            if (this.txtUsuario.Text == "Admin" && this.txtPass.Text == "admin")
+            string usuario = txtUsuario.Text;
+            string password = txtPass.Text;
+
+            if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(password))
             {
-                this.DialogResult = DialogResult.OK;
+                MessageBox.Show("Por favor, ingrese usuario y contraseña.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
+
+            try
             {
-                MessageBox.Show("Las credenciales no son v�lidas."
-                , "Login", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Llamar al servicio de autenticación
+                String? authResponse = await _authService.LoginAsync(new LoginDto { Username = usuario, Password = password });
+
+                if (authResponse != null && !string.IsNullOrWhiteSpace(authResponse))
+                {
+                    var responseObj = JsonSerializer.Deserialize<Dictionary<string, string>>(authResponse);
+                    _authService.SetToken(responseObj["token"]);
+
+                    this.DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    MessageBox.Show("Credenciales incorrectas. Intente nuevamente.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al iniciar sesión: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void inkOlvidaPass_LinkClicked(object sender,
         LinkLabelLinkClickedEventArgs e)

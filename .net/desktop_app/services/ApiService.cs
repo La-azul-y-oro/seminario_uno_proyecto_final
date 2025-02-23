@@ -1,34 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Net.Http.Headers;
+using desktop_app.auth;
+using desktop_app.utils; // Asegúrate de importar AuthService
 
 namespace desktop_app.services
 {
     public class ApiService
     {
         private readonly HttpClient _httpClient;
+        private readonly AuthService _authService;
         private readonly string _baseUrl = "https://localhost:7057/api/";
 
-        public ApiService()
+        public ApiService(AuthService authService)
         {
+            _authService = authService;
             _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
+        }
+
+        private void AddAuthorizationHeader()
+        {
+            if (!string.IsNullOrWhiteSpace(_authService.Token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", _authService.Token);
+            }
         }
 
         public async Task<List<T>> GetAllAsync<T>(string endpoint)
         {
             try
             {
+                AddAuthorizationHeader(); // Agregar token antes de la petición
                 HttpResponseMessage response = await _httpClient.GetAsync(endpoint);
-                response.EnsureSuccessStatusCode();
-
-                string json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<T>>(json, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+                return await JsonUtil.Deserialize<List<T>>(response);
             }
             catch (Exception ex)
             {
@@ -40,14 +43,9 @@ namespace desktop_app.services
         {
             try
             {
+                AddAuthorizationHeader();
                 HttpResponseMessage response = await _httpClient.GetAsync($"{endpoint}/{id}");
-                response.EnsureSuccessStatusCode();
-
-                string json = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+                return await JsonUtil.Deserialize<T>(response);
             }
             catch (Exception ex)
             {
@@ -59,8 +57,8 @@ namespace desktop_app.services
         {
             try
             {
-                string json = JsonSerializer.Serialize(data);
-                HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                AddAuthorizationHeader();
+                HttpContent content = JsonUtil.Serialize(data);
 
                 HttpResponseMessage response = await _httpClient.PostAsync(endpoint, content);
                 response.EnsureSuccessStatusCode();
@@ -77,8 +75,8 @@ namespace desktop_app.services
         {
             try
             {
-                string json = JsonSerializer.Serialize(data);
-                HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+                AddAuthorizationHeader();
+                HttpContent content = JsonUtil.Serialize(data);
 
                 HttpResponseMessage response = await _httpClient.PutAsync($"{endpoint}/{id}", content);
                 response.EnsureSuccessStatusCode();
@@ -95,6 +93,7 @@ namespace desktop_app.services
         {
             try
             {
+                AddAuthorizationHeader();
                 HttpResponseMessage response = await _httpClient.DeleteAsync($"{endpoint}/{id}");
                 response.EnsureSuccessStatusCode();
 

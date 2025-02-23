@@ -28,109 +28,135 @@
         /// </summary>
         private void InitializeComponent()
         {
+            pnlContainer = new Panel();
+            tableLayoutPanel1 = new TableLayoutPanel();
             mnsPrincipal = new MenuStrip();
             mnuArchivo = new ToolStripMenuItem();
-            mnuSalir = new ToolStripMenuItem();
-            inicioToolStripMenuItem = new ToolStripMenuItem();
-            pnlContainer = new Panel();
-            conceptosToolStripMenuItem1 = new ToolStripMenuItem();
-            consorciosToolStripMenuItem = new ToolStripMenuItem();
-            usuariosToolStripMenuItem = new ToolStripMenuItem();
+            tsmSalir = new ToolStripMenuItem();
+            mnuModulos = new ToolStripMenuItem();
+            tsmiConceptos = new ToolStripMenuItem();
+            tsmiUsuarios = new ToolStripMenuItem();
+            tsmiServicios = new ToolStripMenuItem();
+            labelUserInfo = new Label();
+            tableLayoutPanel1.SuspendLayout();
             mnsPrincipal.SuspendLayout();
             SuspendLayout();
             // 
+            // pnlContainer
+            // 
+            tableLayoutPanel1.SetColumnSpan(pnlContainer, 2);
+            pnlContainer.Dock = DockStyle.Fill;
+            pnlContainer.Location = new Point(3, 43);
+            pnlContainer.Name = "pnlContainer";
+            pnlContainer.Size = new Size(1294, 652);
+            pnlContainer.TabIndex = 3;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 500F));
+            tableLayoutPanel1.Controls.Add(mnsPrincipal, 0, 0);
+            tableLayoutPanel1.Controls.Add(pnlContainer, 0, 1);
+            tableLayoutPanel1.Controls.Add(labelUserInfo, 1, 0);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Size = new Size(1300, 698);
+            tableLayoutPanel1.TabIndex = 0;
+            // 
             // mnsPrincipal
             // 
-            mnsPrincipal.Font = new Font("Segoe UI", 12F);
-            mnsPrincipal.ImageScalingSize = new Size(20, 20);
-            mnsPrincipal.Items.AddRange(new ToolStripItem[] { mnuArchivo, inicioToolStripMenuItem });
+            mnsPrincipal.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            mnsPrincipal.Items.AddRange(new ToolStripItem[] { mnuArchivo, mnuModulos });
             mnsPrincipal.Location = new Point(0, 0);
             mnsPrincipal.Name = "mnsPrincipal";
-            mnsPrincipal.Padding = new Padding(10, 3, 0, 3);
-            mnsPrincipal.Size = new Size(1300, 38);
-            mnsPrincipal.TabIndex = 1;
+            mnsPrincipal.Size = new Size(800, 29);
+            mnsPrincipal.TabIndex = 0;
             mnsPrincipal.Text = "menuStrip1";
             // 
             // mnuArchivo
             // 
-            mnuArchivo.DropDownItems.AddRange(new ToolStripItem[] { mnuSalir });
+            mnuArchivo.DropDownItems.AddRange(new ToolStripItem[] { tsmSalir });
             mnuArchivo.Name = "mnuArchivo";
-            mnuArchivo.Size = new Size(93, 32);
+            mnuArchivo.Size = new Size(75, 25);
             mnuArchivo.Text = "Archivo";
             // 
-            // mnuSalir
+            // tsmSalir
             // 
-            mnuSalir.Name = "mnuSalir";
-            mnuSalir.Size = new Size(224, 32);
-            mnuSalir.Text = "Salir";
-            mnuSalir.Click += mnuSalir_Click;
+            tsmSalir.Name = "tsmSalir";
+            tsmSalir.Size = new Size(111, 26);
+            tsmSalir.Text = "Salir";
+            tsmSalir.Click += salirToolStripMenuItem_Click;
             // 
-            // inicioToolStripMenuItem
+            // mnuModulos
             // 
-            inicioToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { conceptosToolStripMenuItem1, consorciosToolStripMenuItem, usuariosToolStripMenuItem });
-            inicioToolStripMenuItem.Name = "inicioToolStripMenuItem";
-            inicioToolStripMenuItem.Size = new Size(104, 32);
-            inicioToolStripMenuItem.Text = "Módulos";
+            mnuModulos.DropDownItems.AddRange(new ToolStripItem[] { tsmiConceptos, tsmiUsuarios, tsmiServicios });
+            mnuModulos.Name = "mnuModulos";
+            mnuModulos.Size = new Size(83, 25);
+            mnuModulos.Text = "Módulos";
             // 
-            // pnlContainer
+            // tsmiConceptos
             // 
-            pnlContainer.Dock = DockStyle.Fill;
-            pnlContainer.Location = new Point(0, 38);
-            pnlContainer.Name = "pnlContainer";
-            pnlContainer.Size = new Size(1300, 660);
-            pnlContainer.TabIndex = 3;
+            tsmiConceptos.Name = "tsmiConceptos";
+            tsmiConceptos.Size = new Size(153, 26);
+            tsmiConceptos.Text = "Conceptos";
             // 
-            // conceptosToolStripMenuItem1
+            // tsmiUsuarios
             // 
-            conceptosToolStripMenuItem1.Font = new Font("Segoe UI", 10F);
-            conceptosToolStripMenuItem1.Name = "conceptosToolStripMenuItem1";
-            conceptosToolStripMenuItem1.Size = new Size(224, 28);
-            conceptosToolStripMenuItem1.Text = "Conceptos";
+            tsmiUsuarios.Name = "tsmiUsuarios";
+            tsmiUsuarios.Size = new Size(153, 26);
+            tsmiUsuarios.Text = "Usuarios";
             // 
-            // consorciosToolStripMenuItem
+            // tsmiServicios
             // 
-            consorciosToolStripMenuItem.Font = new Font("Segoe UI", 10F);
-            consorciosToolStripMenuItem.Name = "consorciosToolStripMenuItem";
-            consorciosToolStripMenuItem.Size = new Size(224, 28);
-            consorciosToolStripMenuItem.Text = "Consorcios";
+            tsmiServicios.Name = "tsmiServicios";
+            tsmiServicios.Size = new Size(153, 26);
+            tsmiServicios.Text = "Servicios";
             // 
-            // usuariosToolStripMenuItem
+            // labelUserInfo
             // 
-            usuariosToolStripMenuItem.Font = new Font("Segoe UI", 10F);
-            usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            usuariosToolStripMenuItem.Size = new Size(224, 28);
-            usuariosToolStripMenuItem.Text = "Usuarios";
+            labelUserInfo.AutoSize = true;
+            labelUserInfo.Dock = DockStyle.Fill;
+            labelUserInfo.Location = new Point(803, 0);
+            labelUserInfo.Name = "labelUserInfo";
+            labelUserInfo.Size = new Size(494, 40);
+            labelUserInfo.TabIndex = 4;
+            labelUserInfo.TextAlign = ContentAlignment.MiddleRight;
             // 
             // FormMain
             // 
-            AutoScaleDimensions = new SizeF(13F, 31F);
+            AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1300, 698);
-            Controls.Add(pnlContainer);
-            Controls.Add(mnsPrincipal);
+            Controls.Add(tableLayoutPanel1);
             Font = new Font("Segoe UI", 14F);
             IsMdiContainer = true;
-            MainMenuStrip = mnsPrincipal;
             Margin = new Padding(5);
             Name = "FormMain";
             Text = "Consorcio";
             WindowState = FormWindowState.Maximized;
             Load += formMain_Shown;
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
             mnsPrincipal.ResumeLayout(false);
             mnsPrincipal.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
+        private Panel pnlContainer;
+        private TableLayoutPanel tableLayoutPanel1;
         private MenuStrip mnsPrincipal;
         private ToolStripMenuItem mnuArchivo;
-        private ToolStripMenuItem mnuSalir;
-        private Panel pnlContainer;
-        private ToolStripMenuItem inicioToolStripMenuItem;
-        private ToolStripMenuItem conceptosToolStripMenuItem1;
-        private ToolStripMenuItem consorciosToolStripMenuItem;
-        private ToolStripMenuItem usuariosToolStripMenuItem;
+        private ToolStripMenuItem tsmSalir;
+        private ToolStripMenuItem mnuModulos;
+        private ToolStripMenuItem tsmiConceptos;
+        private ToolStripMenuItem tsmiUsuarios;
+        private ToolStripMenuItem tsmiServicios;
+        private Label labelUserInfo;
     }
 }

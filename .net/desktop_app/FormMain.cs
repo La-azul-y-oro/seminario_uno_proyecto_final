@@ -1,35 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using desktop_app;
+using desktop_app.auth;
 using desktop_app.services;
 
 namespace PracticaSeminario
 {
     public partial class FormMain : Form
     {
-        private readonly ApiService _apiService = new ApiService();
+        private readonly AuthService _authService = new AuthService();
+        private readonly ApiService _apiService;
         public FormMain()
         {
             InitializeComponent();
+            _apiService = new ApiService(_authService);
         }
 
-        private void mnuSalir_Click(object sender, EventArgs e)
+        private void LoadUserData()
         {
-            this.Dispose();
+            string userInfo = _authService.GetUserInfo();
+            labelUserInfo.Text = userInfo;
         }
-
         private void formMain_Shown(object sender, EventArgs e)
         {
-            FormLogin appLogin = new FormLogin();
+            FormLogin appLogin = new FormLogin(_authService);
             if (appLogin.ShowDialog() == DialogResult.OK)
             {
+                this.LoadUserData();
                 this.ShowControl(new ConceptControl(_apiService));
             }
             else
@@ -43,6 +39,11 @@ namespace PracticaSeminario
             pnlContainer.Controls.Clear();
             control.Dock = DockStyle.Fill;
             pnlContainer.Controls.Add(control);
+        }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
         }
     }
 }
