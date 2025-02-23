@@ -135,7 +135,6 @@
         private Label labelForm;
         private TextBox txtName;
         private Label label1;
-        private Button btnCancel;
         private Button btnAccept;
     }
 }
