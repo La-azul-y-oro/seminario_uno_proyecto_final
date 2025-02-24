@@ -40,6 +40,7 @@ namespace api.Services.Implementations
                 throw new KeyNotFoundException("Consortium not found");
 
             consortium.Name = entity.Name;
+            consortium.Address = entity.Address;
             _context.SaveChanges();
         }
 
