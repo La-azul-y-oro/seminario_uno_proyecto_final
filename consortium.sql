@@ -83,6 +83,16 @@ CREATE TABLE movement (
     active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
+-- Table: user_functional_unit
+CREATE TABLE user_functional_unit (
+    user_id INT NOT NULL,
+    functional_unit_id INT NOT NULL,
+    PRIMARY KEY (user_id, functional_unit_id),
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (functional_unit_id) REFERENCES functional_unit(id),
+    active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
 DELIMITER //
 
 -- Trigger to validate document_number in user (before insert)

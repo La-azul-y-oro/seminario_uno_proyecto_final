@@ -13,6 +13,9 @@
     <Compile Update="concept\ConceptForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="consortium\ConsortiumControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -31,6 +31,19 @@ namespace api.Context
                 .HasIndex(fu => new { fu.Name, fu.ConsortiumId })
                 .IsUnique();
 
+            modelBuilder.Entity<UserFunctionalUnit>()
+                .HasKey(ufu => new { ufu.UserId, ufu.FunctionalUnitId });
+
+            modelBuilder.Entity<UserFunctionalUnit>()
+                .HasOne(ufu => ufu.User)
+                .WithMany(u => u.UserFunctionalUnits)
+                .HasForeignKey(ufu => ufu.UserId);
+
+            modelBuilder.Entity<UserFunctionalUnit>()
+                .HasOne(ufu => ufu.FunctionalUnit)
+                .WithMany(fu => fu.UserFunctionalUnits)
+                .HasForeignKey(ufu => ufu.FunctionalUnitId);
+
             base.OnModelCreating(modelBuilder);
         }
     }

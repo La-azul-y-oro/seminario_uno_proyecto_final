@@ -21,5 +21,8 @@ namespace api.Models
         public required int ConsortiumId { get; set; }
 
         public bool Active { get; set; } = true;
-}
+
+        public ICollection<UserFunctionalUnit> UserFunctionalUnits { get; set; } = new List<UserFunctionalUnit>();
+
+    }
 }
