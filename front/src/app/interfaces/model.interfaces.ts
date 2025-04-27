@@ -1,4 +1,4 @@
-//Concept
+
 export interface ConceptRequest{
     id: number;
     name: string;
@@ -77,4 +77,17 @@ export interface ResetPasswordRequest {
 export interface ChangePasswordRequest{
     currentPassword: string,
     newPassword: string
+}
+
+/// User
+export interface UserRequest{
+    id: number;
+    name: string;
+    active?: boolean;
+}
+
+export interface UserResponse{
+    id: number;
+    name: string;
+    active: boolean;
 }

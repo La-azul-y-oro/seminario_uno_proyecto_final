@@ -1,4 +1,5 @@
-﻿using api.Models;
+﻿using api.Dto;
+using api.Models;
 using AutoMapper;
 
 namespace api.Mappers

@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using api.Models;
 
-namespace api.Models
+namespace api.Dto
 {
     public class UserResponse
     {
@@ -23,5 +24,7 @@ namespace api.Models
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public Role Role { get; set; }
+
+        public required bool Active { get; set; }
     }
 }

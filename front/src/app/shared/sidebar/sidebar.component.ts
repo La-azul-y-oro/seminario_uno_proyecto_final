@@ -49,6 +49,11 @@ export class SidebarComponent {
     label: 'Proveedores',
     icon: 'pi pi-warehouse',
     path: 'proveedores'
+  },
+  {
+    label: 'Usuarios',
+    icon: 'pi pi-users',
+    path: 'usuarios'
   }];
 
   constructor (

@@ -1,0 +1,9 @@
+<app-form 
+    #form
+    [titleOnCreate]="'Crear usuario'"
+    [titleOnUpdate]="'Actualizar usuario'"
+    [fields]="fields"
+    (onSave)="saveData($event)"
+    (onUpdate)="updateData($event)"
+    [data]="data"
+/>

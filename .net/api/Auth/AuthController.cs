@@ -43,7 +43,9 @@ namespace api.Auth
             _context.User.Add(user);
             _context.SaveChanges();
 
-            return Ok("Registered successfully");
+            var userResponse = _userMapper.GetUserResponse(user);
+
+            return Ok(userResponse);
         }
 
         

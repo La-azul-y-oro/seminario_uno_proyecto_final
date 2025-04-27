@@ -33,14 +33,14 @@
                   [style]="{ width: '100%'}">
                 </p-dropdown>
 
-                <p-password *ngIf="isFieldType(field.type, 'password')"
+                <p-password *ngIf="isFieldType(field.type, 'password') && !isEditMode"
                   [id]="field.controlName"
                   [formControlName]="field.controlName"
                   [placeholder]="field.placeholder"
-                  [toggleMask]="true"
+                  [toggleMask]="isEditMode ? false : true"
                   [feedback]="false"
                 />
-                <label [for]="field.controlName">
+                <label *ngIf="!(isFieldType(field.type, 'password') && isEditMode)" [for]="field.controlName">
                   {{ field.label }}
                 </label>
               </p-floatLabel>
