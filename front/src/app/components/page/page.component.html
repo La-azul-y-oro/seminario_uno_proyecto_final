@@ -84,7 +84,7 @@
       <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
           <td *ngFor="let col of columns">
-            {{ getNestedProperty(rowData, col.field) }}
+            {{ getDisplayValue(rowData, col.field) }}
           </td>
           <td>
             <app-action-buttons [buttons]="buttonConfig" [data]="rowData" />

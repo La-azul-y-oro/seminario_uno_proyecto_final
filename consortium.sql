@@ -107,7 +107,7 @@ BEGIN
     
     IF (NEW.document_type IN ('cuil', 'cuit') AND (NEW.document_number < 10000000000 OR NEW.document_number > 99999999999)) THEN
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'CUIL/CUIT number must contain 8 digits';
+        SET MESSAGE_TEXT = 'CUIL/CUIT number must contain 11 digits';
     END IF;
 END;
 //

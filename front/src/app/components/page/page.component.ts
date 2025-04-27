@@ -9,6 +9,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CommonModule } from '@angular/common';
 import { Column } from '../../interfaces/components.interface';
 import { ActionButtonsComponent, ActionButtonConfig } from '../action-buttons/action-buttons.component';
+import { Role } from '../../interfaces/model.interfaces';
 
 @Component({
   selector: 'app-page',
@@ -58,6 +59,17 @@ export class PageComponent {
 
   filter(event : any){
     this.dt.filterGlobal(event.target.value, 'contains');
+  }
+
+  
+  getDisplayValue(rowData: any, field: string): any {
+    const value = this.getNestedProperty(rowData, field);
+
+    if (field === 'role' && value in Role) {
+      return Role[value as keyof typeof Role]; // Traducir la key al valor
+    }
+
+    return value;
   }
 
   getNestedProperty(obj: any, path: string): any {

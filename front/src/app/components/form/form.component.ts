@@ -49,10 +49,17 @@ export class FormComponent implements OnChanges{
   ngOnInit(){
     this.form = this.fb.group({});
     this.fields?.forEach(f => {
-      const control = new FormControl(null, f.validators);
+      const control = new FormControl(
+        null,
+        {
+          validators: f.validators,
+          updateOn: 'blur'
+        }
+      );
 
       this.form.addControl(f.controlName, control);
     });
+    
   }
 
   ngOnChanges(): void {
@@ -84,6 +91,10 @@ export class FormComponent implements OnChanges{
 
   hasError(nameField : any){
     let field = this.form.get(nameField); 
+    // if(nameField == "documentType"){
+    //   console.log("touched" + field?.touched)
+    //   console.log("dirty" + field?.dirty)
+    // }
     return (field?.dirty || field?.touched) && field?.invalid;
   }
 
