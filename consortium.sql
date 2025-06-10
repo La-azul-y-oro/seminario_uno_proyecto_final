@@ -15,7 +15,7 @@ CREATE TABLE user (
     last_name VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     reset_password_token VARCHAR(255) NULL,
-    reset_token_xpiration DATETIME NULL
+    reset_token_expiration DATETIME NULL
 );
 
 -- Table: consortium
@@ -36,16 +36,6 @@ CREATE TABLE functional_unit (
     active BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (consortium_id) REFERENCES consortium(id),
     CONSTRAINT unit_consortium UNIQUE (name, consortium_id)
-);
-
--- Table: user_unit
-CREATE TABLE user_unit (
-    user_id INT NOT NULL,
-    functional_unit_id INT NOT NULL,
-    PRIMARY KEY (user_id, functional_unit_id),
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (functional_unit_id) REFERENCES functional_unit(id),
-    active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
 -- Table: supplier
