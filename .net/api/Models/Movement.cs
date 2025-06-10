@@ -11,7 +11,7 @@ namespace api.Models
         public required float amount { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public required Type type { get; set; }
+        public required MovementType type { get; set; }
         
         [StringLength(255)]
         public string receipt { get; set; }
@@ -20,14 +20,14 @@ namespace api.Models
         public required int consortiumId { get; set; }
 
         [Column("supplier_cuit")]
-        public required int supplierCuit{ get; set; }
+        public required long supplierCuit { get; set; }
 
         [Column("concept_id")]
         public required int conceptId { get; set; }
 
         [Column("functional_unit_id")]
         public required int functionalUnitId { get; set; }
-        public bool active { get; set; }
+        public bool active { get; set; } = true;
 
     }
 }

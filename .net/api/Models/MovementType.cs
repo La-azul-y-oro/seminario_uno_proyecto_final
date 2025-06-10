@@ -1,6 +1,6 @@
 ﻿namespace api.Models
 {
-    public enum Type
+    public enum MovementType
     {
         INGRESO,
         EGRESO

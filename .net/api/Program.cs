@@ -21,6 +21,7 @@ builder.Services.AddScoped<IGenericService<Supplier, int>, SupplierService>();
 builder.Services.AddScoped<IGenericService<Consortium, int>, ConsortiumService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IGenericService<FunctionalUnit, int>, FunctionalUnitService>();
+builder.Services.AddScoped<IGenericService<Movement, int>, MovementService>();
 builder.Services.AddSingleton<JwtService>();
 
 builder.Services.AddAutoMapper(typeof(Program));

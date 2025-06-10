@@ -17,6 +17,8 @@ namespace api.Context
 
         public DbSet<FunctionalUnit> FunctionalUnit { get; set; }
 
+        public DbSet<Movement> Movement { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
@@ -43,6 +45,10 @@ namespace api.Context
                 .HasOne(ufu => ufu.FunctionalUnit)
                 .WithMany(fu => fu.UserFunctionalUnits)
                 .HasForeignKey(ufu => ufu.FunctionalUnitId);
+                
+            modelBuilder.Entity<Movement>()
+                .Property(m => m.type)
+                .HasConversion<string>();
 
             base.OnModelCreating(modelBuilder);
         }

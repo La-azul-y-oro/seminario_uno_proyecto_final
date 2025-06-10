@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using api.Models;
+using api.Services.Implementations;
+using api.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {   
@@ -23,7 +27,7 @@ namespace api.Controllers
         public ActionResult<Movement> GetById (int id){
 
             try{
-                var movement = _movemntService.GetById(id);
+                var movement = _movementService.GetById(id);
                 return Ok(movement);
             } catch(KeyNotFoundException){
                 return NotFound();
