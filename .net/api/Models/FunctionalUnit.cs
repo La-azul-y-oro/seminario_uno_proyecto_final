@@ -15,10 +15,11 @@ namespace api.Models
         public required decimal Balance { get; set; }
 
         [Column(TypeName = "decimal(5,2)")]
-        public required long Factor { get; set; }
+        public required float Factor { get; set; }
 
         [Column("consortium_id")]
         public required int ConsortiumId { get; set; }
+        public Consortium Consortium { get; set; } = null!;
 
         public bool Active { get; set; } = true;
 

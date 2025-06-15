@@ -9,19 +9,24 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuración de la cadena de conexión desde appsettings.json
+// Configuraciï¿½n de la cadena de conexiï¿½n desde appsettings.json
 string connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
 
-// Configuración de servicios
+// Configuraciï¿½n de servicios
 builder.Services.AddScoped<IGenericService<Concept, int>, ConceptService>();
 builder.Services.AddScoped<IGenericService<Supplier, int>, SupplierService>();
 builder.Services.AddScoped<IGenericService<Consortium, int>, ConsortiumService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IGenericService<FunctionalUnit, int>, FunctionalUnitService>();
-builder.Services.AddScoped<IGenericService<Movement, int>, MovementService>();
+builder.Services.AddScoped<IFunctionalUnitService, FunctionalUnitService>();
+builder.Services.AddScoped<IMovementService, MovementService>();
+
+builder.Services.AddScoped<IReportService, ReportService>();
+
+
 builder.Services.AddSingleton<JwtService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
@@ -89,10 +94,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
+QuestPDF.Settings.License = LicenseType.Community;
 
 var app = builder.Build();
 
-// Configuración de middleware
+// Configuraciï¿½n de middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

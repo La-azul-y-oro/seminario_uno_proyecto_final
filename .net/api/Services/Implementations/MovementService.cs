@@ -1,9 +1,10 @@
 using api.Context;
 using api.Models;
 using api.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Services.Implementations{
-    public class MovementService : IGenericService<Movement, int>{
+    public class MovementService : IMovementService {
 
         private readonly ApplicationDbContext _context;
 
@@ -13,14 +14,14 @@ namespace api.Services.Implementations{
 
         public IEnumerable<Movement> GetAll()
         {
-            return _context.Movement.Where(m => m.active).ToList();
+            return _context.Movement.Where(m => m.Active).ToList();
         }
 
         public Movement GetById(int id)
         {
             var movement = _context.Movement.Find(id);
 
-            if(movement == null || !movement.active){
+            if(movement == null || !movement.Active){
                 throw new KeyNotFoundException();
             }
 
@@ -31,19 +32,20 @@ namespace api.Services.Implementations{
         {
             var movement = _context.Movement.Find(id);
 
-            if (movement == null || !movement.active)
+            if (movement == null || !movement.Active)
             {
                 throw new KeyNotFoundException();
             }
 
-            movement.date = entity.date;
-            movement.amount = entity.amount;
-            movement.type = entity.type;
-            movement.receipt = entity.receipt;
-            movement.consortiumId = entity.consortiumId;
-            movement.supplierCuit = entity.supplierCuit;
-            movement.conceptId = entity.conceptId;
-            movement.functionalUnitId = entity.functionalUnitId;
+            movement.Date = entity.Date;
+            movement.Amount = entity.Amount;
+            movement.Type = entity.Type;
+            movement.Receipt = entity.Receipt;
+            movement.ConsortiumId = entity.ConsortiumId;
+            movement.SupplierId = entity.SupplierId;
+            movement.ConceptId = entity.ConceptId;
+            movement.FunctionalUnitId = entity.FunctionalUnitId;
+            movement.Comment = entity.Comment;
 
             _context.SaveChanges();
         }
@@ -58,13 +60,38 @@ namespace api.Services.Implementations{
         {
             var movement = _context.Movement.Find(id);
 
-            if (movement == null || !movement.active)
+            if (movement == null || !movement.Active)
             {
                 throw new KeyNotFoundException("User not found");
             }
 
-            movement.active = false;
+            movement.Active = false;
             _context.SaveChanges();
+        }
+
+        public List<Movement> GetByConsortiumAndMonthAndYear(int consortiumId,int month, int year)
+        {
+            return _context.Movement
+                .Include(m => m.Concept)
+                .Include(m => m.Supplier)
+                .Where(m =>
+                    m.ConsortiumId == consortiumId &&
+                    m.Date.Month == month &&
+                    m.Date.Year == year &&
+                    m.Active)
+                .ToList();
+        }
+
+        public List<Movement> GetByConsortiumAndYear(int consortiumId, int year)
+        {
+            return _context.Movement
+                .Include(m => m.Concept)
+                .Include(m => m.Supplier)
+                .Where(m =>
+                    m.ConsortiumId == consortiumId &&
+                    m.Date.Year == year &&
+                    m.Active)
+                .ToList();
         }
     }
 }
