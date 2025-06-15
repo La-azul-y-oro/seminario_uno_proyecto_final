@@ -14,8 +14,7 @@ public class Supplier
     [StringLength(255)]
     public required string Name { get; set; }
 
-    [Column(TypeName = "BIGINT")]
-    public long Phone { get; set; }
+    public required string Phone { get; set; }
 
     [StringLength(255)]
     [EmailAddress]
