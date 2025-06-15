@@ -33,6 +33,11 @@ namespace api.Context
                 .HasIndex(fu => new { fu.Name, fu.ConsortiumId })
                 .IsUnique();
 
+            modelBuilder.Entity<FunctionalUnit>()
+                .HasOne(m => m.Consortium)
+                .WithMany()
+                .HasForeignKey(m => m.ConsortiumId);
+
             modelBuilder.Entity<UserFunctionalUnit>()
                 .HasKey(ufu => new { ufu.UserId, ufu.FunctionalUnitId });
 
@@ -47,8 +52,30 @@ namespace api.Context
                 .HasForeignKey(ufu => ufu.FunctionalUnitId);
                 
             modelBuilder.Entity<Movement>()
-                .Property(m => m.type)
+                .Property(m => m.Type)
                 .HasConversion<string>();
+
+            modelBuilder.Entity<Movement>()
+                .HasOne(m => m.Concept)
+                .WithMany()
+                .HasForeignKey(m => m.ConceptId);
+
+            modelBuilder.Entity<Movement>()
+                .HasOne(m => m.Consortium)
+                .WithMany()
+                .HasForeignKey(m => m.ConsortiumId);
+
+            modelBuilder.Entity<Movement>()
+                .HasOne(m => m.Supplier)
+                .WithMany()
+                .HasForeignKey(m => m.SupplierId)
+                .IsRequired(false);
+
+            modelBuilder.Entity<Movement>()
+                .HasOne(m => m.FunctionalUnit)
+                .WithMany()
+                .HasForeignKey(m => m.FunctionalUnitId)
+                .IsRequired(false);
 
             base.OnModelCreating(modelBuilder);
         }

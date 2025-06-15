@@ -6,28 +6,36 @@ namespace api.Models
 {
     public class Movement
     {
-        public int id {  get; set; }
-        public required DateTime date { get; set; }
-        public required float amount { get; set; }
+        public int Id { get; set; }
+
+        public required DateTime Date { get; set; }
+        public required float Amount { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public required MovementType type { get; set; }
-        
+        public required MovementType Type { get; set; }
+
         [StringLength(255)]
-        public string receipt { get; set; }
+        public string? Receipt { get; set; }
 
         [Column("consortium_id")]
-        public required int consortiumId { get; set; }
+        public required int ConsortiumId { get; set; }
+        public Consortium Consortium { get; set; } = null!;
 
-        [Column("supplier_cuit")]
-        public required long supplierCuit { get; set; }
+        [Column("supplier_id")]
+        public int? SupplierId { get; set; }
+        public Supplier? Supplier { get; set; }
 
         [Column("concept_id")]
-        public required int conceptId { get; set; }
+        public required int ConceptId { get; set; }
+        public Concept Concept { get; set; } = null!;
 
         [Column("functional_unit_id")]
-        public required int functionalUnitId { get; set; }
-        public bool active { get; set; } = true;
+        public int? FunctionalUnitId { get; set; }
+        public FunctionalUnit? FunctionalUnit { get; set; }
 
+        public bool Active { get; set; } = true;
+
+        [StringLength(255)]
+        public string? Comment { get; set; }
     }
 }

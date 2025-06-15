@@ -41,7 +41,7 @@ namespace api.Controllers
             }
 
             _movementService.Create(movement);
-            return CreatedAtAction(nameof(GetById), new { id = movement.id}, movement);
+            return CreatedAtAction(nameof(GetById), new { id = movement.Id}, movement);
         }
 
         [HttpPut("{id}")]

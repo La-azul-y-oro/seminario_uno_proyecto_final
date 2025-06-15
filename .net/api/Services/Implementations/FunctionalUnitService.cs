@@ -2,10 +2,11 @@
 using api.Models;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace api.Services.Implementations
 {
-    public class FunctionalUnitService : IGenericService<FunctionalUnit, int>
+    public class FunctionalUnitService : IFunctionalUnitService
     {
         private readonly ApplicationDbContext _context;
 
@@ -21,9 +22,11 @@ namespace api.Services.Implementations
 
         public FunctionalUnit GetById(int id)
         {
-            var functionalUnit = _context.FunctionalUnit.Find(id);
+            var functionalUnit = _context.FunctionalUnit
+                .Include(fu => fu.Consortium)
+                .FirstOrDefault(fu => fu.Id == id);
 
-            if(functionalUnit == null || !functionalUnit.Active){
+            if (functionalUnit == null || !functionalUnit.Active){
                 throw new KeyNotFoundException();
             }
 
@@ -64,6 +67,13 @@ namespace api.Services.Implementations
 
             functionalUnit.Active = false;
             _context.SaveChanges();
+        }
+
+        public List<FunctionalUnit> FindByConsortiumId(int consortiumId)
+        {
+            return _context.FunctionalUnit
+                .Where(fu => fu.ConsortiumId == consortiumId && fu.Active)
+                .ToList();
         }
     }
 }
