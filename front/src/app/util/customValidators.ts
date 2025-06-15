@@ -26,6 +26,16 @@ export function cuitValidator(control: AbstractControl): ValidationErrors | null
   return isValid ? null : { 'invalidDigits': { value: control.value } };
 }
 
+export function phoneValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+  if (!value) {
+    return null;
+  }
+
+  const isValid = /^\d{10}$/.test(value);
+  return isValid ? null : { 'invalidDigits': { value: control.value } };
+}
+
 export function dniCuitValidator(control: AbstractControl): ValidationErrors | null {
   const value = control.value;
   if (!value) {

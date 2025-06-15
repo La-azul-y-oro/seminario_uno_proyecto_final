@@ -21,7 +21,7 @@ namespace desktop_app.supplier
                 btnAccept.Text = "Actualizar";
                 txtName.Text = _supplier.Name;
                 txtCUIT.Text = _supplier.Cuit.ToString();
-                txtPhone.Text = _supplier.Phone.ToString();
+                txtPhone.Text = _supplier.Phone;
                 txtMail.Text = _supplier.Email;
             }
         }
@@ -50,7 +50,7 @@ namespace desktop_app.supplier
                 {
                     Name = Name,
                     Cuit = long.Parse(Cuit),
-                    Phone = long.Parse(Phone),
+                    Phone = Phone,
                     Email = Email,
                     Active = true,
                 };

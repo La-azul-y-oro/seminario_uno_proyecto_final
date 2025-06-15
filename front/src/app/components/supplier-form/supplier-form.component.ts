@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormField, TypeField } from '../../interfaces/components.interface';
 import { SupplierRequest } from '../../interfaces/model.interfaces';
 import { EmailValidator, Validators } from '@angular/forms';
-import { cuitValidator, emailCustomValidator, noWhitespaceValidator } from '../../util/customValidators';
+import { cuitValidator, emailCustomValidator, noWhitespaceValidator, phoneValidator } from '../../util/customValidators';
 import { GenericFormComponent } from '../form/generic-form.class';
 import { FormComponent } from '../form/form.component';
 
@@ -35,10 +35,10 @@ export class SupplierFormComponent extends GenericFormComponent<SupplierRequest>
   {
     label: 'Teléfono',
     controlName: 'phone',
-    type: TypeField.NUMBER,
+    type: TypeField.TEXT,
     placeholder: 'Ingrese el teléfono',
-    errorMessage: 'Dato obligatorio.',
-    validators: [Validators.required]
+    errorMessage: 'Dato obligatorio. Debe contener exactamente 10 dígitos.',
+    validators: [Validators.required, phoneValidator]
   },
   {
     label: 'E-mail',

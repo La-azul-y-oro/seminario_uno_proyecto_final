@@ -7,7 +7,7 @@
         public long Cuit { get; set; }
 
         public required string Name { get; set; }
-        public long Phone { get; set; }
+        public required string Phone { get; set; }
 
         public required string Email { get; set; }
 
