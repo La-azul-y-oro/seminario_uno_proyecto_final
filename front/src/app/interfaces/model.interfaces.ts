@@ -91,3 +91,10 @@ export interface UserResponse{
     name: string;
     active: boolean;
 }
+
+export interface LiquidationRequest{
+    consortiumId: number,
+    month: number,
+    year: number,
+    expirationDate: Date
+}
