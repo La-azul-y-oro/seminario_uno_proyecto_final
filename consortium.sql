@@ -84,6 +84,21 @@ CREATE TABLE user_functional_unit (
     active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
+-- Table: liquidation
+CREATE TABLE liquidation (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    consortium_id INT NOT NULL,
+    period VARCHAR(7) NOT NULL,
+    generate_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    expiration_date DATETIME NOT NULL,
+    amount DECIMAL(12, 2) NOT NULL,
+    generate_by INT NOT NULL,
+    FOREIGN KEY (consortium_id) REFERENCES consortium(id),
+    FOREIGN KEY (generate_by) REFERENCES user(id),
+    CONSTRAINT unique_period_consortium UNIQUE (consortium_id, period)
+);
+
+
 DELIMITER //
 
 -- Trigger to validate document_number in user (before insert)

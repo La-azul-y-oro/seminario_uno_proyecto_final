@@ -9,7 +9,9 @@ namespace api.Models
         public int Id { get; set; }
 
         public required DateTime Date { get; set; }
-        public required float Amount { get; set; }
+
+        [Column(TypeName = "decimal(12,2)")]
+        public required decimal Amount { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public required MovementType Type { get; set; }
