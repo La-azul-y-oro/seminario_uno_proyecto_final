@@ -20,4 +20,8 @@
     (onSave)="save($event)"
     (onUpdate)="update($event)"
     />
-
+<app-liquidation-dialog 
+    [visible]="showLiquidationDialog"
+    (onCancel)="showLiquidationDialog = false"
+    (onConfirm)="generateLiquidation($event)"
+/>

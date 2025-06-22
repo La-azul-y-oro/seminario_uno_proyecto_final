@@ -44,4 +44,11 @@ export class ToastComponent{
   showErrorUpdate() {
     this.messageService.add(this.errorUpdate);
   }
+
+  setSuccessMessage(msg : string) {
+    this.messageService.add({...this.baseSuccess, detail: msg});
+  }
+  setErrorMessage(msg : string) {
+    this.messageService.add({...this.baseError, detail: msg});
+  }
 }
