@@ -13,16 +13,19 @@ using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuraci�n de la cadena de conexi�n desde appsettings.json
+// Configuracion de la cadena de conexion desde appsettings.json
 string connectionString = builder.Configuration.GetConnectionString("MySqlConnection");
 
-// Configuraci�n de servicios
+builder.Services.AddHttpContextAccessor();
+
+// Configuracion de servicios
 builder.Services.AddScoped<IGenericService<Concept, int>, ConceptService>();
 builder.Services.AddScoped<IGenericService<Supplier, int>, SupplierService>();
 builder.Services.AddScoped<IGenericService<Consortium, int>, ConsortiumService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IFunctionalUnitService, FunctionalUnitService>();
 builder.Services.AddScoped<IMovementService, MovementService>();
+builder.Services.AddScoped<ILiquidationService, LiquidationService>();
 
 builder.Services.AddScoped<IReportService, ReportService>();
 
@@ -98,7 +101,7 @@ QuestPDF.Settings.License = LicenseType.Community;
 
 var app = builder.Build();
 
-// Configuraci�n de middleware
+// Configuracion de middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

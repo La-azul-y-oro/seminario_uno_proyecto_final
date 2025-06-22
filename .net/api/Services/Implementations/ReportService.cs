@@ -550,9 +550,9 @@ namespace api.Services.Implementations
             public required string ConsortiumName { get; set; }
             public required List<Movement> Incomes { get; set; }
             public required List<Movement> Expenses { get; set; }
-            public float SumIncomes { get; set; }
-            public float SumExpenses { get; set; }
-            public float Balance { get; set; }
+            public decimal SumIncomes { get; set; }
+            public decimal SumExpenses { get; set; }
+            public decimal Balance { get; set; }
         }
 
         private sealed class ExpensesForFunctionalUnitReportContent
@@ -560,16 +560,16 @@ namespace api.Services.Implementations
             public required string ReportTitle { get; set; }
             public required string ConsortiumName { get; set; }
             public required List<Movement> Expenses { get; set; }
-            public float SumExpenses { get; set; }
-            public float Factor { get; set; }
-            public float ToPay { get; set; }
+            public decimal SumExpenses { get; set; }
+            public decimal Factor { get; set; }
+            public decimal ToPay { get; set; }
         }
 
         private sealed class ExpensesForConsoritumReportContent {
             public required string ReportTitle { get; set; }
             public required string ConsortiumName { get; set; }
             public required List<Movement> Expenses { get; set; }
-            public float SumExpenses { get; set; }
+            public decimal SumExpenses { get; set; }
             public required List<FunctionalUnit> FunctionalUnits { get; set; }
         }
     }

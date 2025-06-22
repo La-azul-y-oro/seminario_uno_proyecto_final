@@ -19,6 +19,8 @@ namespace api.Context
 
         public DbSet<Movement> Movement { get; set; }
 
+        public DbSet<Liquidation> Liquidation { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()

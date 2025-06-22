@@ -15,7 +15,7 @@ namespace api.Models
         public required decimal Balance { get; set; }
 
         [Column(TypeName = "decimal(5,2)")]
-        public required float Factor { get; set; }
+        public required decimal Factor { get; set; }
 
         [Column("consortium_id")]
         public required int ConsortiumId { get; set; }
