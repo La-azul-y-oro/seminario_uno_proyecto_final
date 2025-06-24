@@ -25,3 +25,11 @@
     (onCancel)="showLiquidationDialog = false"
     (onConfirm)="generateLiquidation($event)"
 />
+<app-report-dialog 
+    [visible]="showReportDialog"
+    [consortiumId]="consortiumId!"
+    (onCancel)="showReportDialog = false"
+    (onConfirm)="showReportDialog = false"
+    (onExpenses)="getExpensesReport($event)"
+    (onFinancialReport)="getFinancialReport($event)"
+/>

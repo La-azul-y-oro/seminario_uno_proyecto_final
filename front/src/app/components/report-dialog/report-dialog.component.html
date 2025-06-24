@@ -1,0 +1,121 @@
+<p-dialog
+  header="Seleccione y descargue el reporte"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ minWidth: '40vw', minHeight: '50vh' }"
+  [closable]="false"
+  (onHide)="resetDialog()"
+>
+  <!-- Tipo de reporte -->
+  <div *ngIf="step === 1" class="p-fluid">
+    <p>¿Qué tipo de reporte desea descargar?</p>
+    <p-dropdown
+      [options]="reportTypes"
+      [(ngModel)]="selectedReportType"
+      placeholder="Seleccione tipo"
+      optionLabel="label"
+    />
+  </div>
+
+  <!-- Financiero - PDF/Excel + fecha -->
+  <div
+    *ngIf="step === 2 && selectedReportType?.value === 'financiero'"
+    class="p-fluid mt-3"
+  >
+    <p>Seleccione formato de descarga</p>
+    <p-radioButton
+      name="format"
+      inputId="pdf"
+      value="PDF"
+      [(ngModel)]="financialFormat"
+      label="PDF"
+      class="me-3"
+    />
+    <p-radioButton
+      name="format"
+      inputId="excel"
+      value="EXCEL"
+      [(ngModel)]="financialFormat"
+      label="Excel"
+    />
+
+    <div class="mt-3">
+      <p>Seleccione período</p>
+      <div class="mb-2">
+        <p-checkbox
+          [(ngModel)]="onlyYear"
+          binary="true"
+          inputId="onlyYear"
+          label="Solo año"
+        />
+      </div>
+
+      <div *ngIf="!onlyYear">
+        <p-calendar
+          [(ngModel)]="financialDate"
+          view="month"
+          dateFormat="mm/yy"
+          [readonlyInput]="true"
+          [touchUI]="true"
+        />
+      </div>
+
+      <div *ngIf="onlyYear">
+        <p-calendar
+          [(ngModel)]="financialDate"
+          view="year"
+          dateFormat="yy"
+          [readonlyInput]="true"
+          [touchUI]="true"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- Expensas -->
+  <div
+    *ngIf="step === 2 && selectedReportType?.value === 'expensas'"
+    class="p-fluid mt-3"
+  >
+    <p>Seleccione la liquidación a descargar:</p>
+    <div *ngIf="expensasList.length > 0; else noExpensas">
+      <div
+        *ngFor="let item of expensasList"
+        class="d-flex align-items-center mb-2"
+      >
+        <p-radioButton
+          name="expensa"
+          [value]="item"
+          [(ngModel)]="selectedExpensa"
+          class="me-2"
+        />
+        <label>{{ item.label }}</label>
+      </div>
+    </div>
+
+    <ng-template #noExpensas>
+      <p class="text-muted text-center mt-2">
+        No hay liquidaciones disponibles para descargar.
+      </p>
+    </ng-template>
+  </div>
+
+  <!-- Footer -->
+  <ng-template pTemplate="footer">
+    <div class="d-flex justify-content-end gap-2">
+      <p-button label="Cancelar" severity="secondary" (onClick)="onClose()" />
+      <p-button
+        label="Siguiente"
+        *ngIf="step === 1"
+        (onClick)="goToStep2()"
+        [disabled]="!selectedReportType"
+      />
+      <p-button
+        label="Descargar"
+        *ngIf="step === 2"
+        (onClick)="onDownload()"
+        [disabled]="!canDownload()"
+      />
+    </div>
+  </ng-template>
+</p-dialog>

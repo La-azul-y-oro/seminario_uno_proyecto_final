@@ -92,9 +92,32 @@ export interface UserResponse{
     active: boolean;
 }
 
+export interface Liquidation{
+    id: number;
+    consortiumId: number;
+    period: string; // Example: "2025-06"
+    generateAt: Date;
+    expirationDate: Date;
+    amount: number;
+    generateBy: number;
+}
+
 export interface LiquidationRequest{
-    consortiumId: number,
-    month: number,
-    year: number,
-    expirationDate: Date
+    consortiumId: number;
+    month: number;
+    year: number;
+    expirationDate: Date;
+}
+
+export interface ExpensesRequest{
+    consortiumId: number;
+    year: number;
+    month?: number;
+}
+
+export interface FinancialRequest{
+    consortiumId: number;
+    format: string;
+    year: number;
+    month?: number;
 }

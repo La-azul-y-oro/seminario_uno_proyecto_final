@@ -13,16 +13,18 @@ namespace api.Services.Implementations
         private readonly IMovementService _movementService;
         private readonly IGenericService<Consortium, int> _consortiumService;
         private readonly IFunctionalUnitService _functionalUnitService;
+        private readonly ILiquidationService _liquidationService;
 
         private static readonly string[] _headersFinancialIncomes = ["Fecha", "Concepto", "Monto", "Comentario"];
         private static readonly string[] _headersFinancialExpenses = ["Fecha", "Proveedor", "Concepto", "Monto", "Comentario"];
         private static readonly string[] _headersFunctionalUnits = ["Unidad", "Factor", "A abonar"];
 
-        public ReportService(IMovementService movementService, IGenericService<Consortium, int> consortiumService, IFunctionalUnitService functionalUnitService)
+        public ReportService(IMovementService movementService, IGenericService<Consortium, int> consortiumService, IFunctionalUnitService functionalUnitService, ILiquidationService liquidationService)
         {
             _movementService = movementService;
             _consortiumService = consortiumService;
             _functionalUnitService = functionalUnitService;
+            _liquidationService = liquidationService;
         }
         
         public async Task<byte[]> GenerateFinancialReport(int consortiumId, int month, int year, string format)
@@ -89,6 +91,7 @@ namespace api.Services.Implementations
         {
             var movements = _movementService.GetByConsortiumAndMonthAndYear(consortiumId, month, year);
             var consortium = _consortiumService.GetById(consortiumId);
+            var liquidation = _liquidationService.GetByPeriod($"{year}-{month:D2}");
             var consortiumName = consortium.Name;
             var functionalUnits = _functionalUnitService.FindByConsortiumId(consortiumId);
 
@@ -96,15 +99,15 @@ namespace api.Services.Implementations
             var reportTitle =  $"Liquidación expensas - Consorcio: {consortiumName} - Período: {month:D2}/{year}";
 
             var expenses = movements.Where(m => m.Type == MovementType.EGRESO).ToList();
-            var sumExpenses = expenses.Sum(m => m.Amount);
 
             var reportContent = new ExpensesForConsoritumReportContent()
             {
                 ReportTitle = reportTitle,
                 ConsortiumName = consortiumName,
                 Expenses = expenses,
-                SumExpenses = sumExpenses,
-                FunctionalUnits = functionalUnits
+                SumExpenses = liquidation.Amount,
+                FunctionalUnits = functionalUnits,
+                ExpirationDate = liquidation.ExpirationDate
             };
 
             return GenerateExpensesByConsortiumPdf(reportContent);
@@ -283,6 +286,10 @@ namespace api.Services.Implementations
                         header.Item().Row(row =>
                         {
                             row.RelativeItem().AlignCenter().Container().MaxWidth(400).Text(reportContent.ReportTitle).AlignCenter().FontSize(12);
+                        });
+                        header.Item().Row(row =>
+                        {
+                            row.RelativeItem().AlignCenter().Container().MaxWidth(400).PaddingTop(10).Text("Fecha vencimiento: "+reportContent.ExpirationDate.ToShortDateString()).AlignCenter().FontSize(12);
                         });
                     });
 
@@ -571,6 +578,8 @@ namespace api.Services.Implementations
             public required List<Movement> Expenses { get; set; }
             public decimal SumExpenses { get; set; }
             public required List<FunctionalUnit> FunctionalUnits { get; set; }
+
+            public DateTime ExpirationDate { get; set; }
         }
     }
 }
