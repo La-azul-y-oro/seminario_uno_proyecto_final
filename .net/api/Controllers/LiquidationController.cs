@@ -1,4 +1,5 @@
 ﻿using api.Dto;
+using api.Models;
 using api.Services.Implementations;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -29,6 +30,21 @@ namespace api.Controllers
             _liquidationService.GenerateLiquidation(request.ConsortiumId, request.Month, request.Year, request.ExpirationDate);
 
             return Ok();
+        }
+
+        [HttpGet("consortium/{id}")]
+        public ActionResult<IEnumerable<Liquidation>> GetAllByConsortium(int id)
+        {
+
+            try
+            {
+                var liquidations = _liquidationService.GetAllByConsortiumId(id);
+                return Ok(liquidations);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

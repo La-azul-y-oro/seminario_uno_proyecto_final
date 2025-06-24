@@ -23,7 +23,7 @@ namespace api.Controllers
         {
             var reportBytes = await _reportService.GenerateFinancialReport(consortiumId, month, year, format);
 
-            var contentType = format == "excel"
+            var contentType = format.ToLower() == "excel"
                 ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 : "application/pdf";
 
@@ -47,7 +47,7 @@ namespace api.Controllers
 
             var contentType = "application/pdf";
 
-            string fileName = $"liquidación_expensas_consorcio_{month}_{year}.pdf";
+            string fileName = $"liquidacion_expensas_consorcio_{month}_{year}.pdf";
 
             return File(reportBytes, contentType, fileName);
         }
@@ -62,7 +62,7 @@ namespace api.Controllers
 
             var contentType = "application/pdf";
 
-            string fileName = $"liquidación_expensas_{month}_{year}.pdf";
+            string fileName = $"liquidacion_expensas_{month}_{year}.pdf";
 
             return File(reportBytes, contentType, fileName);
         }

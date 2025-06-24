@@ -42,6 +42,21 @@ namespace api.Services.Implementations
             _context.SaveChanges();
         }
 
+        public IEnumerable<Liquidation> GetAllByConsortiumId(int consortiumId)
+        {
+            return _context.Liquidation.Where(m => m.ConsortiumId == consortiumId).ToList();
+        }
+
+        public Liquidation GetByPeriod(string period)
+        {
+            var liquidation = _context.Liquidation.FirstOrDefault(l => l.Period == period);
+
+            if (liquidation == null)
+                throw new KeyNotFoundException("Liquidation not found");
+
+            return liquidation;
+        }
+
         private static void ValidateDate(int month, int year, DateTime expirationDate) {
             var now = DateTime.Now;
 
