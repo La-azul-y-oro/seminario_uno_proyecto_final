@@ -11,13 +11,15 @@ namespace api.Services.Implementations
         private readonly IMovementService _movementService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserService _userService;
+        private readonly IFunctionalUnitService _functionalUnitService;
 
-        public LiquidationService(ApplicationDbContext context, IMovementService movementService, IHttpContextAccessor httpContextAccessor, IUserService userService)
+        public LiquidationService(ApplicationDbContext context, IMovementService movementService, IHttpContextAccessor httpContextAccessor, IUserService userService, IFunctionalUnitService functionalUnitService)
         {
             _context = context;
             _movementService = movementService;
             _httpContextAccessor = httpContextAccessor;
             _userService = userService;
+            _functionalUnitService = functionalUnitService;
         }
 
         public void GenerateLiquidation(int consortiumId, int month, int year, DateTime expirationDate) {
@@ -40,6 +42,8 @@ namespace api.Services.Implementations
 
             _context.Liquidation.Add(liquidation);
             _context.SaveChanges();
+
+            updateFunctionalUnits(consortiumId, sumExpenses);
         }
 
         public IEnumerable<Liquidation> GetAllByConsortiumId(int consortiumId)
@@ -47,9 +51,9 @@ namespace api.Services.Implementations
             return _context.Liquidation.Where(m => m.ConsortiumId == consortiumId).ToList();
         }
 
-        public Liquidation GetByPeriod(string period)
+        public Liquidation GetByPeriodAndConsortiumId(string period, int consortiumId)
         {
-            var liquidation = _context.Liquidation.FirstOrDefault(l => l.Period == period);
+            var liquidation = _context.Liquidation.FirstOrDefault(l => l.Period == period && l.ConsortiumId == consortiumId);
 
             if (liquidation == null)
                 throw new KeyNotFoundException("Liquidation not found");
@@ -96,6 +100,17 @@ namespace api.Services.Implementations
             }
 
             return userEntity.Id;
+        }
+
+        private void updateFunctionalUnits(int consortiumId, decimal sumExpenses)
+        {
+            var functionalUnits = _functionalUnitService.FindByConsortiumId(consortiumId);
+
+            foreach (var item in functionalUnits)
+            {
+                var amount = (item.Factor/100) * sumExpenses * (-1);
+                _functionalUnitService.UpdateBalance(item.Id, amount);
+            }
         }
     }
 }

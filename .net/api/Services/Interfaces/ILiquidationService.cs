@@ -8,6 +8,6 @@ namespace api.Services.Interfaces
 
         IEnumerable<Liquidation> GetAllByConsortiumId(int consortiumId);
 
-        Liquidation GetByPeriod(String period);
+        Liquidation GetByPeriodAndConsortiumId(String period, int consortiumId);
     }
 }

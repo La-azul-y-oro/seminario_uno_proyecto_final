@@ -75,5 +75,18 @@ namespace api.Services.Implementations
                 .Where(fu => fu.ConsortiumId == consortiumId && fu.Active)
                 .ToList();
         }
+
+        public void UpdateBalance(int id, decimal amount)
+        {
+            var functionalUnit = _context.FunctionalUnit.Find(id);
+
+            if (functionalUnit == null || !functionalUnit.Active)
+            {
+                throw new KeyNotFoundException($"Functional Unit with ID {id} not found or inactive.");
+            }
+
+            functionalUnit.Balance += amount;
+            _context.SaveChanges();
+        }
     }
 }

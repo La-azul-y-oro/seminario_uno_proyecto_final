@@ -1,15 +1,21 @@
 using api.Context;
 using api.Models;
 using api.Services.Interfaces;
+using DocumentFormat.OpenXml.Bibliography;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Services.Implementations{
     public class MovementService : IMovementService {
 
         private readonly ApplicationDbContext _context;
+        private readonly IFunctionalUnitService _functionalUnitService;
+        private readonly IServiceProvider _serviceProvider;
 
-        public MovementService(ApplicationDbContext context){
+        public MovementService(ApplicationDbContext context, IFunctionalUnitService functionalUnitService, IServiceProvider serviceProvider)
+        {
             _context = context;
+            _functionalUnitService = functionalUnitService;
+            _serviceProvider = serviceProvider;
         }
 
         public IEnumerable<Movement> GetAll()
@@ -52,8 +58,17 @@ namespace api.Services.Implementations{
 
         public void Create(Movement entity)
         {
+            if (entity.Type.Equals(MovementType.EGRESO)){
+                validateLiquidationPeriod(entity);
+            }
+
             _context.Movement.Add(entity);
             _context.SaveChanges();
+
+            if (entity.Type.Equals(MovementType.INGRESO))
+            {
+                updateFunctionalUnitBalance(entity);
+            }
         }
 
         public void Delete(int id)
@@ -92,6 +107,24 @@ namespace api.Services.Implementations{
                     m.Date.Year == year &&
                     m.Active)
                 .ToList();
+        }
+
+        private void validateLiquidationPeriod(Movement entity)
+        {
+            var liquidationService = _serviceProvider.GetRequiredService<ILiquidationService>();
+
+            var liquidation = liquidationService.GetByPeriodAndConsortiumId($"{entity.Date.Year}-{entity.Date.Month:D2}", entity.ConsortiumId);
+
+            if (liquidation != null) {
+                throw new InvalidOperationException("Cannot enter an expense for a period that has already closed.");
+            }
+        }
+
+        private void updateFunctionalUnitBalance(Movement entity)
+        {
+            if (entity.FunctionalUnitId != null) {
+                _functionalUnitService.UpdateBalance(entity.Id, entity.Amount);
+            }
         }
     }
 }
