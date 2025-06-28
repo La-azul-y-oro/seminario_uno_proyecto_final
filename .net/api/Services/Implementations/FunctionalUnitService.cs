@@ -1,7 +1,6 @@
 ﻿using api.Context;
 using api.Models;
 using api.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Services.Implementations
@@ -17,7 +16,8 @@ namespace api.Services.Implementations
 
         public IEnumerable<FunctionalUnit> GetAll()
         {
-            return _context.FunctionalUnit.Where(fu => fu.Active).ToList();
+            return _context.FunctionalUnit.Include(fu => fu.Consortium).ToList();
+
         }
 
         public FunctionalUnit GetById(int id)

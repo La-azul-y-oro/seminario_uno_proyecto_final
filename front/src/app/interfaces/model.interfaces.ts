@@ -61,22 +61,22 @@ export enum Role {
 type RoleKey = "ADMIN" | "STAFF" | "CLIENT"
 
 export interface UserLogin {
-    username: string,
-    password: string
+    username: string;
+    password: string;
 }
 
 export interface ForgotPasswordRequest {
-    email: string,
+    email: string;
 }
 
 export interface ResetPasswordRequest {
-    token: string,
-    newPassword: string
+    token: string;
+    newPassword: string;
 }
 
 export interface ChangePasswordRequest{
-    currentPassword: string,
-    newPassword: string
+    currentPassword: string;
+    newPassword: string;
 }
 
 /// User
@@ -120,4 +120,12 @@ export interface FinancialRequest{
     format: string;
     year: number;
     month?: number;
+}
+
+export interface UnitFunctionalRequest{
+    id: number;
+    balance: number;
+    factor: number;
+    consortiumId: number;
+    active?: boolean;
 }

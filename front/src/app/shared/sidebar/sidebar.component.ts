@@ -41,6 +41,11 @@ export class SidebarComponent {
     path: 'consorcios'
   },
   {
+    label: 'Unidades Funcionales',
+    icon: 'pi pi-home',
+    path: 'unidades-funcionales'
+  },
+  {
     label: 'Conceptos',
     icon: 'pi pi-book',
     path: 'conceptos'
