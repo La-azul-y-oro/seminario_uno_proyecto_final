@@ -91,7 +91,7 @@ namespace api.Services.Implementations
         {
             var movements = _movementService.GetByConsortiumAndMonthAndYear(consortiumId, month, year);
             var consortium = _consortiumService.GetById(consortiumId);
-            var liquidation = _liquidationService.GetByPeriod($"{year}-{month:D2}");
+            var liquidation = _liquidationService.GetByPeriodAndConsortiumId($"{year}-{month:D2}", consortiumId);
             var consortiumName = consortium.Name;
             var functionalUnits = _functionalUnitService.FindByConsortiumId(consortiumId);
 
