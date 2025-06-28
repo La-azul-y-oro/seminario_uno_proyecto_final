@@ -63,7 +63,7 @@ export class ReportDialogComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    if (this.consortiumId !== undefined) {
+    if (this.consortiumId !== undefined && this.visible) {
       this.getLiquidations();
     }
   }

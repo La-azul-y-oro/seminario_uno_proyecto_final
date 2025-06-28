@@ -29,7 +29,12 @@
     [visible]="showReportDialog"
     [consortiumId]="consortiumId!"
     (onCancel)="showReportDialog = false"
-    (onConfirm)="showReportDialog = false"
     (onExpenses)="getExpensesReport($event)"
     (onFinancialReport)="getFinancialReport($event)"
+/>
+<app-functional-unit-dialog
+    [visible]="showFunctionalUnitDialog"
+    [consortiumId]="consortiumId!"
+    (onCancel)="resetUnitFunctionalData()"
+    (onSave)="saveFunctionalUnits($event)"
 />

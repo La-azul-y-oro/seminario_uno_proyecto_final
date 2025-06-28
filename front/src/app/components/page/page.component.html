@@ -3,7 +3,7 @@
     <div class="col-6">
       <h3>{{ title }}</h3>
     </div>
-    <div class="col-6 align-self-center d-flex justify-content-end">
+    <div *ngIf="!hideCreateButton" class="col-6 align-self-center d-flex justify-content-end">
       <p-button
         *ngIf="!isLoading && !hasError"
         label="{{ labelButtonAdd }}"
@@ -78,7 +78,7 @@
             </ng-template>
           </th>
 
-          <th>Acciones</th>
+          <th *ngIf="showColumnActionButtons()">Acciones</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -86,9 +86,9 @@
           <td *ngFor="let col of columns">
             {{ getDisplayValue(rowData, col.field) }}
           </td>
-          <td>
+          <td *ngIf="showColumnActionButtons()">
             <app-action-buttons [buttons]="buttonConfig" [data]="rowData" />
-         </td>
+          </td>
         </tr>
       </ng-template>
     </p-table>

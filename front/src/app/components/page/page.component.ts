@@ -39,7 +39,8 @@ export class PageComponent {
   @Input() isLoading : boolean = false;
   @Input() hasError : boolean = false;
   @Input() isEmpty : boolean = false;
-  
+  @Input() hideCreateButton : boolean = false;
+
   @Output() onCreate = new EventEmitter;
 
   buttonStyle = {
@@ -74,5 +75,9 @@ export class PageComponent {
 
   getNestedProperty(obj: any, path: string): any {
     return path.split('.').reduce((o, p) => o && o[p], obj);
+  }
+
+  showColumnActionButtons(): boolean {
+    return this.buttonConfig.length > 0;
   }
 }

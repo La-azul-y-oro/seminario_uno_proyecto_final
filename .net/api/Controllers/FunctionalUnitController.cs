@@ -1,7 +1,6 @@
-﻿using api.Models;
-using api.Services.Implementations;
+﻿using api.Dto;
+using api.Models;
 using api.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -11,9 +10,9 @@ namespace api.Controllers
     public class FunctionalUnitController : ControllerBase
     {
 
-        private readonly IGenericService<FunctionalUnit, int> _functionalUnitService;
+        private readonly IFunctionalUnitService _functionalUnitService;
 
-        public FunctionalUnitController(IGenericService<FunctionalUnit, int> functionalUnitService)
+        public FunctionalUnitController(IFunctionalUnitService functionalUnitService)
         {
             _functionalUnitService = functionalUnitService;
         }
@@ -40,27 +39,43 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<FunctionalUnit> Create([FromBody] FunctionalUnit functionalUnit)
+        public ActionResult<FunctionalUnit> Create([FromBody] FunctionalUnitRequest request)
         {
-            if(functionalUnit == null)
+            if(request == null)
             {
                 return BadRequest();
             }
+
+            var functionalUnit = new FunctionalUnit
+            {
+                Name = request.Name,
+                Balance = request.Balance,
+                Factor = request.Factor,
+                ConsortiumId = request.ConsortiumId
+            };
 
             _functionalUnitService.Create(functionalUnit);
             return CreatedAtAction(nameof(GetById), new { id = functionalUnit.Id }, functionalUnit);
         }
 
         [HttpPut("{id}")]
-        public ActionResult<FunctionalUnit> Update(int id, [FromBody] FunctionalUnit functionalUnit)
+        public ActionResult<FunctionalUnit> Update(int id, [FromBody] FunctionalUnitRequest request)
         {
-            if (functionalUnit == null)
+            if (request == null)
             {
                 return BadRequest();
             }
 
             try
             {
+                var functionalUnit = new FunctionalUnit
+                {
+                    Name = request.Name,
+                    Balance = request.Balance,
+                    Factor = request.Factor,
+                    ConsortiumId = request.ConsortiumId
+                };
+
                 _functionalUnitService.Update(id, functionalUnit);
                 return NoContent();
             }
@@ -77,6 +92,20 @@ namespace api.Controllers
             {
                 _functionalUnitService.Delete(id);
                 return NoContent();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("consortium/{id}")]
+        public ActionResult<IEnumerable<FunctionalUnit>> FindByConsortiumId(int id)
+        {
+            try
+            {
+                var functionalUnit = _functionalUnitService.FindByConsortiumId(id);
+                return Ok(functionalUnit);
             }
             catch (KeyNotFoundException)
             {

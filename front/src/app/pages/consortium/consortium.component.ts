@@ -11,6 +11,9 @@ import { LiquidationDialogComponent } from "../../components/liquidation-dialog/
 import { LiquidationService } from '../../services/liquidation.service';
 import { ReportDialogComponent } from '../../components/report-dialog/report-dialog.component';
 import { ReportService } from '../../services/report.service';
+import { FunctionalUnitDialogComponent } from '../../components/functional-unit-dialog/functional-unit-dialog.component';
+import { FunctionalUnitService } from '../../services/functional-unit.service';
+import { concat, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-consortium',
@@ -21,7 +24,8 @@ import { ReportService } from '../../services/report.service';
     PageComponent,
     ToastComponent,
     LiquidationDialogComponent,
-    ReportDialogComponent
+    ReportDialogComponent,
+    FunctionalUnitDialogComponent
   ],
   templateUrl: './consortium.component.html',
   styleUrl: './consortium.component.css'
@@ -32,6 +36,7 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
 
   showLiquidationDialog: boolean = false;
   showReportDialog: boolean = false;
+  showFunctionalUnitDialog: boolean = false;
   consortiumId: number | undefined = undefined;
 
   columns = [
@@ -63,13 +68,20 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
       tooltip: 'Descargar reportes',
       severity: 'warning',
       action: (data: any) => this.openReportDialog(data)
+    },
+    {
+      icon: 'pi pi-home',
+      tooltip: 'Unidades funcionales',
+      severity: 'secondary',
+      action: (data: any) => this.openFunctionalUnitDialog(data)
     }
   ];
 
   constructor(
     service: ConsortiumService,
     private readonly liquidationService: LiquidationService,
-    private readonly reportService: ReportService
+    private readonly reportService: ReportService,
+    private readonly functionalUnitService: FunctionalUnitService
   ) {
     super(service);
   }
@@ -82,6 +94,11 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
   openReportDialog(data: any) {
     this.consortiumId = data.id;
     this.showReportDialog = true;
+  }
+
+  openFunctionalUnitDialog(data: any) {
+    this.consortiumId = data.id;
+    this.showFunctionalUnitDialog = true;
   }
 
   generateLiquidation(event: any) {
@@ -118,6 +135,7 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
         link.click();
         window.URL.revokeObjectURL(url);
 
+        this.showLiquidationDialog = false;
         this.toast.setSuccessMessage('Las expensas se han descargado correctamente.');
       },
       error: (error) => {
@@ -127,12 +145,12 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
     });
   }
 
-  getFinancialReport(request: FinancialRequest){
-      this.reportService.getFinancialReport(request).subscribe({
+  getFinancialReport(request: FinancialRequest) {
+    this.reportService.getFinancialReport(request).subscribe({
       next: (blob) => {
         let filename = 'reporte_financiero_';
-        if(request.month) filename = filename.concat(`${request.month}_`)
-        filename = filename.concat(`${request.year}${request.format.toLowerCase() ==='pdf' ? '.pdf': '.xlsx'}`)
+        if (request.month) filename = filename.concat(`${request.month}_`)
+        filename = filename.concat(`${request.year}${request.format.toLowerCase() === 'pdf' ? '.pdf' : '.xlsx'}`)
 
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -141,6 +159,7 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
         link.click();
         window.URL.revokeObjectURL(url);
 
+        this.showLiquidationDialog = false;
         this.toast.setSuccessMessage('El reporte financiero se ha descargado correctamente.');
       },
       error: (error) => {
@@ -150,4 +169,52 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
     });
   }
 
+  resetUnitFunctionalData() {
+    this.consortiumId = undefined;
+    this.showFunctionalUnitDialog = false;
+  }
+
+  saveFunctionalUnits(event: any) {
+    const toCreate = event.create ?? [];
+    const toUpdate = event.update ?? [];
+    const toDelete = event.delete ?? [];
+
+    const createRequests: Observable<any>[] = toCreate.map((e: any) =>
+      this.functionalUnitService.create(e)
+    );
+
+    const updateRequests: Observable<any>[] = toUpdate.map((e: any) =>
+      this.functionalUnitService.update(e.id, e)
+    );
+
+    const deleteRequests: Observable<any>[] = toDelete.map((id: any) =>
+      this.functionalUnitService.deleteById(id)
+    );
+
+    const allRequests: Observable<any>[] = [
+      ...deleteRequests,
+      ...updateRequests,
+      ...createRequests
+    ];
+
+    if (allRequests.length > 0) {
+      concat(...allRequests).subscribe({
+        next: () => {
+        },
+        complete: () => {
+          this.showFunctionalUnitDialog = false;
+          this.consortiumId = undefined;
+
+          this.toast.setSuccessMessage('Se han actualizado las unidades funcionales.');
+        },
+        error: (err) => {
+          console.error("Error al guardar unidades funcionales", err);
+          this.toast.setErrorMessage("Ha ocurrido un error al guardar los cambios");
+        }
+      });
+    } else {
+      this.showFunctionalUnitDialog = false;
+      this.consortiumId = undefined;
+    }
+  }
 }

@@ -72,7 +72,7 @@ namespace api.Services.Implementations
 
             var expenses = movements.Where(m => m.Type == MovementType.EGRESO).ToList();
             var sumExpenses = expenses.Sum(m => m.Amount);
-            var toPay = (sumExpenses * functionalUnit.Factor);
+            var toPay = (sumExpenses * (functionalUnit.Factor/100));
 
             var reportContent = new ExpensesForFunctionalUnitReportContent()
             {
@@ -80,7 +80,7 @@ namespace api.Services.Implementations
                 ConsortiumName = consortiumName,
                 Expenses = expenses,
                 SumExpenses = sumExpenses,
-                Factor = functionalUnit.Factor*100,
+                Factor = functionalUnit.Factor,
                 ToPay = toPay
             };
 
@@ -432,7 +432,7 @@ namespace api.Services.Implementations
                 // Filas de datos con padding y bordes
                 foreach (var m in reportContent.FunctionalUnits)
                 {
-                    var factorPercent = (m.Factor * 100).ToString("F2") + "%";
+                    var factorPercent = (m.Factor).ToString("F2") + "%";
                     var toPay = "$" + (totalExpenses * m.Factor).ToString("F2");
 
                     void DataCell(string text) => table.Cell().Border(1)

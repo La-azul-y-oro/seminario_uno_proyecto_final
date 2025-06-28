@@ -18,32 +18,37 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
   dataList: TResponse[] = [];
   dataObject?: TRequest;
 
-  isLoading : boolean = false;
-  hasError : boolean = false;
-  isEmpty : boolean = false;
+  isLoading: boolean = false;
+  hasError: boolean = false;
+  isEmpty: boolean = false;
 
 
   abstract columns: Column[];
-  abstract buttonConfig: ActionButtonConfig [];
+  abstract buttonConfig: ActionButtonConfig[];
 
-  constructor(protected service: GenericService<TRequest, TResponse>) {}
+  constructor(protected service: GenericService<TRequest, TResponse>) { }
 
   ngOnInit() {
     this.loadData();
+  }
+
+  protected transformResponseData(data: TResponse[]): TResponse[] {
+    return data;
   }
 
   loadData() {
     this.isLoading = true;
     this.hasError = false;
     this.isEmpty = false;
-  
+
     this.service.getAll().pipe(
       finalize(() => {
         this.isLoading = false;
       })
     ).subscribe({
       next: (response) => {
-        this.dataList = response.filter(e => (e as any).active);
+        const filteredData = response.filter(e => (e as any).active);
+        this.dataList = this.transformResponseData(filteredData);
         this.isEmpty = this.dataList.length === 0;
       },
       error: (error) => {
@@ -98,7 +103,7 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
       next: () => {
         this.toast.showSuccessDelete();
         this.dataList = this.dataList.filter(item => (item as any).id !== id);
-        if(this.dataList.length == 0) this.isEmpty = true;
+        if (this.dataList.length == 0) this.isEmpty = true;
       },
       error: error => {
         this.toast.showErrorDelete();
@@ -135,5 +140,5 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
       }
     });
   }
-  
+
 }

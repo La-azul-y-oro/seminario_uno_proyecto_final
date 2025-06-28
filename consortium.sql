@@ -35,7 +35,7 @@ CREATE TABLE functional_unit (
     consortium_id INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (consortium_id) REFERENCES consortium(id),
-    CONSTRAINT unit_consortium UNIQUE (name, consortium_id)
+    CONSTRAINT unit_consortium UNIQUE (name, consortium_id, active)
 );
 
 -- Table: supplier
