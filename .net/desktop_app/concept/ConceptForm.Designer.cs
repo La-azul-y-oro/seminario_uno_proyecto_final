@@ -39,25 +39,24 @@
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 5;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 34F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 30F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 37F));
             tableLayoutPanel1.Controls.Add(labelForm, 1, 0);
             tableLayoutPanel1.Controls.Add(txtName, 2, 2);
             tableLayoutPanel1.Controls.Add(label1, 1, 2);
             tableLayoutPanel1.Controls.Add(btnAccept, 3, 3);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 82F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 82F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 82F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 82F));
-            tableLayoutPanel1.Size = new Size(608, 338);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 109F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 109F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 109F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 109F));
+            tableLayoutPanel1.Size = new Size(695, 451);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // labelForm
@@ -66,9 +65,9 @@
             labelForm.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(labelForm, 3);
             labelForm.Font = new Font("Segoe UI", 12F);
-            labelForm.Location = new Point(245, 61);
+            labelForm.Location = new Point(273, 81);
             labelForm.Name = "labelForm";
-            labelForm.Size = new Size(115, 21);
+            labelForm.Size = new Size(145, 28);
             labelForm.TabIndex = 0;
             labelForm.Text = "Crear concepto";
             // 
@@ -77,10 +76,10 @@
             tableLayoutPanel1.SetColumnSpan(txtName, 2);
             txtName.Dock = DockStyle.Fill;
             txtName.Font = new Font("Segoe UI", 10F);
-            txtName.Location = new Point(215, 172);
-            txtName.Margin = new Padding(3, 8, 3, 2);
+            txtName.Location = new Point(245, 229);
+            txtName.Margin = new Padding(3, 11, 3, 3);
             txtName.Name = "txtName";
-            txtName.Size = new Size(358, 25);
+            txtName.Size = new Size(410, 30);
             txtName.TabIndex = 3;
             // 
             // label1
@@ -89,10 +88,10 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 11F);
             label1.ForeColor = SystemColors.ControlText;
-            label1.Location = new Point(54, 172);
-            label1.Margin = new Padding(3, 8, 3, 0);
+            label1.Location = new Point(44, 229);
+            label1.Margin = new Padding(3, 11, 3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(155, 20);
+            label1.Size = new Size(195, 25);
             label1.TabIndex = 4;
             label1.Text = "Nombre del concepto";
             // 
@@ -102,10 +101,10 @@
             btnAccept.BackColor = SystemColors.HotTrack;
             btnAccept.Font = new Font("Segoe UI", 11F);
             btnAccept.ForeColor = SystemColors.ControlLightLight;
-            btnAccept.Location = new Point(468, 254);
-            btnAccept.Margin = new Padding(9, 8, 3, 2);
+            btnAccept.Location = new Point(535, 338);
+            btnAccept.Margin = new Padding(10, 11, 3, 3);
             btnAccept.Name = "btnAccept";
-            btnAccept.Size = new Size(105, 34);
+            btnAccept.Size = new Size(120, 45);
             btnAccept.TabIndex = 1;
             btnAccept.Text = "Crear";
             btnAccept.UseVisualStyleBackColor = false;
@@ -114,12 +113,11 @@
             // ConceptForm
             // 
             AcceptButton = btnAccept;
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(608, 338);
+            ClientSize = new Size(695, 451);
             Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             Name = "ConceptForm";
             StartPosition = FormStartPosition.CenterScreen;
