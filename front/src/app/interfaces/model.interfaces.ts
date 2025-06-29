@@ -173,3 +173,36 @@ export interface FunctionalUnitBatchRequest{
     update?: UnitFunctionalRequest[];
     create?: UnitFunctionalRequest[];
 }
+
+export interface MovementRequest {
+    id: number;
+    date: Date;
+    amount: number;
+    movementType: MovementType;
+    receipt?: string;
+    consortiumId: number;
+    supplierId?: number;
+    conceptId: number;
+    functionalUnitId?: number;
+    comment?: string;
+    active?: boolean;
+}
+
+export interface MovementResponse {
+    id: number;
+    date: Date;
+    amount: number;
+    movementType: MovementType;
+    receipt?: string;
+    consortiumId: number;
+    supplierId?: number;
+    conceptId: number;
+    functionalUnitId?: number;
+    comment?: string;
+    active: boolean;
+}
+
+export enum MovementType {
+    INGRESO = 'Ingreso',
+    EGRESO = 'Egreso'
+}
