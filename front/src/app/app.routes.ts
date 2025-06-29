@@ -7,6 +7,7 @@ import { adminGuard, authGuardNotLogin, clientGuard, consortiumGuard } from './a
 import { UserComponent } from './pages/user/user.component';
 import { UnitFunctionalComponent } from './pages/unit-functional/unit-functional.component';
 import { ClientPageComponent } from './pages/client-page/client-page.component';
+import { MovementComponent } from './pages/movement/movement.component';
 
 export const routes: Routes = [
     { path: 'conceptos', component: ConceptComponent, canActivate: [consortiumGuard] },
@@ -16,6 +17,7 @@ export const routes: Routes = [
     { path: 'usuarios', component: UserComponent, canActivate: [adminGuard] },
     { path: 'unidades-funcionales', component: UnitFunctionalComponent, canActivate: [consortiumGuard] },
     { path: 'mis-unidades', component: ClientPageComponent, canActivate: [clientGuard] },
+    { path: 'movimientos', component: MovementComponent, canActivate: [consortiumGuard] },
     { path: '', redirectTo: 'consorcios', pathMatch: 'full' },
     { path: '**', redirectTo: 'consorcios' }
 ];
