@@ -34,7 +34,7 @@ namespace desktop_app.services
         {
             _authService.AddAuthorizationHeader(_httpClient);
 
-            HttpResponseMessage response = await _httpClient.GetAsync($"/consortium/{consortiumId}");            
+            HttpResponseMessage response = await _httpClient.GetAsync($"{_baseUrl}/consortium/{consortiumId}");            
 
             response.EnsureSuccessStatusCode();
 

@@ -433,7 +433,7 @@ namespace api.Services.Implementations
                 foreach (var m in reportContent.FunctionalUnits)
                 {
                     var factorPercent = (m.Factor).ToString("F2") + "%";
-                    var toPay = "$" + (totalExpenses * m.Factor).ToString("F2");
+                    var toPay = "$" + (totalExpenses * (m.Factor/100)).ToString("F2");
 
                     void DataCell(string text) => table.Cell().Border(1)
                         .Padding(4).Text(text);

@@ -10,6 +10,7 @@ namespace PracticaSeminario
     {
         private readonly AuthService _authService = new AuthService();
         private readonly LiquidationService _liquidationService;
+        private readonly ReportService _reportService;
         private readonly ApiService _apiService;
         private Control? _currentControl;
 
@@ -18,6 +19,7 @@ namespace PracticaSeminario
             InitializeComponent();
             _apiService = new ApiService(_authService);
             _liquidationService = new LiquidationService(_authService);
+            _reportService = new ReportService(_authService);
         }
 
         private void LoadUserData()
@@ -78,7 +80,7 @@ namespace PracticaSeminario
 
         private void tsmiConsorcios_Click(object sender, EventArgs e)
         {
-            ShowControl(new ConsortiumControl(_apiService, _liquidationService));
+            ShowControl(new ConsortiumControl(_apiService, _liquidationService, _reportService));
         }
 
         private void tsmiUsuarios_Click(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿using desktop_app.liquidation;
 using desktop_app.models;
+using desktop_app.report;
 using desktop_app.services;
 
 namespace desktop_app.consortium
@@ -7,10 +8,12 @@ namespace desktop_app.consortium
     public partial class ConsortiumControl : BaseUserControl
     {
         private readonly LiquidationService _liquidationService;
-        public ConsortiumControl(ApiService apiService, LiquidationService liquidationService) : base(apiService)
+        private readonly ReportService _reportService;
+        public ConsortiumControl(ApiService apiService, LiquidationService liquidationService, ReportService reportService) : base(apiService)
         {
             InitializeComponent();
             _liquidationService = liquidationService;
+            _reportService = reportService;
 
             NewClicked += (s, e) => OpenConsortiumForm(null);
             EditClicked += (s, e) => EditSelectedConsortium();
@@ -136,7 +139,7 @@ namespace desktop_app.consortium
                     break;
 
                 case "btnDescargar":
-                    DownloadReport(rowData);
+                    DownloadReportAsync(rowData);
                     break;
 
                 case "btnUnidades":
@@ -151,9 +154,13 @@ namespace desktop_app.consortium
             form.ShowDialog();
         }
 
-        private void DownloadReport(Consortium consorcio)
+        private async Task DownloadReportAsync(Consortium consorcio)
         {
-            MessageBox.Show($"Descargar reportes de {consorcio.Name}");
+            var list = await _liquidationService.GetAllByConsortiumIdAsync(consorcio.Id);
+
+            using var form = new ReportDownloadForm(list, _reportService, consorcio);
+
+            form.ShowDialog();
         }
 
         private void ManageFunctionalUnits(Consortium consorcio)
