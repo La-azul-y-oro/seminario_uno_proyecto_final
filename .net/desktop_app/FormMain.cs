@@ -9,6 +9,7 @@ namespace PracticaSeminario
     public partial class FormMain : Form
     {
         private readonly AuthService _authService = new AuthService();
+        private readonly LiquidationService _liquidationService;
         private readonly ApiService _apiService;
         private Control? _currentControl;
 
@@ -16,6 +17,7 @@ namespace PracticaSeminario
         {
             InitializeComponent();
             _apiService = new ApiService(_authService);
+            _liquidationService = new LiquidationService(_authService);
         }
 
         private void LoadUserData()
@@ -76,7 +78,13 @@ namespace PracticaSeminario
 
         private void tsmiConsorcios_Click(object sender, EventArgs e)
         {
-            ShowControl(new ConsortiumControl(_apiService));
+            ShowControl(new ConsortiumControl(_apiService, _liquidationService));
+        }
+
+        private void tsmiUsuarios_Click(object sender, EventArgs e)
+        {
+            // a implementar
+            // ShowControl(new UserControl(_apiService));
         }
     }
 }

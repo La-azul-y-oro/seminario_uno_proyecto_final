@@ -94,7 +94,15 @@ namespace desktop_app.auth
         {
             return $"{Name} {LastName} {(string.IsNullOrWhiteSpace(Role) ? "" : "- " + Role)}";
         }
-
+        
+        public void AddAuthorizationHeader(HttpClient _httpClient)
+        {
+            if (!string.IsNullOrWhiteSpace(Token))
+            {
+                _httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", Token);
+            }
+        }
 
     }
 

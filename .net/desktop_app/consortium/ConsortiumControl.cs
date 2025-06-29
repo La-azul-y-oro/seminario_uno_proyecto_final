@@ -1,18 +1,24 @@
-﻿using desktop_app.models;
+﻿using desktop_app.liquidation;
+using desktop_app.models;
 using desktop_app.services;
 
 namespace desktop_app.consortium
 {
     public partial class ConsortiumControl : BaseUserControl
     {
-        public ConsortiumControl(ApiService apiService) : base(apiService)
+        private readonly LiquidationService _liquidationService;
+        public ConsortiumControl(ApiService apiService, LiquidationService liquidationService) : base(apiService)
         {
             InitializeComponent();
+            _liquidationService = liquidationService;
+
             NewClicked += (s, e) => OpenConsortiumForm(null);
             EditClicked += (s, e) => EditSelectedConsortium();
             DeleteClicked += (s, e) => DeleteSelectedConsortium();
             UpdateListClicked += async (s, e) => await LoadDataAsync();
             setLabelEntity("CONSORCIOS");
+
+            dgvEntity.CellContentClick += dgvEntity_CellContentClick;
         }
 
         public override async void LoadData()
@@ -23,6 +29,7 @@ namespace desktop_app.consortium
         private async Task LoadDataAsync()
         {
             dgvEntity.DataSource = await GetAll();
+            AddActionButtons();
         }
 
         private async Task<List<Consortium>> GetAll()
@@ -80,6 +87,80 @@ namespace desktop_app.consortium
                 MessageBox.Show("Seleccione un registro para eliminar.");
             }
         }
+
+        private void AddActionButtons()
+        {
+            // Verificá que no estén ya agregadas
+            if (dgvEntity.Columns["btnLiquidar"] != null) return;
+
+            var btnLiquidar = new DataGridViewButtonColumn
+            {
+                Name = "btnLiquidar",
+                HeaderText = "Liquidación",
+                Text = "Generar",
+                UseColumnTextForButtonValue = true
+            };
+
+            var btnDescargar = new DataGridViewButtonColumn
+            {
+                Name = "btnDescargar",
+                HeaderText = "Reportes",
+                Text = "Descargar",
+                UseColumnTextForButtonValue = true
+            };
+
+            var btnUnidades = new DataGridViewButtonColumn
+            {
+                Name = "btnUnidades",
+                HeaderText = "Unidades",
+                Text = "Gestionar",
+                UseColumnTextForButtonValue = true
+            };
+
+            dgvEntity.Columns.Add(btnLiquidar);
+            dgvEntity.Columns.Add(btnDescargar);
+            dgvEntity.Columns.Add(btnUnidades);
+        }
+
+        private void dgvEntity_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var columnName = dgvEntity.Columns[e.ColumnIndex].Name;
+            var rowData = (Consortium)dgvEntity.Rows[e.RowIndex].DataBoundItem;
+
+            switch (columnName)
+            {
+                case "btnLiquidar":
+                    GenerateLiquidation(rowData);
+                    break;
+
+                case "btnDescargar":
+                    DownloadReport(rowData);
+                    break;
+
+                case "btnUnidades":
+                    ManageFunctionalUnits(rowData);
+                    break;
+            }
+        }
+
+        private void GenerateLiquidation(Consortium consorcio)
+        {
+            using var form = new LiquidationForm(_liquidationService, consorcio);
+            form.ShowDialog();
+        }
+
+        private void DownloadReport(Consortium consorcio)
+        {
+            MessageBox.Show($"Descargar reportes de {consorcio.Name}");
+        }
+
+        private void ManageFunctionalUnits(Consortium consorcio)
+        {
+            MessageBox.Show($"Abrir unidades funcionales de {consorcio.Name}");
+        }
+
 
     }
 
