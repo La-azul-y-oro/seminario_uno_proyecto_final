@@ -36,10 +36,10 @@
             tsmSalir = new ToolStripMenuItem();
             mnuModulos = new ToolStripMenuItem();
             tsmiConceptos = new ToolStripMenuItem();
+            tsmiConsorcios = new ToolStripMenuItem();
             tsmiSupplier = new ToolStripMenuItem();
             tsmiUsuarios = new ToolStripMenuItem();
             labelUserInfo = new Label();
-            tsmiConsorcios = new ToolStripMenuItem();
             tableLayoutPanel1.SuspendLayout();
             mnsPrincipal.SuspendLayout();
             SuspendLayout();
@@ -73,10 +73,11 @@
             // mnsPrincipal
             // 
             mnsPrincipal.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            mnsPrincipal.ImageScalingSize = new Size(20, 20);
             mnsPrincipal.Items.AddRange(new ToolStripItem[] { mnuArchivo, mnuModulos });
             mnsPrincipal.Location = new Point(0, 0);
             mnsPrincipal.Name = "mnsPrincipal";
-            mnsPrincipal.Size = new Size(800, 29);
+            mnsPrincipal.Size = new Size(800, 36);
             mnsPrincipal.TabIndex = 0;
             mnsPrincipal.Text = "menuStrip1";
             // 
@@ -84,20 +85,20 @@
             // 
             mnuArchivo.DropDownItems.AddRange(new ToolStripItem[] { tsmChangePass, tsmSalir });
             mnuArchivo.Name = "mnuArchivo";
-            mnuArchivo.Size = new Size(75, 25);
+            mnuArchivo.Size = new Size(93, 32);
             mnuArchivo.Text = "Archivo";
             // 
             // tsmChangePass
             // 
             tsmChangePass.Name = "tsmChangePass";
-            tsmChangePass.Size = new Size(219, 26);
+            tsmChangePass.Size = new Size(271, 32);
             tsmChangePass.Text = "Cambiar contraseña";
             tsmChangePass.Click += tsmChangePass_Click;
             // 
             // tsmSalir
             // 
             tsmSalir.Name = "tsmSalir";
-            tsmSalir.Size = new Size(219, 26);
+            tsmSalir.Size = new Size(271, 32);
             tsmSalir.Text = "Salir";
             tsmSalir.Click += salirToolStripMenuItem_Click;
             // 
@@ -105,28 +106,36 @@
             // 
             mnuModulos.DropDownItems.AddRange(new ToolStripItem[] { tsmiConceptos, tsmiConsorcios, tsmiSupplier, tsmiUsuarios });
             mnuModulos.Name = "mnuModulos";
-            mnuModulos.Size = new Size(83, 25);
+            mnuModulos.Size = new Size(104, 32);
             mnuModulos.Text = "Módulos";
             // 
             // tsmiConceptos
             // 
             tsmiConceptos.Name = "tsmiConceptos";
-            tsmiConceptos.Size = new Size(180, 26);
+            tsmiConceptos.Size = new Size(224, 32);
             tsmiConceptos.Text = "Conceptos";
             tsmiConceptos.Click += tsmiConceptos_Click;
+            // 
+            // tsmiConsorcios
+            // 
+            tsmiConsorcios.Name = "tsmiConsorcios";
+            tsmiConsorcios.Size = new Size(224, 32);
+            tsmiConsorcios.Text = "Consorcios";
+            tsmiConsorcios.Click += tsmiConsorcios_Click;
             // 
             // tsmiSupplier
             // 
             tsmiSupplier.Name = "tsmiSupplier";
-            tsmiSupplier.Size = new Size(180, 26);
+            tsmiSupplier.Size = new Size(224, 32);
             tsmiSupplier.Text = "Proveedores";
             tsmiSupplier.Click += tsmiSupplier_Click;
             // 
             // tsmiUsuarios
             // 
             tsmiUsuarios.Name = "tsmiUsuarios";
-            tsmiUsuarios.Size = new Size(180, 26);
+            tsmiUsuarios.Size = new Size(224, 32);
             tsmiUsuarios.Text = "Usuarios";
+            tsmiUsuarios.Click += tsmiUsuarios_Click;
             // 
             // labelUserInfo
             // 
@@ -138,16 +147,9 @@
             labelUserInfo.TabIndex = 4;
             labelUserInfo.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // tsmiConsorcios
-            // 
-            tsmiConsorcios.Name = "tsmiConsorcios";
-            tsmiConsorcios.Size = new Size(180, 26);
-            tsmiConsorcios.Text = "Consorcios";
-            tsmiConsorcios.Click += tsmiConsorcios_Click;
-            // 
             // FormMain
             // 
-            AutoScaleDimensions = new SizeF(11F, 25F);
+            AutoScaleDimensions = new SizeF(13F, 31F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1300, 698);
             Controls.Add(tableLayoutPanel1);

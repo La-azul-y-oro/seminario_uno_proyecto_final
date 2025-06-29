@@ -16,20 +16,11 @@ namespace desktop_app.services
             _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
         }
 
-        private void AddAuthorizationHeader()
-        {
-            if (!string.IsNullOrWhiteSpace(_authService.Token))
-            {
-                _httpClient.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", _authService.Token);
-            }
-        }
-
         public async Task<List<T>> GetAllAsync<T>(string endpoint)
         {
             try
             {
-                AddAuthorizationHeader(); // Agregar token antes de la petición
+                _authService.AddAuthorizationHeader(_httpClient);
                 HttpResponseMessage response = await _httpClient.GetAsync(endpoint);
                 return await JsonUtil.Deserialize<List<T>>(response);
             }
@@ -43,7 +34,7 @@ namespace desktop_app.services
         {
             try
             {
-                AddAuthorizationHeader();
+                _authService.AddAuthorizationHeader(_httpClient);
                 HttpResponseMessage response = await _httpClient.GetAsync($"{endpoint}/{id}");
                 return await JsonUtil.Deserialize<T>(response);
             }
@@ -57,7 +48,7 @@ namespace desktop_app.services
         {
             try
             {
-                AddAuthorizationHeader();
+                _authService.AddAuthorizationHeader(_httpClient);
                 HttpContent content = JsonUtil.Serialize(data);
 
                 HttpResponseMessage response = await _httpClient.PostAsync(endpoint, content);
@@ -75,7 +66,7 @@ namespace desktop_app.services
         {
             try
             {
-                AddAuthorizationHeader();
+                _authService.AddAuthorizationHeader(_httpClient);
                 HttpContent content = JsonUtil.Serialize(data);
 
                 HttpResponseMessage response = await _httpClient.PutAsync($"{endpoint}/{id}", content);
@@ -93,7 +84,7 @@ namespace desktop_app.services
         {
             try
             {
-                AddAuthorizationHeader();
+                _authService.AddAuthorizationHeader(_httpClient);
                 HttpResponseMessage response = await _httpClient.DeleteAsync($"{endpoint}/{id}");
                 response.EnsureSuccessStatusCode();
 
