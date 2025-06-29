@@ -165,7 +165,7 @@ namespace desktop_app.consortium
 
         private void ManageFunctionalUnits(Consortium consorcio)
         {
-            MessageBox.Show($"Abrir unidades funcionales de {consorcio.Name}");
+            MessageBox.Show($"Función aún no disponible, por favor dirigase al módulo de unidades funcionales.");
         }
 
 
