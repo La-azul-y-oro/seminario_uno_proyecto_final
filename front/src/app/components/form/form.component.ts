@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -10,6 +10,8 @@ import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormField, TypeField } from '../../interfaces/components.interface';
 import { markAllAsTouched } from '../../util/formUtils';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-form',
@@ -21,51 +23,43 @@ import { markAllAsTouched } from '../../util/formUtils';
     FloatLabelModule,
     InputNumberModule,
     InputTextModule,
-    CommonModule, 
+    CommonModule,
     ReactiveFormsModule,
-    PasswordModule
+    PasswordModule,
+    MultiSelectModule,
+    ProgressSpinnerModule
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
-export class FormComponent implements OnChanges{
-  @Input() data? : any;
-  @Input() titleOnCreate : string = "Crear registro";
-  @Input() titleOnUpdate : string = "Actualizar registro";
+export class FormComponent implements OnChanges {
+  @Input() data?: any;
+  @Input() titleOnCreate: string = "Crear registro";
+  @Input() titleOnUpdate: string = "Actualizar registro";
   @Input() fields!: FormField[];
+  @Input() textError: string = "";
+  @Input() isReady: boolean = true;
+  @Input() hasReadyError: boolean = false;
 
   @Output() onSave = new EventEmitter;
   @Output() onUpdate = new EventEmitter;
 
-  visible : boolean = false;
+  visible: boolean = false;
   form!: FormGroup;
-  isEditMode : boolean = false;
-  title? : string;
+  isEditMode: boolean = false;
+  title?: string;
 
-  constructor (
-    private fb : FormBuilder
-  ){}
+  constructor(
+    private readonly fb: FormBuilder
+  ) { }
 
-  ngOnInit(){
-    this.form = this.fb.group({});
-    this.fields?.forEach(f => {
-      const control = new FormControl(
-        null,
-        {
-          validators: f.validators,
-          updateOn: 'blur'
-        }
-      );
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['fields'] && this.fields?.length) {
+      this.buildForm();
+    }
 
-      this.form.addControl(f.controlName, control);
-    });
-    
-  }
-
-  ngOnChanges(): void {
-    if(this.data) {
-      this.ungroupFormFields(this.data)
-
+    if (this.data && this.form) {
+      this.ungroupFormFields(this.data);
       this.title = this.titleOnUpdate;
       this.isEditMode = true;
 
@@ -74,27 +68,37 @@ export class FormComponent implements OnChanges{
           this.form.get(field.controlName)?.disable();
         }
       });
-    }else{
+    } else if (!this.data && this.form) {
       this.title = this.titleOnCreate;
       this.isEditMode = false;
     }
   }
 
-  sendData(){
+
+  private buildForm() {
+    this.form = this.fb.group({});
+    this.fields.forEach(f => {
+      const control = new FormControl(
+        null,
+        {
+          validators: f.validators
+        }
+      );
+      this.form.addControl(f.controlName, control);
+    });
+  }
+
+  sendData() {
     markAllAsTouched(this.form);
 
-    if(this.form.valid){
+    if (this.form.valid) {
       const form = this.groupFormFields();
       (this.isEditMode) ? this.onUpdate.emit(form) : this.onSave.emit(form)
     }
   }
 
-  hasError(nameField : any){
-    let field = this.form.get(nameField); 
-    // if(nameField == "documentType"){
-    //   console.log("touched" + field?.touched)
-    //   console.log("dirty" + field?.dirty)
-    // }
+  hasError(nameField: any) {
+    let field = this.form.get(nameField);
     return (field?.dirty || field?.touched) && field?.invalid;
   }
 
@@ -108,12 +112,14 @@ export class FormComponent implements OnChanges{
         return field === TypeField.SELECT;
       case TypeField.PASSWORD:
         return field === TypeField.PASSWORD;
+      case TypeField.MULTISELECT:
+        return field === TypeField.MULTISELECT;
       default:
         return false;
     }
-  } 
+  }
 
-  resetAll(){
+  resetAll() {
     this.form.reset();
     this.data = undefined;
     this.isEditMode = false;
@@ -123,10 +129,10 @@ export class FormComponent implements OnChanges{
 
   private groupFormFields() {
     const organizedData: any = {};
-  
+
     this.fields.forEach(field => {
       const controlValue = this.form.get(field.controlName)?.value;
-      
+
       if (field.groupBy) {
         if (!organizedData[field.groupBy]) {
           organizedData[field.groupBy] = {};
@@ -136,14 +142,14 @@ export class FormComponent implements OnChanges{
         organizedData[field.controlName] = controlValue;
       }
     });
-  
+
     return organizedData;
   }
 
   private ungroupFormFields(organizedData: any) {
     Object.keys(organizedData).forEach(key => {
       const value = organizedData[key];
-  
+
       if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
         Object.keys(value).forEach(subKey => {
           this.form.get(subKey)?.patchValue(value[subKey]);

@@ -19,5 +19,8 @@
     [data]="dataObject"
     (onSave)="save($event)"
     (onUpdate)="update($event)"
+    [conceptList]="conceptList"
+    [isReady]="!isLoadingConcepts"
+    [hasError]="!isLoadingConcepts && conceptList.length <= 0"
     />
 

@@ -19,8 +19,8 @@ string connectionString = builder.Configuration.GetConnectionString("MySqlConnec
 builder.Services.AddHttpContextAccessor();
 
 // Configuracion de servicios
-builder.Services.AddScoped<IGenericService<Concept, int>, ConceptService>();
-builder.Services.AddScoped<IGenericService<Supplier, int>, SupplierService>();
+builder.Services.AddScoped<IConceptService, ConceptService>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IGenericService<Consortium, int>, ConsortiumService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IFunctionalUnitService, FunctionalUnitService>();

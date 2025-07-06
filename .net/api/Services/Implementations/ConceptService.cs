@@ -4,7 +4,7 @@ using api.Services.Interfaces;
 
 namespace api.Services.Implementations
 {
-    public class ConceptService : IGenericService<Concept, int>
+    public class ConceptService : IConceptService
     {
         private readonly ApplicationDbContext _context;
 
@@ -51,6 +51,13 @@ namespace api.Services.Implementations
 
             concept.Active = false;
             _context.SaveChanges();
+        }
+
+        public List<Concept> GetByIds(List<int> ids)
+        {
+            return _context.Concept
+                .Where(c => ids.Contains(c.Id) && c.Active)
+                .ToList();
         }
     }
 }

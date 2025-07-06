@@ -1,4 +1,5 @@
-﻿using api.Models;
+﻿using api.Dto;
+using api.Models;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,9 @@ namespace api.Controllers
     [ApiController]
     public class SupplierController : ControllerBase
     {
-        private readonly IGenericService<Supplier, int> _supplierService;
+        private readonly ISupplierService _supplierService;
 
-        public SupplierController(IGenericService<Supplier, int> supplierService)
+        public SupplierController(ISupplierService supplierService)
         {
             _supplierService = supplierService;
         }
@@ -40,30 +41,30 @@ namespace api.Controllers
 
         // POST: api/supplier
         [HttpPost]
-        public ActionResult<Supplier> Create([FromBody] Supplier supplier)
+        public ActionResult<Supplier> Create([FromBody] SupplierRequestDTO supplierDto)
         {
-            if (supplier == null)
+            if (supplierDto == null)
             {
                 return BadRequest();
             }
 
-            _supplierService.Create(supplier);
+            var supplier = _supplierService.Create(supplierDto);
             return CreatedAtAction(nameof(GetById), new { id = supplier.Id }, supplier);
         }
 
         // PUT: api/supplier/5
         [HttpPut("{id}")]
-        public ActionResult Update(int id, [FromBody] Supplier supplier)
+        public ActionResult Update(int id, [FromBody] SupplierRequestDTO supplierDto)
         {
-            if (supplier == null)
+            if (supplierDto == null)
             {
                 return BadRequest();
             }
 
             try
             {
-                _supplierService.Update(id, supplier);
-                return NoContent();  // 204 No Content
+                _supplierService.Update(id, supplierDto);
+                return Ok();  
             }
             catch (KeyNotFoundException)
             {

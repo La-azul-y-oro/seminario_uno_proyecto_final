@@ -49,6 +49,7 @@ export interface SupplierResponse{
     phone: string;
     email: string;
     active?: boolean;
+    concepts?: ConceptResponse[]
 }
 
 
