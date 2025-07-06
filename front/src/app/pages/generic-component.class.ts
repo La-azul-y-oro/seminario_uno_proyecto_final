@@ -114,7 +114,8 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
 
   handlePostCreate(response: TResponse) {
     this.isEmpty = false;
-    this.dataList = [...this.dataList, response];
+    const processNewData = this.transformResponseData([response]);
+    this.dataList = [...this.dataList, processNewData[0]];
     this.form.resetAndHideForm();
   }
 
@@ -132,7 +133,8 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
       next: updatedData => {
         const index = this.dataList.findIndex(item => (item as any).id === id);
         if (index !== -1) {
-          this.dataList[index] = updatedData;
+          const processNewData = this.transformResponseData([updatedData]);
+          this.dataList[index] = processNewData[0];
         }
       },
       error: error => {

@@ -79,6 +79,15 @@ namespace api.Context
                 .HasForeignKey(m => m.FunctionalUnitId)
                 .IsRequired(false);
 
+            modelBuilder.Entity<Supplier>()
+                .HasMany(s => s.Concepts)
+                .WithMany()
+                .UsingEntity(
+                    "concept_supplier",
+                    l => l.HasOne(typeof(Concept)).WithMany().HasForeignKey("concept_id"),
+                    r => r.HasOne(typeof(Supplier)).WithMany().HasForeignKey("supplier_id"),
+                    j => j.HasKey("concept_id", "supplier_id"));
+
             base.OnModelCreating(modelBuilder);
         }
     }

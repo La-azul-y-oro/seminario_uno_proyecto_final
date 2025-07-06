@@ -20,7 +20,7 @@ export abstract class GenericFormComponent<T> {
   }
 
   showForm() {
-    this.formComponent.form.reset();
+    this.formComponent.form?.reset();
     this.formComponent.visible = true;
   }
 

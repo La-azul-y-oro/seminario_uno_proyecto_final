@@ -55,6 +55,15 @@ CREATE TABLE concept (
     active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
+-- Table: concept_supplier
+CREATE TABLE concept_supplier (
+    concept_id INT NOT NULL,
+    supplier_id INT NOT NULL,
+    PRIMARY KEY (concept_id, supplier_id),
+    FOREIGN KEY (concept_id) REFERENCES concept(id),
+    FOREIGN KEY (supplier_id) REFERENCES supplier(id),
+);
+
 -- Table: movement
 CREATE TABLE movement (
     id INT AUTO_INCREMENT PRIMARY KEY,

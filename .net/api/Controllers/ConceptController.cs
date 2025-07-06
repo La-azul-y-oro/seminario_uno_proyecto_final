@@ -10,10 +10,10 @@ namespace api.Controllers
     [Authorize]
     public class ConceptController : ControllerBase
     {
-        private readonly IGenericService<Concept, int> _conceptService;
+        private readonly IConceptService _conceptService;
 
         // Inyección del servicio en el constructor
-        public ConceptController(IGenericService<Concept, int> conceptService)
+        public ConceptController(IConceptService conceptService)
         {
             _conceptService = conceptService;
         }

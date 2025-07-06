@@ -21,4 +21,6 @@ public class Supplier
     public required string Email { get; set; }
     
     public bool Active { get; set; } = true;
+
+    public ICollection<Concept> Concepts { get; set; } = new List<Concept>();
 }
