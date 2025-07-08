@@ -1,4 +1,5 @@
-﻿using api.Models;
+﻿using api.Dto;
+using api.Models;
 using api.Services.Interfaces;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Vml;
@@ -11,7 +12,7 @@ namespace api.Services.Implementations
     public class ReportService : IReportService
     {
         private readonly IMovementService _movementService;
-        private readonly IGenericService<Consortium, int> _consortiumService;
+        private readonly IConsortiumService _consortiumService;
         private readonly IFunctionalUnitService _functionalUnitService;
         private readonly ILiquidationService _liquidationService;
 
@@ -19,7 +20,7 @@ namespace api.Services.Implementations
         private static readonly string[] _headersFinancialExpenses = ["Fecha", "Proveedor", "Concepto", "Monto", "Comentario"];
         private static readonly string[] _headersFunctionalUnits = ["Unidad", "Factor", "A abonar"];
 
-        public ReportService(IMovementService movementService, IGenericService<Consortium, int> consortiumService, IFunctionalUnitService functionalUnitService, ILiquidationService liquidationService)
+        public ReportService(IMovementService movementService, IConsortiumService consortiumService, IFunctionalUnitService functionalUnitService, ILiquidationService liquidationService)
         {
             _movementService = movementService;
             _consortiumService = consortiumService;
@@ -577,7 +578,7 @@ namespace api.Services.Implementations
             public required string ConsortiumName { get; set; }
             public required List<Movement> Expenses { get; set; }
             public decimal SumExpenses { get; set; }
-            public required List<FunctionalUnit> FunctionalUnits { get; set; }
+            public required List<FunctionalUnitResponse> FunctionalUnits { get; set; }
 
             public DateTime ExpirationDate { get; set; }
         }

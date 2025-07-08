@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { Table, TableModule } from 'primeng/table';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Table, TableModule, TableRowCollapseEvent, TableRowExpandEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -7,7 +7,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CommonModule } from '@angular/common';
-import { Column } from '../../interfaces/components.interface';
+import { Column, ColumnExpandData } from '../../interfaces/components.interface';
 import { ActionButtonsComponent, ActionButtonConfig } from '../action-buttons/action-buttons.component';
 import { Role } from '../../interfaces/model.interfaces';
 
@@ -18,10 +18,10 @@ import { Role } from '../../interfaces/model.interfaces';
     ActionButtonsComponent,
     CommonModule,
     ButtonModule,
-    IconFieldModule, 
-    InputTextModule, 
+    IconFieldModule,
+    InputTextModule,
     InputIconModule,
-    ProgressSpinnerModule, 
+    ProgressSpinnerModule,
     TableModule,
     TooltipModule],
   templateUrl: './page.component.html',
@@ -32,16 +32,21 @@ export class PageComponent {
 
   @Input() title?: string = "";
   @Input() labelButtonAdd?: string = "";
-  @Input() data : any [] = [];
+  @Input() data: any[] = [];
   @Input() cols!: Column[];
   @Input() buttonConfig!: ActionButtonConfig[];
-  @Input() canCreate : boolean = true; //TODO ajustar cuando se avance con la seguridad (iniciar en false)
-  @Input() isLoading : boolean = false;
-  @Input() hasError : boolean = false;
-  @Input() isEmpty : boolean = false;
-  @Input() hideCreateButton : boolean = false;
+  @Input() canCreate: boolean = true; //TODO ajustar cuando se avance con la seguridad (iniciar en false)
+  @Input() isLoading: boolean = false;
+  @Input() hasError: boolean = false;
+  @Input() isEmpty: boolean = false;
+  @Input() hideCreateButton: boolean = false;
 
   @Output() onCreate = new EventEmitter;
+
+  @Input() expandable: boolean = false;
+  @Input() expandData?: ColumnExpandData;
+
+  expandedRows: { [key: string]: boolean } = {};
 
   buttonStyle = {
     fontSize: '0.8rem'
@@ -53,16 +58,16 @@ export class PageComponent {
     paddingBottom: '0.5rem',
   };
 
-  create(){
-    if(!this.canCreate) return;
+  create() {
+    if (!this.canCreate) return;
     this.onCreate.emit();
   }
 
-  filter(event : any){
+  filter(event: any) {
     this.dt.filterGlobal(event.target.value, 'contains');
   }
 
-  
+
   getDisplayValue(rowData: any, field: string): any {
     const value = this.getNestedProperty(rowData, field);
 
@@ -80,4 +85,28 @@ export class PageComponent {
   showColumnActionButtons(): boolean {
     return this.buttonConfig.length > 0;
   }
+
+  onRowExpand(event: any) {
+    const id = event.data?.id;
+    if (id != null) {
+      this.expandedRows[id] = true;
+    }
+  }
+
+  onRowCollapse(event: any) {
+    const id = event.data?.id;
+    if (id != null) {
+      delete this.expandedRows[id];
+    }
+  }
+
+  getData(data: any): any[] {
+    const key = this.expandData?.key;
+    return key ? data[key] : [];
+  }
+
+  getTotalColumns(): number {
+    return this.cols.length + (this.expandable ? 1 : 0) + (this.showColumnActionButtons() ? 1 : 0);
+  }
+
 }

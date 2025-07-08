@@ -7,6 +7,28 @@
     width: inherit;
 }
 
+::ng-deep .p-datatable-sm.p-datatable-striped{
+    font-size: 0.8rem;
+}
+
+::ng-deep .p-button.p-button-icon-only.p-button-rounded{
+    height: 0.8rem;
+}
+
+::ng-deep .p-button.p-button-icon-only{
+    width: 0.8rem;
+}
+
+::ng-deep .p-button-icon.pi.pi-chevron-right,
+::ng-deep .p-button-icon.pi.pi-chevron-down
+{
+    font-size: 0.8rem;
+}
+
+::ng-deep .p-ripple.p-element.p-button.p-component.p-button-icon-only.p-button-rounded.p-button-text.p-button-plain{
+    box-shadow: none;
+}
+
 .table{
     overflow: auto; 
     max-height: 80vh;

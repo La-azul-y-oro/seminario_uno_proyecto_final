@@ -21,7 +21,7 @@ builder.Services.AddHttpContextAccessor();
 // Configuracion de servicios
 builder.Services.AddScoped<IConceptService, ConceptService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
-builder.Services.AddScoped<IGenericService<Consortium, int>, ConsortiumService>();
+builder.Services.AddScoped<IConsortiumService, ConsortiumService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IFunctionalUnitService, FunctionalUnitService>();
 builder.Services.AddScoped<IMovementService, MovementService>();
@@ -34,6 +34,8 @@ builder.Services.AddSingleton<JwtService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddSingleton<UserMapper>();
+builder.Services.AddSingleton<FunctionalUnitMapper>();
+builder.Services.AddScoped<ConsortiumMapper>();
 
 
 builder.Services.AddCors(options =>
