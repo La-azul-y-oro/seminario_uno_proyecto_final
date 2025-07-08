@@ -1,4 +1,5 @@
-﻿using api.Models;
+﻿using api.Dto;
+using api.Models;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,18 +9,18 @@ namespace api.Controllers
     [ApiController]
     public class ConsortiumController : ControllerBase
     {
-        private readonly IGenericService<Consortium, int> _consortiumService;
+        private readonly IConsortiumService _consortiumService;
 
-        public ConsortiumController(IGenericService<Consortium, int> consortiumService)
+        public ConsortiumController(IConsortiumService consortiumService)
         {
             _consortiumService = consortiumService;
         }
 
         // GET: api/consortium
         [HttpGet]
-        public ActionResult<IEnumerable<Consortium>> GetAll()
+        public ActionResult<IEnumerable<ConsortiumResponse>> GetAll()
         {
-            var consortiums = _consortiumService.GetAll();
+            var consortiums = _consortiumService.FindAll();
             return Ok(consortiums);
         }
 

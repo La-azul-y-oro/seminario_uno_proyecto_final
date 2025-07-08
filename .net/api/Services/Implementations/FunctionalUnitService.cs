@@ -1,4 +1,6 @@
 ﻿using api.Context;
+using api.Dto;
+using api.Mappers;
 using api.Models;
 using api.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +10,12 @@ namespace api.Services.Implementations
     public class FunctionalUnitService : IFunctionalUnitService
     {
         private readonly ApplicationDbContext _context;
+        private readonly FunctionalUnitMapper _functionalUnitMapper;
 
-        public FunctionalUnitService(ApplicationDbContext context)
+        public FunctionalUnitService(ApplicationDbContext context, FunctionalUnitMapper functionalUnitMapper)
         {
             _context = context;
+            _functionalUnitMapper = functionalUnitMapper;
         }
 
         public IEnumerable<FunctionalUnit> GetAll()
@@ -69,10 +73,12 @@ namespace api.Services.Implementations
             _context.SaveChanges();
         }
 
-        public List<FunctionalUnit> FindByConsortiumId(int consortiumId)
+        public List<FunctionalUnitResponse> FindByConsortiumId(int consortiumId)
         {
             return _context.FunctionalUnit
                 .Where(fu => fu.ConsortiumId == consortiumId && fu.Active)
+                .ToList()
+                .Select(u => _functionalUnitMapper.GetFunctionalUnitResponse(u))
                 .ToList();
         }
 

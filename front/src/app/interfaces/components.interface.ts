@@ -4,6 +4,11 @@ export interface Column {
     sortable?: boolean;
 }
 
+export interface ColumnExpandData {
+    key: string;
+    column: Column[];
+}
+
 export interface FormField{
     label: string; 
     controlName: string; 

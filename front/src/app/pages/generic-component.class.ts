@@ -3,7 +3,7 @@ import { GenericService } from '../services/generic-service.class';
 import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
 import { ToastComponent } from '../components/toast/toast.component';
 import { ActionButtonConfig } from '../components/action-buttons/action-buttons.component';
-import { Column } from '../interfaces/components.interface';
+import { Column, ColumnExpandData } from '../interfaces/components.interface';
 import { finalize } from 'rxjs';
 
 @Directive()
@@ -25,6 +25,7 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
 
   abstract columns: Column[];
   abstract buttonConfig: ActionButtonConfig[];
+  expandData?: ColumnExpandData;
 
   constructor(protected service: GenericService<TRequest, TResponse>) { }
 
@@ -47,7 +48,7 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
       })
     ).subscribe({
       next: (response) => {
-        const filteredData = response.filter(e => (e as any).active);
+        const filteredData = response.filter(e => !(e as any).hasOwnProperty('active') || (e as any).active);
         this.dataList = this.transformResponseData(filteredData);
         this.isEmpty = this.dataList.length === 0;
       },

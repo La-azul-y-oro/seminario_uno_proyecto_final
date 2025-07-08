@@ -14,6 +14,7 @@ import { ReportService } from '../../services/report.service';
 import { FunctionalUnitDialogComponent } from '../../components/functional-unit-dialog/functional-unit-dialog.component';
 import { FunctionalUnitService } from '../../services/functional-unit.service';
 import { concat, Observable } from 'rxjs';
+import { ColumnExpandData } from '../../interfaces/components.interface';
 
 @Component({
   selector: 'app-consortium',
@@ -43,6 +44,15 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
     { header: "Nombre", field: "name", sortable: true },
     { header: "Dirección", field: "address", sortable: true }
   ];
+
+  override expandData : ColumnExpandData = {
+    key: "functionalUnits",
+    column: [
+      { header: "Unidad", field: "name", sortable: true },
+      { header: "Factor (%)", field: "factor", sortable: true },
+      { header: "Balance ($)", field: "balance", sortable: true }
+    ]
+  }
 
   buttonConfig: ActionButtonConfig[] = [
     {
