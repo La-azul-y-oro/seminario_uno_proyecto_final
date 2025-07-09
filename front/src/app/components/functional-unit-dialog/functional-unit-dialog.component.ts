@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -7,9 +7,9 @@ import { MessagesModule } from 'primeng/messages';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { FunctionalUnitService } from '../../services/functional-unit.service';
-import { ToastComponent } from '../toast/toast.component';
 import { InputIconModule } from 'primeng/inputicon';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ToastService } from '../toast/toast-service';
 
 @Component({
   selector: 'app-functional-unit-dialog',
@@ -22,7 +22,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     CommonModule,
     ReactiveFormsModule,
     TooltipModule,
-    ToastComponent,
     InputIconModule,
     ProgressSpinnerModule,
   ],
@@ -30,8 +29,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   styleUrl: './functional-unit-dialog.component.css'
 })
 export class FunctionalUnitDialogComponent {
-  @ViewChild('toast') toast!: ToastComponent;
-
   @Input() visible: boolean = false;
   @Input() consortiumId!: number | undefined;
 
@@ -50,7 +47,8 @@ export class FunctionalUnitDialogComponent {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly functionalUnitService: FunctionalUnitService
+    private readonly functionalUnitService: FunctionalUnitService,
+    private readonly toastService: ToastService
   ) {
     this.form = this.fb.group({
       units: this.fb.array([])
@@ -86,7 +84,7 @@ export class FunctionalUnitDialogComponent {
       },
       error: (error) => {
         console.error(error);
-        this.toast.setErrorMessage('Ha ocurrido un error al intentar obtener las unidades funcionales.');
+        this.toastService.setErrorMessage('Ha ocurrido un error al intentar obtener las unidades funcionales.');
         this.isLoading = false;
         this.hasError = true;
       }

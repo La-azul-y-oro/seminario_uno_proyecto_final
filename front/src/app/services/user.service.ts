@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GenericService } from './generic-service.class';
 import { HttpClient } from '@angular/common/http';
-import { UserRequest, UserResponse } from '../interfaces/model.interfaces';
+import { Client, UserRequest, UserResponse } from '../interfaces/model.interfaces';
 import { Observable } from 'rxjs';
 import { environment } from "../../enviroments/enviroments";
 
@@ -16,5 +16,10 @@ export class UserService extends GenericService<UserRequest, UserResponse>{
   override create(request: UserRequest): Observable<UserResponse> {
     const customUrl = `${environment.apiUrl}/auth/register`;
     return this.httpClient.post<UserResponse>(customUrl, request);
+  }
+
+  getAllClients(): Observable<Client[]> {
+    const customUrl = `${environment.apiUrl}/user/clients`;
+    return this.httpClient.get<Client[]>(customUrl);
   }
 }

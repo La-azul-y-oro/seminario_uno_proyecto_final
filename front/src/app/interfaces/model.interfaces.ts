@@ -1,11 +1,11 @@
 
-export interface ConceptRequest{
+export interface ConceptRequest {
     id: number;
     name: string;
     active?: boolean;
 }
 
-export interface ConceptResponse{
+export interface ConceptResponse {
     id: number;
     name: string;
     active: boolean;
@@ -18,22 +18,23 @@ export enum DocumentType {
 }
 
 //Consortium
-export interface ConsortiumRequest{
+export interface ConsortiumRequest {
     id: number;
     name: string;
     address: string;
     active?: boolean;
 }
 
-export interface ConsortiumResponse{
+export interface ConsortiumResponse {
     id: number;
     name: string;
     address: string;
     active: boolean;
+    functionalUnits?: UnitFunctionalConsortium[];
 }
 
 //Supplier
-export interface SupplierRequest{
+export interface SupplierRequest {
     id: number;
     cuit: number;
     name: string;
@@ -42,7 +43,7 @@ export interface SupplierRequest{
     active?: boolean;
 }
 
-export interface SupplierResponse{
+export interface SupplierResponse {
     id: number;
     cuit: number;
     name: string;
@@ -75,25 +76,32 @@ export interface ResetPasswordRequest {
     newPassword: string;
 }
 
-export interface ChangePasswordRequest{
+export interface ChangePasswordRequest {
     currentPassword: string;
     newPassword: string;
 }
 
 /// User
-export interface UserRequest{
+export interface UserRequest {
     id: number;
     name: string;
     active?: boolean;
 }
 
-export interface UserResponse{
+export interface UserResponse {
     id: number;
     name: string;
     active: boolean;
 }
 
-export interface Liquidation{
+export interface Client {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+}
+
+export interface Liquidation {
     id: number;
     consortiumId: number;
     period: string; // Example: "2025-06"
@@ -103,30 +111,43 @@ export interface Liquidation{
     generateBy: number;
 }
 
-export interface LiquidationRequest{
+export interface LiquidationRequest {
     consortiumId: number;
     month: number;
     year: number;
     expirationDate: Date;
 }
 
-export interface ExpensesRequest{
+export interface ExpensesRequest {
     consortiumId: number;
     year: number;
     month?: number;
 }
 
-export interface FinancialRequest{
+export interface FinancialRequest {
     consortiumId: number;
     format: string;
     year: number;
     month?: number;
 }
 
-export interface UnitFunctionalRequest{
+export interface UnitFunctionalRequest {
     id: number;
     balance: number;
     factor: number;
     consortiumId: number;
     active?: boolean;
+}
+
+export interface UnitFunctionalConsortium {
+    id: number;
+    name: string;
+    balance: number;
+    factor: number;
+    clients?: Client[];
+}
+
+export interface AssignClientsRequest{
+    functionalId: number;
+    clientsIds: number[];
 }

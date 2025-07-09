@@ -112,5 +112,28 @@ namespace api.Controllers
                 return NotFound();
             }
         }
+
+        [HttpPost("assign-clients")]
+        public ActionResult AssignClients([FromBody] AssignClientsRequest request)
+        {
+                if (request == null)
+                {
+                    return BadRequest();
+                }
+
+                if (request.FunctionalId <= 0)
+                {
+                    return BadRequest();
+                }
+
+                if (request.ClientsIds == null)
+                {
+                    return BadRequest();
+                }
+
+                _functionalUnitService.UpdateClientsToFunctionalUnit(request.FunctionalId, request.ClientsIds);
+
+                return Ok();
+            }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using api.Dto;
+using api.Mappers;
 using api.Models;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace api.Controllers
     public class ConsortiumController : ControllerBase
     {
         private readonly IConsortiumService _consortiumService;
+        private readonly ConsortiumMapper _consortiumMapper;
 
-        public ConsortiumController(IConsortiumService consortiumService)
+        public ConsortiumController(IConsortiumService consortiumService, ConsortiumMapper consortiumMapper)
         {
             _consortiumService = consortiumService;
+            _consortiumMapper = consortiumMapper;
         }
 
         // GET: api/consortium
@@ -26,12 +29,14 @@ namespace api.Controllers
 
         // GET: api/consortium/5
         [HttpGet("{id}")]
-        public ActionResult<Consortium> GetById(int id)
+        public ActionResult<ConsortiumResponse> GetById(int id)
         {
             try
             {
                 var consortium = _consortiumService.GetById(id);
-                return Ok(consortium);
+                var consortiumResponse = _consortiumMapper.GetConsortiumResponse(consortium);
+
+                return Ok(consortiumResponse);
             }
             catch (KeyNotFoundException)
             {
@@ -39,7 +44,7 @@ namespace api.Controllers
             }
         }
 
-        // POST: api/concept
+        // POST: api/consortium
         [HttpPost]
         public ActionResult<Consortium> Create([FromBody] Consortium consortium)
         {

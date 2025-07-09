@@ -1,4 +1,7 @@
-﻿using api.Context;
+﻿using System.Linq;
+using api.Context;
+using api.Dto;
+using api.Mappers;
 using api.Models;
 using api.Services.Interfaces;
 using AutoMapper;
@@ -9,11 +12,12 @@ namespace api.Services.Implementations
     public class UserService : IUserService
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserMapper _userMapper;
 
-
-        public UserService(ApplicationDbContext context)
+        public UserService(ApplicationDbContext context, UserMapper userMapper)
         {
             _context = context;
+            _userMapper = userMapper;
         }
 
         public IEnumerable<User> GetAll()
@@ -94,10 +98,23 @@ namespace api.Services.Implementations
             return user;
         }
 
-        //public async Task<User?> GetByResetTokenAsync(string token)
-        //{
-        //    return await _context.User.FirstOrDefaultAsync(u => u.ResetPasswordToken == token);
-        //}
+        public List<Client> FindClientsByFunctionalUnitId(int functionalUnitId)
+        {
+            var users = _context.User
+                .Where(u => u.FunctionalUnits.Any(fu => fu.Id == functionalUnitId))
+                .Where(u => u.Role == Role.CLIENT && u.Active == true)
+                .ToList();
+
+            return users.Select(user => _userMapper.GetClient(user)).ToList();
+        }
+
+        public List<Client> GetAllClients()
+        {
+            return _context.User
+                .Where(u => u.Active && u.Role == Role.CLIENT)
+                .Select(u => _userMapper.GetClient(u))
+                .ToList();
+        }
 
     }
 }

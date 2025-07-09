@@ -25,6 +25,13 @@ namespace api.Controllers
             return Ok(usersResponse);
         }
 
+        [HttpGet("clients")]
+        public ActionResult<IEnumerable<Client>> GetAllClients()
+        {
+            var clients = _userService.GetAllClients();
+            return Ok(clients);
+        }
+
         [HttpGet("{id}")]
         public ActionResult<UserResponse> GetById(int id)
         {

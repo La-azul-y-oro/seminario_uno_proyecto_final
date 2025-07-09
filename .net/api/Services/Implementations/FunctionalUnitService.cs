@@ -94,5 +94,40 @@ namespace api.Services.Implementations
             functionalUnit.Balance += amount;
             _context.SaveChanges();
         }
+
+        public void UpdateClientsToFunctionalUnit(int FunctionalId, List<int> ClientsIds)
+        {
+            var functionalUnit = _context.FunctionalUnit
+                .Include(fu => fu.Users)
+                .FirstOrDefault(fu => fu.Id == FunctionalId && fu.Active);
+
+            if (functionalUnit == null)
+            {
+                throw new ArgumentException($"Functional unit with ID {FunctionalId} not found or inactive");
+            }
+
+            functionalUnit.Users.Clear();
+
+            if (ClientsIds != null && ClientsIds.Any())
+            {
+                var users = _context.User
+                    .Where(u => ClientsIds.Contains(u.Id) && u.Active)
+                    .ToList();
+
+                if (users.Count != ClientsIds.Count)
+                {
+                    var foundIds = users.Select(u => u.Id).ToList();
+                    var missingIds = ClientsIds.Except(foundIds).ToList();
+                    throw new ArgumentException($"Users not found or inactive: {string.Join(", ", missingIds)}");
+                }
+
+                foreach (var user in users)
+                {
+                    functionalUnit.Users.Add(user);
+                }
+            }
+
+            _context.SaveChanges();
+        }
     }
 }

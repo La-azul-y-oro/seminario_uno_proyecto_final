@@ -1,4 +1,5 @@
-﻿using api.Models;
+﻿using api.Dto;
+using api.Models;
 
 namespace api.Services.Interfaces
 {
@@ -9,5 +10,8 @@ namespace api.Services.Interfaces
         void Update(User user);
 
         User GetByResetToken(String resetToken);
+
+        List<Client> FindClientsByFunctionalUnitId(int functionalUnitId);
+        List<Client> GetAllClients();
     }
 }

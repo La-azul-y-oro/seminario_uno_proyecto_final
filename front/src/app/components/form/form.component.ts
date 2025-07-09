@@ -78,13 +78,26 @@ export class FormComponent implements OnChanges {
   private buildForm() {
     this.form = this.fb.group({});
     this.fields.forEach(f => {
+      const updateOn = f.type === TypeField.SELECT ? 'blur' : 'change';
+
       const control = new FormControl(
         null,
         {
-          validators: f.validators
+          validators: f.validators,
+          updateOn
         }
       );
       this.form.addControl(f.controlName, control);
+    });
+    this.resetFormVisualState();
+  }
+
+  private resetFormVisualState() {
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+    Object.values(this.form.controls).forEach(control => {
+      control.markAsPristine();
+      control.markAsUntouched();
     });
   }
 

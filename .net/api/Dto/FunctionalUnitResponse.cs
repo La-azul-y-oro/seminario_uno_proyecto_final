@@ -6,5 +6,6 @@
         public required string Name { get; set; }
         public required decimal Balance { get; set; }
         public required decimal Factor { get; set; }
+        public ICollection<Client> Clients { get; set; } = new List<Client>();
     }
 }

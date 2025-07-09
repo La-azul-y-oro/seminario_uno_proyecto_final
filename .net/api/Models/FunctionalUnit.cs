@@ -20,10 +20,7 @@ namespace api.Models
         [Column("consortium_id")]
         public required int ConsortiumId { get; set; }
         public Consortium Consortium { get; set; } = null!;
-
         public bool Active { get; set; } = true;
-
-        public ICollection<UserFunctionalUnit> UserFunctionalUnits { get; set; } = new List<UserFunctionalUnit>();
-
+        public ICollection<User> Users { get; set; } = new List<User>();
     }
 }
