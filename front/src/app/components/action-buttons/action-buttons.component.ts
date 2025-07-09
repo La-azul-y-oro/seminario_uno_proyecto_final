@@ -15,11 +15,11 @@ import { TooltipModule } from 'primeng/tooltip';
   styleUrl: './action-buttons.component.css'
 })
 export class ActionButtonsComponent {
-  @Input() buttons!: ActionButtonConfig[];
+  @Input() buttons?: ActionButtonConfig[];
   @Input() data!: any;
   @Output() buttonClick = new EventEmitter<{ action: Function, data: any }>();
 
-  actionButtons = {
+  @Input() actionButtonStyle = {
     height: '30px',
     width: '30px', 
     padding: '0px',

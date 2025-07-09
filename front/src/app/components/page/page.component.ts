@@ -58,6 +58,14 @@ export class PageComponent {
     paddingBottom: '0.5rem',
   };
 
+  actionButtonStyleExpandable = {
+      height: '20px',
+      width: '20px', 
+      padding: '0px',
+      marginLeft: '5px',
+      marginRight: '5px'
+  };
+
   create() {
     if (!this.canCreate) return;
     this.onCreate.emit();
@@ -84,6 +92,10 @@ export class PageComponent {
 
   showColumnActionButtons(): boolean {
     return this.buttonConfig.length > 0;
+  }
+
+  showColumnActionButtonsExpandable(): boolean {
+    return Boolean(this.expandData?.actionButtons?.length);
   }
 
   onRowExpand(event: any) {

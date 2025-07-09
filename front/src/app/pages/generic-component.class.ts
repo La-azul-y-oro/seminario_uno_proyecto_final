@@ -1,15 +1,13 @@
 import { Directive, ViewChild, OnInit } from '@angular/core';
 import { GenericService } from '../services/generic-service.class';
-import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
-import { ToastComponent } from '../components/toast/toast.component';
 import { ActionButtonConfig } from '../components/action-buttons/action-buttons.component';
 import { Column, ColumnExpandData } from '../interfaces/components.interface';
 import { finalize } from 'rxjs';
+import { ConfirmDialogService } from '../components/confirm-dialog/confirm-dialog-service';
+import { ToastService } from '../components/toast/toast-service';
 
 @Directive()
 export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
-  @ViewChild('dialog') dialog!: ConfirmDialogComponent;
-  @ViewChild('toast') toast!: ToastComponent;
   @ViewChild('form') form!: any;
 
   title!: string;
@@ -27,7 +25,11 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
   abstract buttonConfig: ActionButtonConfig[];
   expandData?: ColumnExpandData;
 
-  constructor(protected service: GenericService<TRequest, TResponse>) { }
+  constructor(
+    protected service: GenericService<TRequest, TResponse>,
+    private readonly confirmService: ConfirmDialogService,
+    public readonly toastService: ToastService
+  ) { }
 
   ngOnInit() {
     this.loadData();
@@ -66,11 +68,11 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
   save(data: TRequest) {
     this.service.create(data).subscribe({
       next: response => {
-        this.toast.showSuccessCreate();
+        this.toastService.showSuccessCreate();
         this.handlePostCreate(response);
       },
       error: error => {
-        this.toast.showErrorCreate();
+        this.toastService.showErrorCreate();
         console.error(error);
       }
     });
@@ -85,29 +87,32 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
   update(data: TRequest) {
     this.service.update(this.idToUpdate!, data).subscribe({
       next: response => {
-        this.toast.showSuccessUpdate();
+        this.toastService.showSuccessUpdate();
         this.handlePostUpdate(response);
       },
       error: error => {
-        this.toast.showErrorUpdate();
+        this.toastService.showErrorUpdate();
         console.error(error);
       }
     });
   }
 
   openConfirmDialog(data: any) {
-    this.dialog.openDialog(data.id);
+    this.confirmService.open(data)
+      .subscribe(() => {
+        this.deleteItem(data.id);
+    });
   }
 
   deleteItem(id: number) {
     this.service.deleteById(id).subscribe({
       next: () => {
-        this.toast.showSuccessDelete();
+        this.toastService.showSuccessDelete();
         this.dataList = this.dataList.filter(item => (item as any).id !== id);
         if (this.dataList.length == 0) this.isEmpty = true;
       },
       error: error => {
-        this.toast.showErrorDelete();
+        this.toastService.showErrorDelete();
         console.error(error);
       }
     });

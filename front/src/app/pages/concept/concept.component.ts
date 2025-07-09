@@ -3,19 +3,17 @@ import { GenericComponent } from '../generic-component.class';
 import { ConceptRequest, ConceptResponse } from '../../interfaces/model.interfaces';
 import { ConceptService } from '../../services/concept.service';
 import { PageComponent } from '../../components/page/page.component';
-import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
-import { ToastComponent } from '../../components/toast/toast.component';
 import { ConceptFormComponent } from '../../components/concept-form/concept-form.component';
 import { ActionButtonConfig } from '../../components/action-buttons/action-buttons.component';
+import { ConfirmDialogService } from '../../components/confirm-dialog/confirm-dialog-service';
+import { ToastService } from '../../components/toast/toast-service';
 
 @Component({
   selector: 'app-concept',
   standalone: true,
   imports: [
     ConceptFormComponent,
-    ConfirmDialogComponent,
-    PageComponent,
-    ToastComponent
+    PageComponent
   ],
   templateUrl: './concept.component.html',
   styleUrl: './concept.component.css'
@@ -44,7 +42,11 @@ export class ConceptComponent extends GenericComponent<ConceptRequest, ConceptRe
     }
   ];
 
-  constructor(service: ConceptService) {
-    super(service);
+  constructor(
+    service: ConceptService,
+    confirmService: ConfirmDialogService,
+    toastService: ToastService  
+  ) {
+    super(service, confirmService, toastService);
   }
 }

@@ -21,5 +21,10 @@ namespace api.Mappers
         {
             return _mapper.Map<User>(user);
         }
+
+        public Client GetClient(User user)
+        {
+            return _mapper.Map<Client>(user);
+        }
     }
 }

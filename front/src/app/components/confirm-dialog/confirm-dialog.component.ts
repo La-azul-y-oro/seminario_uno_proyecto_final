@@ -15,9 +15,9 @@ export class ConfirmDialogComponent {
     private readonly confirmationService: ConfirmationService
   ){}
 
-  openDialog(id : any){
+  openDialog(id : any, header: string = 'Eliminar registro'){
     this.confirmationService.confirm({
-        header: 'Eliminar registro',
+        header,
         message: '¿Desea continuar?',
         icon: 'pi pi-info-circle',
         acceptButtonStyleClass:"p-button-outlined",
@@ -28,8 +28,9 @@ export class ConfirmDialogComponent {
 
         accept: () => {
             this.onConfirm.emit(id);
-        },
+            this.confirmationService.close();
+        }
     });
-}
+  }
 
 }

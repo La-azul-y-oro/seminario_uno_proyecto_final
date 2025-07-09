@@ -11,11 +11,7 @@
     [expandable]="true"
     [expandData]="expandData"
 />
-<app-toast #toast />
-<app-confirm-dialog 
-    #dialog
-    (onConfirm)="deleteItem($event)"
-    />
+
 <app-consortium-form 
     #form
     [data]="dataObject"
@@ -39,4 +35,10 @@
     [consortiumId]="consortiumId!"
     (onCancel)="resetUnitFunctionalData()"
     (onSave)="saveFunctionalUnits($event)"
+/>
+<app-client-dialog 
+    [visible]="showBindUsersDialog"
+    [clients]="clients"
+    [functionalUnit]="functionalUnit!"
+    (onCancel)="resetClientsData($event)"
 />

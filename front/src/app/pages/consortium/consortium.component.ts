@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { GenericComponent } from '../generic-component.class';
-import { ConsortiumRequest, ConsortiumResponse, ExpensesRequest, FinancialRequest, LiquidationRequest } from '../../interfaces/model.interfaces';
+import { Client, ConsortiumRequest, ConsortiumResponse, ExpensesRequest, FinancialRequest, LiquidationRequest, UnitFunctionalConsortium } from '../../interfaces/model.interfaces';
 import { ConsortiumService } from '../../services/consortium.service';
 import { PageComponent } from '../../components/page/page.component';
-import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
-import { ToastComponent } from '../../components/toast/toast.component';
 import { ConsortiumFormComponent } from '../../components/consortium-form/consortium-form.component';
 import { ActionButtonConfig } from '../../components/action-buttons/action-buttons.component';
 import { LiquidationDialogComponent } from "../../components/liquidation-dialog/liquidation-dialog.component";
@@ -15,18 +13,21 @@ import { FunctionalUnitDialogComponent } from '../../components/functional-unit-
 import { FunctionalUnitService } from '../../services/functional-unit.service';
 import { concat, Observable } from 'rxjs';
 import { ColumnExpandData } from '../../interfaces/components.interface';
+import { ClientDialogComponent } from "../../components/client-dialog/client-dialog.component";
+import { UserService } from '../../services/user.service';
+import { ConfirmDialogService } from '../../components/confirm-dialog/confirm-dialog-service';
+import { ToastService } from '../../components/toast/toast-service';
 
 @Component({
   selector: 'app-consortium',
   standalone: true,
   imports: [
     ConsortiumFormComponent,
-    ConfirmDialogComponent,
     PageComponent,
-    ToastComponent,
     LiquidationDialogComponent,
     ReportDialogComponent,
-    FunctionalUnitDialogComponent
+    FunctionalUnitDialogComponent,
+    ClientDialogComponent
   ],
   templateUrl: './consortium.component.html',
   styleUrl: './consortium.component.css'
@@ -38,20 +39,31 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
   showLiquidationDialog: boolean = false;
   showReportDialog: boolean = false;
   showFunctionalUnitDialog: boolean = false;
+  showBindUsersDialog: boolean = false;
+
   consortiumId: number | undefined = undefined;
+  functionalUnit: UnitFunctionalConsortium | undefined = undefined;
+
+  clients: Client[] = [];
 
   columns = [
     { header: "Nombre", field: "name", sortable: true },
     { header: "Dirección", field: "address", sortable: true }
   ];
 
-  override expandData : ColumnExpandData = {
+  override expandData: ColumnExpandData = {
     key: "functionalUnits",
     column: [
       { header: "Unidad", field: "name", sortable: true },
       { header: "Factor (%)", field: "factor", sortable: true },
       { header: "Balance ($)", field: "balance", sortable: true }
-    ]
+    ],
+    actionButtons: [{
+      icon: 'pi pi-user-plus',
+      tooltip: 'Clientes vinculados',
+      severity: 'success',
+      action: (data: any) => this.openBindUsersForm(data)
+    }]
   }
 
   buttonConfig: ActionButtonConfig[] = [
@@ -91,9 +103,17 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
     service: ConsortiumService,
     private readonly liquidationService: LiquidationService,
     private readonly reportService: ReportService,
-    private readonly functionalUnitService: FunctionalUnitService
+    private readonly functionalUnitService: FunctionalUnitService,
+    private readonly userService: UserService,
+    confirmService: ConfirmDialogService,
+    toastService: ToastService
   ) {
-    super(service);
+    super(service, confirmService, toastService);
+  }
+
+  override ngOnInit() {
+    super.ngOnInit();
+    this.getClients();
   }
 
   openLiquidationDialog(data: any) {
@@ -111,6 +131,12 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
     this.showFunctionalUnitDialog = true;
   }
 
+  openBindUsersForm(data: any) {
+    this.functionalUnit = data.row;
+    this.consortiumId = data.parent;
+    this.showBindUsersDialog = true;
+  }
+
   generateLiquidation(event: any) {
     const request: LiquidationRequest = {
       ...event,
@@ -123,15 +149,14 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
   createLiquidation(request: LiquidationRequest) {
     this.liquidationService.generateLiquidation(request).subscribe({
       next: () => {
-        this.toast.setSuccessMessage('La liquidación se ha generado correctamente.');
+        this.toastService.setSuccessMessage('La liquidación se ha generado correctamente.');
       },
       error: error => {
-        this.toast.setErrorMessage('Ha ocurrido un error al generar la liquidación.');
+        this.toastService.setErrorMessage('Ha ocurrido un error al generar la liquidación.');
         console.error(error);
       }
     });
   }
-
 
   getExpensesReport(request: ExpensesRequest) {
     this.reportService.getExpenseReport(request).subscribe({
@@ -146,10 +171,10 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
         window.URL.revokeObjectURL(url);
 
         this.showLiquidationDialog = false;
-        this.toast.setSuccessMessage('Las expensas se han descargado correctamente.');
+        this.toastService.setSuccessMessage('Las expensas se han descargado correctamente.');
       },
       error: (error) => {
-        this.toast.setErrorMessage('Ha ocurrido un error al obtener las expensas');
+        this.toastService.setErrorMessage('Ha ocurrido un error al obtener las expensas');
         console.error(error);
       }
     });
@@ -170,10 +195,10 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
         window.URL.revokeObjectURL(url);
 
         this.showLiquidationDialog = false;
-        this.toast.setSuccessMessage('El reporte financiero se ha descargado correctamente.');
+        this.toastService.setSuccessMessage('El reporte financiero se ha descargado correctamente.');
       },
       error: (error) => {
-        this.toast.setErrorMessage('Ha ocurrido un error al obtener el reporte financiero');
+        this.toastService.setErrorMessage('Ha ocurrido un error al obtener el reporte financiero');
         console.error(error);
       }
     });
@@ -182,6 +207,13 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
   resetUnitFunctionalData() {
     this.consortiumId = undefined;
     this.showFunctionalUnitDialog = false;
+  }
+
+  resetClientsData(functionalUnit: any) {
+    this.updateConsortiumData(functionalUnit);
+    this.consortiumId = undefined;
+    this.functionalUnit = undefined;
+    this.showBindUsersDialog = false;
   }
 
   saveFunctionalUnits(event: any) {
@@ -215,16 +247,39 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
           this.showFunctionalUnitDialog = false;
           this.consortiumId = undefined;
 
-          this.toast.setSuccessMessage('Se han actualizado las unidades funcionales.');
+          this.toastService.setSuccessMessage('Se han actualizado las unidades funcionales.');
         },
         error: (err) => {
           console.error("Error al guardar unidades funcionales", err);
-          this.toast.setErrorMessage("Ha ocurrido un error al guardar los cambios");
+          this.toastService.setErrorMessage("Ha ocurrido un error al guardar los cambios");
         }
       });
     } else {
       this.showFunctionalUnitDialog = false;
       this.consortiumId = undefined;
+    }
+  }
+
+  getClients() {
+    this.userService.getAllClients().subscribe({
+      next: (response) => {
+        this.clients = response;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+  }
+
+  updateConsortiumData(functionalUnit: any) {
+    const consortium = this.dataList.find(c => c.id == this.consortiumId);
+
+    if (consortium && consortium.functionalUnits) {
+      let index = consortium.functionalUnits.findIndex(fu => fu.id === functionalUnit.id);
+
+      if (index !== -1) {
+        consortium.functionalUnits[index] = functionalUnit;
+      }
     }
   }
 }

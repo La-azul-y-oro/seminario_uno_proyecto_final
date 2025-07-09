@@ -9,11 +9,7 @@
     [isEmpty]="isEmpty"
     (onCreate)="openForm()"
 />
-<app-toast #toast />
-<app-confirm-dialog 
-    #dialog
-    (onConfirm)="deleteItem($event)"
-    />
+
 <app-concept-form 
     #form
     [data]="dataObject"

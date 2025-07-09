@@ -1,3 +1,5 @@
+import { ActionButtonConfig } from "../components/action-buttons/action-buttons.component";
+
 export interface Column {
     field: string;
     header: string;
@@ -7,6 +9,7 @@ export interface Column {
 export interface ColumnExpandData {
     key: string;
     column: Column[];
+    actionButtons?: ActionButtonConfig[];
 }
 
 export interface FormField{

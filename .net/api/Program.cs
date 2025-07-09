@@ -33,8 +33,8 @@ builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddSingleton<JwtService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
-builder.Services.AddSingleton<UserMapper>();
-builder.Services.AddSingleton<FunctionalUnitMapper>();
+builder.Services.AddScoped<UserMapper>();
+builder.Services.AddScoped<FunctionalUnitMapper>();
 builder.Services.AddScoped<ConsortiumMapper>();
 
 

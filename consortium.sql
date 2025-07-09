@@ -89,8 +89,7 @@ CREATE TABLE user_functional_unit (
     functional_unit_id INT NOT NULL,
     PRIMARY KEY (user_id, functional_unit_id),
     FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (functional_unit_id) REFERENCES functional_unit(id),
-    active BOOLEAN NOT NULL DEFAULT TRUE
+    FOREIGN KEY (functional_unit_id) REFERENCES functional_unit(id)
 );
 
 -- Table: liquidation

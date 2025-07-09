@@ -10,6 +10,7 @@ namespace api.Profiles
         {
             CreateMap<User, UserResponse>();
             CreateMap<UserRequest, User>();
+            CreateMap<User, Client>();
         }
     }
 }
