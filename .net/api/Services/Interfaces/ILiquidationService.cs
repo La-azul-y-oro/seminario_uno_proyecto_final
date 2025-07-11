@@ -9,5 +9,7 @@ namespace api.Services.Interfaces
         IEnumerable<Liquidation> GetAllByConsortiumId(int consortiumId);
 
         Liquidation GetByPeriodAndConsortiumId(String period, int consortiumId);
+
+        Liquidation FindById(int liquidationId);
     }
 }

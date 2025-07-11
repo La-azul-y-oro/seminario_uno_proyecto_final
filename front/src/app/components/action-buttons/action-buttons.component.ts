@@ -25,7 +25,7 @@ export class ActionButtonsComponent {
     padding: '0px',
     marginLeft: '5px',
     marginRight: '5px'
-};
+  };
 
   onClick(action: Function, data: any) {
     action(data);

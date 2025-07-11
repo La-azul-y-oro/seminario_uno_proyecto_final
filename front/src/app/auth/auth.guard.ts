@@ -5,34 +5,45 @@ import { AuthService } from './auth.service';
 import { hasValidRoles } from '../util/rolesUtil';
 
 const loginPath = '/login';
-const homePath = '/inicio';
+const clientPath = '/mis-unidades';
+const consortiumPath = '/consortium';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const clientGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-
   return authService.currentUserLoginOn.pipe(
     take(1),
     map((loggedIn: boolean) => {
-      if (loggedIn) {
+      if(!loggedIn) {
+        router.navigate([loginPath]);
+        return false;
+      }
+      if(hasValidRoles(authService.userData, ["CLIENT"])){
         return true;
       } else {
-        router.navigate([loginPath]);
+        router.navigate([consortiumPath]);
         return false;
       }
     })
   );
 };
 
-export const conceptGuard: CanActivateFn = (route, state) => {
+export const consortiumGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
-
   return authService.currentUserLoginOn.pipe(
     take(1),
     map((loggedIn: boolean) => {
-      if(!loggedIn) router.navigate([loginPath]);
-      return hasValidRoles(authService.userData, ["ADMIN", "STAFF"]);
+      if(!loggedIn) {
+        router.navigate([loginPath]);
+        return false;
+      }
+      if(hasValidRoles(authService.userData, ["ADMIN", "STAFF"])){
+        return true;
+      } else {
+        router.navigate([clientPath]);
+        return false;
+      }
     })
   );
 };
@@ -45,7 +56,8 @@ export const authGuardNotLogin: CanActivateFn = (route, state) => {
     take(1),
     map((loggedIn: boolean) => {
       if (loggedIn) {
-        router.navigate([homePath]);
+        const path = (hasValidRoles(authService.userData, ["ADMIN", "STAFF"])) ? consortiumPath : clientPath; 
+        router.navigate([path]);
         return false;
       } else {
         return true;

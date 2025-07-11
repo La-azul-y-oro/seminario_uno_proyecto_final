@@ -1,0 +1,16 @@
+<app-page
+    [hideCreateButton]="true"
+    [title]="title"
+    [data]="dataList"
+    [cols]="columns"
+    [buttonConfig]="buttonConfig"
+    [isLoading]="isLoading"
+    [hasError]="hasError"
+    [isEmpty]="isEmpty"
+/>
+
+<app-client-liquidation-dialog 
+    [visible]="showLiquidationDialog"
+    [liquidations]="liquidations"
+    (onCancel)="showLiquidationDialog = false"
+/>

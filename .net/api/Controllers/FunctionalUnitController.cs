@@ -116,24 +116,31 @@ namespace api.Controllers
         [HttpPost("assign-clients")]
         public ActionResult AssignClients([FromBody] AssignClientsRequest request)
         {
-                if (request == null)
-                {
-                    return BadRequest();
-                }
-
-                if (request.FunctionalId <= 0)
-                {
-                    return BadRequest();
-                }
-
-                if (request.ClientsIds == null)
-                {
-                    return BadRequest();
-                }
-
-                _functionalUnitService.UpdateClientsToFunctionalUnit(request.FunctionalId, request.ClientsIds);
-
-                return Ok();
+            if (request == null)
+            {
+                return BadRequest();
             }
+
+            if (request.FunctionalId <= 0)
+            {
+                return BadRequest();
+            }
+
+            if (request.ClientsIds == null)
+            {
+                return BadRequest();
+            }
+
+            _functionalUnitService.UpdateClientsToFunctionalUnit(request.FunctionalId, request.ClientsIds);
+
+            return Ok();
+        }
+
+
+        [HttpGet("client/{id}")]
+        public ActionResult<List<ClientFunctionalUnit>> GetAllByClientId(int id)
+        {
+            return Ok(_functionalUnitService.GetByClientId(id));
+        }
     }
 }
