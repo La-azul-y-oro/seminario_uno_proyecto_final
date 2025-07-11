@@ -56,7 +56,7 @@ tooltipEnabled = true;
       })
       );
     }
-    if (this.functionalUnit.clients && this.functionalUnit.clients.length > 0) {
+    if (this.functionalUnit?.clients && this.functionalUnit.clients.length > 0) {
       this.bindClients = this.functionalUnit.clients.map(c => ({
         ...c,
         fullName: `${c.firstName} ${c.lastName}`

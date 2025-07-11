@@ -143,6 +143,7 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
       consortiumId: this.consortiumId!
     }
     this.showLiquidationDialog = false;
+    this.consortiumId = undefined;
     this.createLiquidation(request);
   }
 
