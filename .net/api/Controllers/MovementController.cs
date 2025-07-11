@@ -10,9 +10,9 @@ namespace api.Controllers
     [ApiController]
     public class MovementController : ControllerBase
     {
-        private readonly IGenericService<Movement, int> _movementService;
+        private readonly IMovementService _movementService;
 
-        public MovementController(IGenericService<Movement, int> movementService)
+        public MovementController(IMovementService movementService)
         {
             _movementService = movementService;
         }
@@ -40,8 +40,14 @@ namespace api.Controllers
                 return BadRequest();
             }
 
-            _movementService.Create(movement);
-            return CreatedAtAction(nameof(GetById), new { id = movement.Id}, movement);
+            try
+            {
+                _movementService.Create(movement);
+                return CreatedAtAction(nameof(GetById), new { id = movement.Id }, movement);
+            }
+            catch (InvalidOperationException e) {
+                return Conflict(e.Message);
+            }
         }
 
         [HttpPut("{id}")]
@@ -55,6 +61,8 @@ namespace api.Controllers
                 return NoContent();
             } catch(KeyNotFoundException) {
                 return NotFound();
+            } catch (InvalidOperationException e) {
+                return Conflict(e.Message);
             }
         }
 
@@ -65,6 +73,9 @@ namespace api.Controllers
                 return NoContent();
             } catch(KeyNotFoundException){
                 return NotFound();
+            } catch (InvalidOperationException e)
+            {
+                return Conflict(e.Message);
             }
         }
 

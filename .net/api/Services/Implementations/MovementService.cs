@@ -43,6 +43,11 @@ namespace api.Services.Implementations{
                 throw new KeyNotFoundException();
             }
 
+            if (movement.Type.Equals(MovementType.EGRESO))
+            {
+                validateLiquidationPeriod(movement);
+            }
+
             movement.Date = entity.Date;
             movement.Amount = entity.Amount;
             movement.Type = entity.Type;
@@ -78,6 +83,10 @@ namespace api.Services.Implementations{
             if (movement == null || !movement.Active)
             {
                 throw new KeyNotFoundException("User not found");
+            }
+            if (movement.Type.Equals(MovementType.EGRESO))
+            {
+                validateLiquidationPeriod(movement);
             }
 
             movement.Active = false;
@@ -116,7 +125,7 @@ namespace api.Services.Implementations{
             var liquidation = liquidationService.GetByPeriodAndConsortiumId($"{entity.Date.Year}-{entity.Date.Month:D2}", entity.ConsortiumId);
 
             if (liquidation != null) {
-                throw new InvalidOperationException("Cannot enter an expense for a period that has already closed.");
+                throw new InvalidOperationException("Cannot perform an operation for a period that has already closed.");
             }
         }
 
