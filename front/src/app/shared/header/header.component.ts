@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { UserInfoComponent } from '../../components/user-info/user-info.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -12,12 +13,14 @@ import { MessageService } from 'primeng/api';
     ButtonModule,
     MenubarModule,
     ToastModule,
-    UserInfoComponent  
+    UserInfoComponent,
+    CommonModule  
     ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  @Input() showButton: boolean = true;
   @Output() toggleSidebar = new EventEmitter;
 
   menubarStyle = {

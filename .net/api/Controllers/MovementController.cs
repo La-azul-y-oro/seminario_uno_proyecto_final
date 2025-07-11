@@ -1,6 +1,7 @@
 ﻿using api.Models;
 using api.Services.Implementations;
 using api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,12 +19,14 @@ namespace api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<IEnumerable<Movement>> GetAll(){
             var movements = _movementService.GetAll();
             return Ok(movements);
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<Movement> GetById (int id){
 
             try{
@@ -35,6 +38,7 @@ namespace api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<Movement> Create([FromBody] Movement movement){
             if(movement == null){
                 return BadRequest();
@@ -51,6 +55,7 @@ namespace api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<Movement> Update(int id, [FromBody] Movement movement){
             if(movement == null){
                 return BadRequest();
@@ -67,6 +72,7 @@ namespace api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult Delete(int id){
             try{
                 _movementService.Delete(id);

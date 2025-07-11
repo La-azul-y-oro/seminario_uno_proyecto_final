@@ -39,11 +39,19 @@ export class FunctionalUnitDialogComponent {
   units: FormArray;
   totalFactor = 0;
 
-  originalUnits: any[] = [];
+  @Input() originalUnits: any[] = [];
   deletedUnitIds: number[] = [];
 
   isLoading : boolean = false;
   hasError : boolean = false;
+
+  actionButtonStyle = {
+    height: '30px',
+    width: '30px', 
+    padding: '0px',
+    marginLeft: '5px',
+    marginRight: '5px'
+  };
 
   constructor(
     private readonly fb: FormBuilder,
@@ -66,7 +74,7 @@ export class FunctionalUnitDialogComponent {
   loadUnits() {
     this.functionalUnitService.getByConsortiumId(this.consortiumId!).subscribe({
       next: (response) => {
-        const filteredData = response.filter(e => e.active);
+        const filteredData = response.filter(e => !(e as any).hasOwnProperty('active') || (e as any).active);
         this.originalUnits = JSON.parse(JSON.stringify(filteredData));
 
         filteredData?.forEach((u: any) => {
@@ -171,6 +179,6 @@ export class FunctionalUnitDialogComponent {
 
   showTooltipCannotDelete(unit: any) {
     const canDelete = this.canDelete(unit);
-    return canDelete ? "" : "No se pueden borrar las unidades con balance distinto de 0 (cero)";
+    return canDelete ? "Remover" : "No se pueden borrar las unidades con balance distinto de 0 (cero)";
   }
 }

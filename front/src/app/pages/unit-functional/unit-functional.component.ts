@@ -6,6 +6,7 @@ import { ActionButtonConfig } from '../../components/action-buttons/action-butto
 import { FunctionalUnitService } from '../../services/functional-unit.service';
 import { ConfirmDialogService } from '../../components/confirm-dialog/confirm-dialog-service';
 import { ToastService } from '../../components/toast/toast-service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-unit-functional',
@@ -31,7 +32,9 @@ export class UnitFunctionalComponent extends GenericComponent<UnitFunctionalRequ
   constructor(
     service: FunctionalUnitService,
     confirmService: ConfirmDialogService,
-    toastService: ToastService) {
-    super(service, confirmService, toastService);
+    toastService: ToastService,
+    authService: AuthService
+  ) {
+    super(service, confirmService, toastService, authService);
   }
 }

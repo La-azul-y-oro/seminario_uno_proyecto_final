@@ -7,6 +7,8 @@ import { PageComponent } from '../../components/page/page.component';
 import { UserFormComponent } from '../../components/user-form/user-form.component';
 import { ConfirmDialogService } from '../../components/confirm-dialog/confirm-dialog-service';
 import { ToastService } from '../../components/toast/toast-service';
+import { AuthService } from '../../auth/auth.service';
+import { hasValidRoles } from '../../util/rolesUtil';
 
 @Component({
   selector: 'app-user',
@@ -23,6 +25,10 @@ export class UserComponent extends GenericComponent<UserRequest, UserResponse> {
   override title = "Usuarios";
   override labelButtonAdd = "Agregar usuario";
 
+  canCreate: boolean = hasValidRoles(this.authService.userData, ["ADMIN"]);
+  canEdit: boolean = hasValidRoles(this.authService.userData, ["ADMIN"]);
+  canRemove: boolean = hasValidRoles(this.authService.userData, ["ADMIN"]);
+
   columns = [
     { header: "Nombre", field: "firstName", sortable: true },
     { header: "Apellido", field: "lastName", sortable: true },
@@ -37,20 +43,24 @@ export class UserComponent extends GenericComponent<UserRequest, UserResponse> {
       icon: 'pi pi-pencil',
       tooltip: 'Editar registro',
       severity: 'success',
-      action: (data: any) => this.openFormEdit(data)
+      hidden: !this.canEdit,
+      action: (data: any) => this.canEdit ? this.openFormEdit(data) : null
     },
     {
       icon: 'pi pi-trash',
       tooltip: 'Borrar registro',
       severity: 'danger',
-      action: (data: any) => this.openConfirmDialog(data)
+      hidden: !this.canRemove,
+      action: (data: any) => this.canRemove ? this.openConfirmDialog(data) : null
     }
   ];
 
   constructor(
     service: UserService,
     confirmService: ConfirmDialogService,
-    toastService: ToastService) {
-    super(service, confirmService, toastService);
+    toastService: ToastService,
+    authService: AuthService
+  ) {
+    super(service, confirmService, toastService, authService);
   }
 }

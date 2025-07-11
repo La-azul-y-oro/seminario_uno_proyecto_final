@@ -9,6 +9,8 @@ import { ConceptService } from '../../services/concept.service';
 import { finalize } from 'rxjs';
 import { ConfirmDialogService } from '../../components/confirm-dialog/confirm-dialog-service';
 import { ToastService } from '../../components/toast/toast-service';
+import { AuthService } from '../../auth/auth.service';
+import { hasValidRoles } from '../../util/rolesUtil';
 
 @Component({
   selector: 'app-supplier',
@@ -25,6 +27,10 @@ export class SupplierComponent extends GenericComponent<SupplierRequest, Supplie
   override labelButtonAdd = "Agregar proveedor";
   isLoadingConcepts: boolean = true;
 
+  canCreate: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
+  canEdit: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
+  canRemove: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
+
   columns = [
     { header: "Nombre", field: "name", sortable: true },
     { header: "CUIT", field: "cuit", sortable: true },
@@ -38,13 +44,15 @@ export class SupplierComponent extends GenericComponent<SupplierRequest, Supplie
       icon: 'pi pi-pencil',
       tooltip: 'Editar registro',
       severity: 'success',
-      action: (data: any) => this.openFormEdit(data)
+      hidden: !this.canEdit,
+      action: (data: any) => this.canEdit ? this.openFormEdit(data) : null
     },
     {
       icon: 'pi pi-trash',
       tooltip: 'Borrar registro',
       severity: 'danger',
-      action: (data: any) => this.openConfirmDialog(data)
+      hidden: !this.canRemove,
+      action: (data: any) => this.canRemove ? this.openConfirmDialog(data) : null
     }
   ];
 
@@ -59,8 +67,10 @@ export class SupplierComponent extends GenericComponent<SupplierRequest, Supplie
     service: SupplierService,
     private readonly conceptService: ConceptService,
     confirmService: ConfirmDialogService,
-    toastService: ToastService) {
-    super(service, confirmService, toastService);
+    toastService: ToastService,
+    authService: AuthService
+  ) {
+    super(service, confirmService, toastService, authService);
   }
 
   override transformResponseData(data: SupplierResponse[]): any[] {

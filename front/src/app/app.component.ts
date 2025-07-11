@@ -11,6 +11,8 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { ConfirmDialogService } from './components/confirm-dialog/confirm-dialog-service';
 import { ToastComponent } from './components/toast/toast.component';
 import { ToastService } from './components/toast/toast-service';
+import { AuthService } from './auth/auth.service';
+import { hasValidRoles } from './util/rolesUtil';
 
 @Component({
   selector: 'app-root',
@@ -37,7 +39,8 @@ export class AppComponent {
   constructor(
     private readonly router: Router,
     private readonly confirmService: ConfirmDialogService,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    private readonly authService: AuthService
   ) { }
 
 
@@ -54,4 +57,7 @@ export class AppComponent {
     return this.router.url !== '/login';
   }
 
+  isClient(){
+    return hasValidRoles(this.authService.userData, ["CLIENT"]);
+  }
 }

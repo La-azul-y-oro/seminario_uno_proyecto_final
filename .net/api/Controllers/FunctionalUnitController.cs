@@ -1,6 +1,7 @@
 ﻿using api.Dto;
 using api.Models;
 using api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -18,6 +19,8 @@ namespace api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN,STAFF")]
+
         public ActionResult<IEnumerable<FunctionalUnit>> GetAll()
         {
             var functionalUnits = _functionalUnitService.GetAll();
@@ -25,6 +28,7 @@ namespace api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<FunctionalUnit> GetById(int id)
         {
             try
@@ -39,6 +43,7 @@ namespace api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<FunctionalUnit> Create([FromBody] FunctionalUnitRequest request)
         {
             if(request == null)
@@ -59,6 +64,7 @@ namespace api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<FunctionalUnit> Update(int id, [FromBody] FunctionalUnitRequest request)
         {
             if (request == null)
@@ -86,6 +92,7 @@ namespace api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult Delete(int id)
         {
             try
@@ -100,6 +107,7 @@ namespace api.Controllers
         }
 
         [HttpGet("consortium/{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<IEnumerable<FunctionalUnit>> FindByConsortiumId(int id)
         {
             try
@@ -114,6 +122,7 @@ namespace api.Controllers
         }
 
         [HttpPost("assign-clients")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult AssignClients([FromBody] AssignClientsRequest request)
         {
             if (request == null)
@@ -138,6 +147,7 @@ namespace api.Controllers
 
 
         [HttpGet("client/{id}")]
+        [Authorize]
         public ActionResult<List<ClientFunctionalUnit>> GetAllByClientId(int id)
         {
             return Ok(_functionalUnitService.GetByClientId(id));

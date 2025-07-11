@@ -17,6 +17,8 @@ import { ClientDialogComponent } from "../../components/client-dialog/client-dia
 import { UserService } from '../../services/user.service';
 import { ConfirmDialogService } from '../../components/confirm-dialog/confirm-dialog-service';
 import { ToastService } from '../../components/toast/toast-service';
+import { AuthService } from '../../auth/auth.service';
+import { hasValidRoles } from '../../util/rolesUtil';
 
 @Component({
   selector: 'app-consortium',
@@ -51,6 +53,14 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
     { header: "Dirección", field: "address", sortable: true }
   ];
 
+  canCreate : boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
+  canEdit : boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
+  canRemove : boolean = hasValidRoles(this.authService.userData, ["ADMIN"]);
+  canGenerateLiquidation: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
+  canGetReport: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
+  canManageFunctionalUnit: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
+  canManageClients: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
+
   override expandData: ColumnExpandData = {
     key: "functionalUnits",
     column: [
@@ -62,7 +72,8 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
       icon: 'pi pi-user-plus',
       tooltip: 'Clientes vinculados',
       severity: 'success',
-      action: (data: any) => this.openBindUsersForm(data)
+      isDisabled: !this.canManageClients,
+      action: (data: any) => this.canManageClients ? this.openBindUsersForm(data) : null
     }]
   }
 
@@ -71,31 +82,36 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
       icon: 'pi pi-pencil',
       tooltip: 'Editar registro',
       severity: 'success',
-      action: (data: any) => this.openFormEdit(data)
+      hidden: !this.canEdit,
+      action: (data: any) => this.canEdit ? this.openFormEdit(data) : null
     },
     {
       icon: 'pi pi-trash',
       tooltip: 'Borrar registro',
       severity: 'danger',
-      action: (data: any) => this.openConfirmDialog(data)
+      hidden: !this.canRemove,
+      action: (data: any) => this.canRemove ? this.openConfirmDialog(data) : null
     },
     {
       icon: 'pi pi-file',
       tooltip: 'Generar liquidación',
       severity: 'info',
-      action: (data: any) => this.openLiquidationDialog(data)
+      hidden: !this.canGenerateLiquidation,
+      action: (data: any) => !this.canGenerateLiquidation ? this.openLiquidationDialog(data) : null
     },
     {
       icon: 'pi pi-chart-bar',
       tooltip: 'Descargar reportes',
       severity: 'warning',
-      action: (data: any) => this.openReportDialog(data)
+      hidden: !this.canGetReport,
+      action: (data: any) => this.canGetReport ? this.openReportDialog(data) : null
     },
     {
       icon: 'pi pi-home',
       tooltip: 'Unidades funcionales',
       severity: 'secondary',
-      action: (data: any) => this.openFunctionalUnitDialog(data)
+      hidden: !this.canManageFunctionalUnit,
+      action: (data: any) => this.canManageFunctionalUnit ? this.openFunctionalUnitDialog(data) : null
     }
   ];
 
@@ -106,9 +122,10 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
     private readonly functionalUnitService: FunctionalUnitService,
     private readonly userService: UserService,
     confirmService: ConfirmDialogService,
-    toastService: ToastService
+    toastService: ToastService,
+    authService: AuthService  
   ) {
-    super(service, confirmService, toastService);
+    super(service, confirmService, toastService, authService);
   }
 
   override ngOnInit() {

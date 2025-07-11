@@ -5,6 +5,7 @@ import { Column, ColumnExpandData } from '../interfaces/components.interface';
 import { finalize } from 'rxjs';
 import { ConfirmDialogService } from '../components/confirm-dialog/confirm-dialog-service';
 import { ToastService } from '../components/toast/toast-service';
+import { AuthService } from '../auth/auth.service';
 
 @Directive()
 export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
@@ -28,7 +29,8 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
   constructor(
     protected service: GenericService<TRequest, TResponse>,
     private readonly confirmService: ConfirmDialogService,
-    public readonly toastService: ToastService
+    public readonly toastService: ToastService,
+    public readonly authService : AuthService
   ) { }
 
   ngOnInit() {

@@ -2,6 +2,7 @@
 using api.Mappers;
 using api.Models;
 using api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -21,6 +22,7 @@ namespace api.Controllers
 
         // GET: api/consortium
         [HttpGet]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<IEnumerable<ConsortiumResponse>> GetAll()
         {
             var consortiums = _consortiumService.FindAll();
@@ -29,6 +31,7 @@ namespace api.Controllers
 
         // GET: api/consortium/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<ConsortiumResponse> GetById(int id)
         {
             try
@@ -46,6 +49,7 @@ namespace api.Controllers
 
         // POST: api/consortium
         [HttpPost]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<Consortium> Create([FromBody] Consortium consortium)
         {
             if (consortium == null)
@@ -59,6 +63,7 @@ namespace api.Controllers
 
         // PUT: api/consortium/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult Update(int id, [FromBody] Consortium consortium)
         {
             if (consortium == null)
@@ -79,6 +84,7 @@ namespace api.Controllers
 
         // DELETE: api/consortium/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Delete(int id)
         {
             try

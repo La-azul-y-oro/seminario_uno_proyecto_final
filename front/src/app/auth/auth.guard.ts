@@ -6,7 +6,7 @@ import { hasValidRoles } from '../util/rolesUtil';
 
 const loginPath = '/login';
 const clientPath = '/mis-unidades';
-const consortiumPath = '/consortium';
+const consortiumPath = '/consorcios';
 
 export const clientGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
@@ -61,6 +61,30 @@ export const authGuardNotLogin: CanActivateFn = (route, state) => {
         return false;
       } else {
         return true;
+      }
+    })
+  );
+};
+
+export const adminGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  return authService.currentUserLoginOn.pipe(
+    take(1),
+    map((loggedIn: boolean) => {
+      if(!loggedIn) {
+        router.navigate([loginPath]);
+        return false;
+      }
+      if(hasValidRoles(authService.userData, ["ADMIN"])){
+        return true;
+      } else if(hasValidRoles(authService.userData, ["STAFF"])){
+        router.navigate([consortiumPath]);
+        return false;
+      }
+        else {
+        router.navigate([clientPath]);
+        return false;
       }
     })
   );
