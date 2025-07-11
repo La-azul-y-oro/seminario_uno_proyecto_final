@@ -2,7 +2,6 @@ using System.Text;
 using api.Auth;
 using api.Context;
 using api.Mappers;
-using api.Models;
 using api.Services.Implementations;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
