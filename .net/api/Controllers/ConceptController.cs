@@ -7,7 +7,6 @@ namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ConceptController : ControllerBase
     {
         private readonly IConceptService _conceptService;
@@ -20,6 +19,7 @@ namespace api.Controllers
 
         // GET: api/concept
         [HttpGet]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<IEnumerable<Concept>> GetAll()
         {
             var concepts = _conceptService.GetAll();
@@ -28,6 +28,7 @@ namespace api.Controllers
 
         // GET: api/concept/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<Concept> GetById(int id)
         {
             try
@@ -43,6 +44,7 @@ namespace api.Controllers
 
         // POST: api/concept
         [HttpPost]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<Concept> Create([FromBody] Concept concept)
         {
             if (concept == null)
@@ -56,6 +58,7 @@ namespace api.Controllers
 
         // PUT: api/concept/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult Update(int id, [FromBody] Concept concept)
         {
             if (concept == null)
@@ -76,6 +79,7 @@ namespace api.Controllers
 
         // DELETE: api/concept/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult Delete(int id)
         {
             try

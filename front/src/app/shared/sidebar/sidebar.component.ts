@@ -4,6 +4,8 @@ import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
 import { TooltipModule } from 'primeng/tooltip';
 import { CommonModule } from '@angular/common';
+import { hasValidRoles } from '../../util/rolesUtil';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -31,11 +33,6 @@ export class SidebarComponent {
 
   items: MenuItem[] = [
   {
-    label: 'Inicio',
-    icon: 'pi pi-home',
-    path: 'inicio'
-  },
-  {
     label: 'Consorcios',
     icon: 'pi pi-building',
     path: 'consorcios'
@@ -58,10 +55,12 @@ export class SidebarComponent {
   {
     label: 'Usuarios',
     icon: 'pi pi-users',
-    path: 'usuarios'
+    path: 'usuarios',
+    visible: hasValidRoles(this.authService.currentUserData, ["ADMIN"])
   }];
 
   constructor (
+    private readonly authService: AuthService
   ){}
 
   sidebarStyle = {

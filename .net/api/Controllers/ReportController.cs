@@ -1,6 +1,7 @@
 ﻿using api.Services.Implementations;
 using api.Services.Interfaces;
 using DocumentFormat.OpenXml.Bibliography;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -19,6 +20,7 @@ namespace api.Controllers
         }
 
         [HttpGet("financial/{consortiumId}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public async Task<IActionResult> GetFinancialReport(
         [FromRoute] int consortiumId,
         [FromQuery] int year,
@@ -42,6 +44,7 @@ namespace api.Controllers
         }
 
         [HttpGet("consortium/expenses/{consortiumId}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public async Task<IActionResult> GetExpensesReport(
         [FromRoute] int consortiumId,
         [FromQuery] int year,
@@ -57,6 +60,7 @@ namespace api.Controllers
         }
 
         [HttpGet("functional-unit/expenses/{functionalUnitId}")]
+        [Authorize]
         public async Task<IActionResult> GetExpensesByFunctionalUnitReport(
         [FromRoute] int functionalUnitId,
         [FromQuery] int year,
@@ -72,6 +76,7 @@ namespace api.Controllers
         }
 
         [HttpGet("expenses/{id}")]
+        [Authorize]
         public async Task<IActionResult> GetByExpensesId(int id)
         {
             try

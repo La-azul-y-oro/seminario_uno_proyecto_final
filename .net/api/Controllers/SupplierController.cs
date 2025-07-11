@@ -1,6 +1,7 @@
 ﻿using api.Dto;
 using api.Models;
 using api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -18,6 +19,7 @@ namespace api.Controllers
 
         // GET: api/supplier
         [HttpGet]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<IEnumerable<Supplier>> GetAll()
         {
             var suppliers = _supplierService.GetAll();
@@ -26,6 +28,7 @@ namespace api.Controllers
 
         // GET: api/supplier/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<Supplier> GetById(int id)
         {
             try
@@ -41,6 +44,7 @@ namespace api.Controllers
 
         // POST: api/supplier
         [HttpPost]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<Supplier> Create([FromBody] SupplierRequestDTO supplierDto)
         {
             if (supplierDto == null)
@@ -54,6 +58,7 @@ namespace api.Controllers
 
         // PUT: api/supplier/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult Update(int id, [FromBody] SupplierRequestDTO supplierDto)
         {
             if (supplierDto == null)
@@ -74,6 +79,7 @@ namespace api.Controllers
 
         // DELETE: api/supplier/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult Delete(int id)
         {
             try

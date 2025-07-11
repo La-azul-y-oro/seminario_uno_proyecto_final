@@ -82,7 +82,7 @@ namespace api.Services.Implementations{
 
             if (movement == null || !movement.Active)
             {
-                throw new KeyNotFoundException("User not found");
+                throw new KeyNotFoundException("Movement not found");
             }
             if (movement.Type.Equals(MovementType.EGRESO))
             {

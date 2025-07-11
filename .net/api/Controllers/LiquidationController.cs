@@ -19,6 +19,7 @@ namespace api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public IActionResult Create([FromBody] LiquidationRequestDTO request)
         {
             if (request == null)
@@ -36,6 +37,7 @@ namespace api.Controllers
         }
 
         [HttpGet("consortium/{id}")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<IEnumerable<Liquidation>> GetAllByConsortium(int id)
         {
 

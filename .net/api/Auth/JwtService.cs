@@ -22,7 +22,7 @@ namespace api.Auth
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim("role", user.Role.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
                 new Claim("name", user.FirstName),
                 new Claim("lastName", user.LastName),
                 new Claim("id", user.Id.ToString())

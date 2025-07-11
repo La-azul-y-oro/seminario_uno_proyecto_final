@@ -2,6 +2,7 @@
   <ng-template pTemplate="start">
     <div class="d-flex align-items-center">
       <p-button
+        *ngIf="showButton"
         [text]="true"
         severity="secondary"
         (click)="toggle()"

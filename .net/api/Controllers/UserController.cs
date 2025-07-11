@@ -3,6 +3,7 @@ using api.Models;
 using api.Dto;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace api.Controllers
 {
@@ -18,6 +19,7 @@ namespace api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult<IEnumerable<UserResponse>> GetAll()
         {
             var users = _userService.GetAll();
@@ -26,6 +28,7 @@ namespace api.Controllers
         }
 
         [HttpGet("clients")]
+        [Authorize(Roles = "ADMIN,STAFF")]
         public ActionResult<IEnumerable<Client>> GetAllClients()
         {
             var clients = _userService.GetAllClients();
@@ -33,6 +36,7 @@ namespace api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult<UserResponse> GetById(int id)
         {
             try
@@ -46,6 +50,7 @@ namespace api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult<UserResponse> Create([FromBody] UserRequest userRequest)
         {
             if(userRequest == null) {
@@ -58,6 +63,7 @@ namespace api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult<UserResponse> Update(int id, [FromBody] UserRequest userRequest)
         {
             if(userRequest == null)
@@ -78,6 +84,7 @@ namespace api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Delete(int id){
             try
             {

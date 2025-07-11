@@ -47,10 +47,12 @@ export class UserInfoComponent {
   }];
 
   private getUserInfo() : string{
+    const roleAttr = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+
     const userInfo = this.authService?.userData as any;
     const name = userInfo?.name;
     const lastName = userInfo?.lastName;
-    const role = (userInfo?.role) ? `- ${Role[userInfo.role as keyof typeof Role]}` : "";
+    const role = (userInfo?.[roleAttr]) ? `- ${Role[userInfo[roleAttr] as keyof typeof Role]}` : "";
 
     return `${name} ${lastName} ${role}`;
   }
