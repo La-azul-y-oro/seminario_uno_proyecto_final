@@ -25,8 +25,7 @@ export class ReportService {
       responseType: 'blob'
     });
   }
-
-  
+ 
   getFinancialReport(request: FinancialRequest): Observable<Blob> {
     const params: any = {
       year: request.year,
@@ -39,6 +38,12 @@ export class ReportService {
 
     return this.httpClient.get(`${this.baseUrl}/financial/${request.consortiumId}`, {
       params,
+      responseType: 'blob'
+    });
+  }
+
+  getExpenseReportById(id: number): Observable<Blob> {
+    return this.httpClient.get(`${this.baseUrl}/expenses/${id}`, {
       responseType: 'blob'
     });
   }

@@ -129,5 +129,44 @@ namespace api.Services.Implementations
 
             _context.SaveChanges();
         }
+
+        public List<ClientFunctionalUnit> GetByClientId(int ClientId)
+        {
+            // Obtener las unidades funcionales del cliente con sus consorcios
+            var functionalUnits = _context.FunctionalUnit
+                .Include(fu => fu.Consortium)
+                .Include(fu => fu.Users)
+                .Where(fu => fu.Users.Any(u => u.Id == ClientId && u.Active))
+                .Where(fu => fu.Active)
+                .ToList();
+
+            var result = functionalUnits.Select(fu => new ClientFunctionalUnit
+            {
+                Id = fu.Id,
+                Name = fu.Name,
+                Balance = fu.Balance,
+                Factor = fu.Factor,
+                Consortium = fu.Consortium.Name,
+                ConsortiumAddress = fu.Consortium.Address,
+                Liquidations = GetLiquidationsForFunctionalUnit(fu.Id, fu.ConsortiumId)
+            }).ToList();
+
+            return result;
+        }
+
+        private List<LiquidationDTO> GetLiquidationsForFunctionalUnit(int functionalUnitId, int consortiumId)
+        {
+            var liquidations = _context.Liquidation
+                .Where(l => l.ConsortiumId == consortiumId)
+                .Select(l => new LiquidationDTO
+                {
+                    Id = l.Id,
+                    Period = l.Period,
+                    ExpirationDate = l.ExpirationDate
+                })
+                .ToList();
+
+            return liquidations;
+        }
     }
 }

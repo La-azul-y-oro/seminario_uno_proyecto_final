@@ -23,4 +23,8 @@ export class FunctionalUnitService extends GenericService<UnitFunctionalRequest,
     return this.httpClient.post<void>(customUrl, body);
   }
 
+  getByClientId(clientId: any) : Observable<any []> {
+    const customUrl = `${environment.apiUrl}/functionalunit/client/${clientId}`;
+    return this.httpClient.get<any []>(customUrl);
+  }
 }

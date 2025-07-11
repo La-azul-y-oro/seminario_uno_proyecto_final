@@ -61,6 +61,15 @@ namespace api.Services.Implementations
             return liquidation;
         }
 
+        public Liquidation FindById(int liquidationId) {
+            var liquidation = _context.Liquidation.Find(liquidationId);
+
+            if (liquidation == null)
+                throw new KeyNotFoundException("Liquidation not found");
+
+            return liquidation;
+        }
+
         private static void ValidateDate(int month, int year, DateTime expirationDate) {
             var now = DateTime.Now;
 

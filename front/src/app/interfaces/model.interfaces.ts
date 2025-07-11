@@ -151,3 +151,18 @@ export interface AssignClientsRequest{
     functionalId: number;
     clientsIds: number[];
 }
+
+export interface ClientFunctionalUnit{
+   id: number;
+   name: string;
+   balance: number;
+   factor: number;
+   consortium: string;
+   liquidations: LiquidationForClient[];
+}
+
+export interface LiquidationForClient {
+  id: number;
+  period: string;
+  expirationDate: string;
+}

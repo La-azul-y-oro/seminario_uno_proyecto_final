@@ -1,4 +1,6 @@
-﻿using api.Services.Interfaces;
+﻿using api.Services.Implementations;
+using api.Services.Interfaces;
+using DocumentFormat.OpenXml.Bibliography;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -8,10 +10,12 @@ namespace api.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IReportService _reportService;
+        private readonly ILiquidationService _liquidationService;
 
-        public ReportController(IReportService reportService)
+        public ReportController(IReportService reportService, ILiquidationService liquidationService)
         {
             _reportService = reportService;
+            _liquidationService = liquidationService;
         }
 
         [HttpGet("financial/{consortiumId}")]
@@ -65,6 +69,29 @@ namespace api.Controllers
             string fileName = $"liquidacion_expensas_{month}_{year}.pdf";
 
             return File(reportBytes, contentType, fileName);
+        }
+
+        [HttpGet("expenses/{id}")]
+        public async Task<IActionResult> GetByExpensesId(int id)
+        {
+            try
+            {
+                var liquidation = _liquidationService.FindById(id);
+
+                string[] periodSplit = liquidation.Period.Split('-');
+                int year = int.Parse(periodSplit[0]);
+                int month = int.Parse(periodSplit[1]);
+
+                var reportBytes = await _reportService.GenerateExpensesReportByConsortium(liquidation.ConsortiumId, month, year);
+                var contentType = "application/pdf";
+                string fileName = $"liquidacion_expensas_{month}_{year}.pdf";
+
+                return File(reportBytes, contentType, fileName);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

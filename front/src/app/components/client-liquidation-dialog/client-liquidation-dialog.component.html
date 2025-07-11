@@ -1,0 +1,72 @@
+<p-dialog
+  header="Liquidaciones disponibles"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '800px', height: '650px' }"
+  [appendTo]="'body'"
+  (onHide)="onClose()"
+>
+  <input type="text" class="d-none" />
+  <div
+    class="row mb-3"
+    style="max-height: 650px; overflow-y: auto; padding: 0 1rem"
+  >
+    <p-table
+      [value]="liquidations"
+      scrollable="true"
+      scrollHeight="450px"
+      [tableStyle]="{ 'min-width': '400px' }"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Periodo</th>
+          <th>Fecha vencimiento</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-liquidation>
+        <tr>
+          <td>{{ liquidation.period }}</td>
+          <td>{{ liquidation.expirationDate }}</td>
+          <td>
+            <p-button
+              pRipple
+              [icon]="
+                isDownloadingLiquidation(liquidation.id) ? '' : 'pi pi-download'
+              "
+              [loading]="isDownloadingLiquidation(liquidation.id)"
+              [loadingIcon]="'pi pi-spin pi-spinner'"
+              [pTooltip]="'Descargar'"
+              [rounded]="true"
+              [outlined]="true"
+              [severity]="'warning'"
+              size="small"
+              [style]="actionButtonStyle"
+              (onClick)="downloadLiquidation(liquidation)"
+              [disabled]="isDownloadingLiquidation(liquidation.id)"
+            >
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4" class="text-center">
+            No existen liquidaciones disponibles.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="row mb-3">
+    <div class="text-end">
+      <p-button
+        label="Cerrar"
+        size="small"
+        severity="secondary"
+        (onClick)="onClose()"
+      />
+    </div>
+  </div>
+</p-dialog>

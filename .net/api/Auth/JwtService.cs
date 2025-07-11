@@ -20,12 +20,13 @@ namespace api.Auth
         {
             var claims = new[]
             {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim("role", user.Role.ToString()),
-            new Claim("name", user.FirstName),
-            new Claim("lastName", user.LastName)
-        };
+                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("role", user.Role.ToString()),
+                new Claim("name", user.FirstName),
+                new Claim("lastName", user.LastName),
+                new Claim("id", user.Id.ToString())
+            };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
