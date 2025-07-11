@@ -1,6 +1,5 @@
 ﻿using api.Dto;
 using api.Models;
-using api.Services.Implementations;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +24,10 @@ namespace api.Controllers
             if (request == null)
             {
                 return BadRequest();
+            }
+            var liquidation = _liquidationService.GetByPeriodAndConsortiumId($"{request.Year}-{request.Month:D2}", request.ConsortiumId);
+            if (liquidation != null) {
+                return Conflict("There is already a liquidation for the indicated period");
             }
 
             _liquidationService.GenerateLiquidation(request.ConsortiumId, request.Month, request.Year, request.ExpirationDate);
