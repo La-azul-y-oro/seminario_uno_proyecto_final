@@ -11,6 +11,7 @@
     [expandable]="true"
     [expandData]="expandData"
     [hideCreateButton]="!canCreate"
+    [messageNoDataExpandable]="'El consorcio aún no posee unidades funcionales asociadas'"
 />
 
 <app-consortium-form 
@@ -35,8 +36,8 @@
 <app-functional-unit-dialog
     [visible]="showFunctionalUnitDialog"
     [consortiumId]="consortiumId!"
-    (onCancel)="resetUnitFunctionalData()"
-    (onSave)="saveFunctionalUnits($event)"
+    [functionalUnitList]="functionalUnitList"
+    (onCancel)="resetUnitFunctionalData($event)"
 />
 <app-client-dialog 
     [visible]="showBindUsersDialog"

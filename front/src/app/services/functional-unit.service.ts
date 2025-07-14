@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AssignClientsRequest, UnitFunctionalRequest } from '../interfaces/model.interfaces';
+import { AssignClientsRequest, UnitFunctionalConsortium, UnitFunctionalRequest } from '../interfaces/model.interfaces';
 import { GenericService } from './generic-service.class';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -26,5 +26,10 @@ export class FunctionalUnitService extends GenericService<UnitFunctionalRequest,
   getByClientId(clientId: any) : Observable<any []> {
     const customUrl = `${environment.apiUrl}/functionalunit/client/${clientId}`;
     return this.httpClient.get<any []>(customUrl);
+  }
+
+  updateFunctionalUnits(body: any) : Observable<UnitFunctionalConsortium []> {
+    const customUrl = `${environment.apiUrl}/functionalunit/update-units`;
+    return this.httpClient.post<UnitFunctionalConsortium []>(customUrl, body);
   }
 }

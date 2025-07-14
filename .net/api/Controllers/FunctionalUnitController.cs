@@ -152,5 +152,25 @@ namespace api.Controllers
         {
             return Ok(_functionalUnitService.GetByClientId(id));
         }
+
+        [HttpPost("update-units")]
+        [Authorize(Roles = "ADMIN,STAFF")]
+        public async Task<ActionResult> UpdateUnits([FromBody] FunctionalUnitBatchRequest request)
+        {
+            try
+            {
+                await _functionalUnitService.ProcessBatchOperations(request);
+                var functionalUnits = _functionalUnitService.FindByConsortiumId(request.ConsortiumId);
+                return Ok(functionalUnits);
+            }
+            catch (BadHttpRequestException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
     }
 }

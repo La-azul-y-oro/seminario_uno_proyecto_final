@@ -9,5 +9,6 @@ namespace api.Services.Interfaces
         void UpdateBalance(int id, decimal amount);
         void UpdateClientsToFunctionalUnit(int FunctionalId, List<int> ClientsIds);
         List<ClientFunctionalUnit> GetByClientId(int ClientId);
+        Task ProcessBatchOperations(FunctionalUnitBatchRequest request);
     }
 }

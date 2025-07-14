@@ -6,6 +6,7 @@
   (onHide)="closeDialog()"
   [appendTo]="'body'"
 >
+  <input type="text" class="d-none" />
   <div class="row mb-3">
     <div class="text-end">
       <p-button
@@ -81,6 +82,7 @@
   [style]="{ minWidth: '400px' }"
   (onHide)="cancelAddClient()"
 >
+  <input type="text" class="d-none" />
   <div class="w-100">
     <div class="mb-3">
       <p-multiSelect

@@ -28,7 +28,6 @@ builder.Services.AddScoped<ILiquidationService, LiquidationService>();
 
 builder.Services.AddScoped<IReportService, ReportService>();
 
-
 builder.Services.AddSingleton<JwtService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
@@ -95,7 +94,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         }; 
     });
 
-builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
 QuestPDF.Settings.License = LicenseType.Community;

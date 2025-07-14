@@ -40,6 +40,7 @@ export class PageComponent {
   @Input() hasError: boolean = false;
   @Input() isEmpty: boolean = false;
   @Input() hideCreateButton: boolean = false;
+  @Input() messageNoDataExpandable: string = "No existen datos asociados para mostrar.";
 
   @Output() onCreate = new EventEmitter;
 

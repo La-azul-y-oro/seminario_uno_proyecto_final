@@ -39,6 +39,110 @@ namespace api.Services.Implementations
 
         public void Update(int id, FunctionalUnit entity)
         {
+            Update(id, entity, true);         
+        }
+
+        public void Create(FunctionalUnit entity)
+        {
+            Create(entity, true);
+        }
+
+        public void Delete(int id)
+        {
+            Delete(id, true);
+        }
+
+        public async Task ProcessBatchOperations(FunctionalUnitBatchRequest request)
+        {
+            if (request == null)
+            {
+                throw new BadHttpRequestException("Data cannot be null");
+            }
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                ProcessDeleteOperations(request.Delete, request.ConsortiumId);
+
+                ProcessUpdateOperations(request.Update, request.ConsortiumId);
+
+                ProcessCreateOperations(request.Create, request.ConsortiumId);
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw new Exception("Batch operation failed: " + ex.Message);
+            }
+        }
+
+        private void ProcessDeleteOperations(List<int> deleteIds, int consortiumId)
+        {
+            foreach (var id in deleteIds)
+            {
+                var existingUnit = GetById(id);
+                if (existingUnit == null)
+                {
+                    throw new KeyNotFoundException($"Functional unit with ID {id} not found");
+                }
+
+                if (existingUnit.ConsortiumId != consortiumId)
+                {
+                    throw new UnauthorizedAccessException($"Functional unit with ID {id} does not belong to consortium {consortiumId}");
+                }
+
+                Delete(id, false);
+            }
+        }
+
+        private void ProcessUpdateOperations(List<FunctionalUnitRequest> updateRequests, int consortiumId)
+        {
+            foreach (var updateRequest in updateRequests)
+            {
+                var existingUnit = GetById((int)updateRequest.Id);
+                if (existingUnit == null)
+                {
+                    throw new KeyNotFoundException($"Functional unit with ID {updateRequest.Id} not found");
+                }
+
+                if (existingUnit.ConsortiumId != consortiumId)
+                {
+                    throw new UnauthorizedAccessException($"Functional unit with ID {updateRequest.Id} does not belong to consortium {consortiumId}");
+                }
+
+                var functionalUnit = new FunctionalUnit
+                {
+                    Name = updateRequest.Name,
+                    Balance = updateRequest.Balance,
+                    Factor = updateRequest.Factor,
+                    ConsortiumId = consortiumId
+                };
+
+                Update((int)updateRequest.Id, functionalUnit, false);
+            }
+        }
+
+        private void ProcessCreateOperations(List<FunctionalUnitRequest> createRequests, int consortiumId)
+        {
+            foreach (var createRequest in createRequests)
+            {
+                var functionalUnit = new FunctionalUnit
+                {
+                    Name = createRequest.Name,
+                    Balance = createRequest.Balance,
+                    Factor = createRequest.Factor,
+                    ConsortiumId = createRequest.ConsortiumId
+                };
+
+                Create(functionalUnit, false);
+            }
+        }
+        public void Update(int id, FunctionalUnit entity, bool saveChanges = true)
+        {
+
             var functionalUnit = _context.FunctionalUnit.Find(id);
 
             if (functionalUnit == null || !functionalUnit.Active)
@@ -51,16 +155,21 @@ namespace api.Services.Implementations
             functionalUnit.Factor = entity.Factor;
             functionalUnit.ConsortiumId = entity.ConsortiumId;
 
-            _context.SaveChanges();
+            if(saveChanges)
+            {
+                _context.SaveChanges();
+            }
         }
 
-        public void Create(FunctionalUnit entity)
+        public void Create(FunctionalUnit entity, bool saveChanges = true)
         {
             _context.FunctionalUnit.Add(entity);
-            _context.SaveChanges();
+            if (saveChanges) { 
+                _context.SaveChanges(); 
+            }
         }
 
-        public void Delete(int id)
+        public void Delete(int id, bool saveChanges = true)
         {
             var functionalUnit = _context.FunctionalUnit.Find(id);
 
@@ -70,7 +179,10 @@ namespace api.Services.Implementations
             }
 
             functionalUnit.Active = false;
-            _context.SaveChanges();
+            if(saveChanges)
+            {
+                _context.SaveChanges();
+            }
         }
 
         public List<FunctionalUnitResponse> FindByConsortiumId(int consortiumId)

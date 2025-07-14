@@ -134,7 +134,15 @@
         <tr>
           <td [attr.colspan]="getTotalColumns()">
             <div class="p-1">
+              <div
+                *ngIf="!getData(rowData) || getData(rowData).length === 0"
+                class="text-center p-3"
+              >
+                <span class="text-muted">{{ messageNoDataExpandable }}</span>
+              </div>
+
               <p-table
+                *ngIf="getData(rowData) && getData(rowData).length > 0"
                 [value]="getData(rowData)"
                 [columns]="expandData?.column"
                 dataKey="id"
