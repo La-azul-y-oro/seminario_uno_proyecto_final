@@ -45,6 +45,7 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
 
   consortiumId: number | undefined = undefined;
   functionalUnit: UnitFunctionalConsortium | undefined = undefined;
+  functionalUnitList: any[] = [];
 
   clients: Client[] = [];
 
@@ -145,6 +146,7 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
 
   openFunctionalUnitDialog(data: any) {
     this.consortiumId = data.id;
+    this.functionalUnitList = data.functionalUnits;
     this.showFunctionalUnitDialog = true;
   }
 
@@ -222,8 +224,19 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
     });
   }
 
-  resetUnitFunctionalData() {
+  resetUnitFunctionalData(data: UnitFunctionalConsortium[]) {
+    if(data.length > 0){
+      const index = this.dataList.findIndex(c => c.id === this.consortiumId);
+      if(index !== -1){
+        this.dataList[index] = {
+          ...this.dataList[index],
+          functionalUnits: data
+        };
+      }
+    }
+    
     this.consortiumId = undefined;
+    this.functionalUnitList =  [];
     this.showFunctionalUnitDialog = false;
   }
 
@@ -232,50 +245,6 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
     this.consortiumId = undefined;
     this.functionalUnit = undefined;
     this.showBindUsersDialog = false;
-  }
-
-  saveFunctionalUnits(event: any) {
-    const toCreate = event.create ?? [];
-    const toUpdate = event.update ?? [];
-    const toDelete = event.delete ?? [];
-
-    const createRequests: Observable<any>[] = toCreate.map((e: any) =>
-      this.functionalUnitService.create(e)
-    );
-
-    const updateRequests: Observable<any>[] = toUpdate.map((e: any) =>
-      this.functionalUnitService.update(e.id, e)
-    );
-
-    const deleteRequests: Observable<any>[] = toDelete.map((id: any) =>
-      this.functionalUnitService.deleteById(id)
-    );
-
-    const allRequests: Observable<any>[] = [
-      ...deleteRequests,
-      ...updateRequests,
-      ...createRequests
-    ];
-
-    if (allRequests.length > 0) {
-      concat(...allRequests).subscribe({
-        next: () => {
-        },
-        complete: () => {
-          this.showFunctionalUnitDialog = false;
-          this.consortiumId = undefined;
-
-          this.toastService.setSuccessMessage('Se han actualizado las unidades funcionales.');
-        },
-        error: (err) => {
-          console.error("Error al guardar unidades funcionales", err);
-          this.toastService.setErrorMessage("Ha ocurrido un error al guardar los cambios");
-        }
-      });
-    } else {
-      this.showFunctionalUnitDialog = false;
-      this.consortiumId = undefined;
-    }
   }
 
   getClients() {

@@ -166,3 +166,10 @@ export interface LiquidationForClient {
   period: string;
   expirationDate: string;
 }
+
+export interface FunctionalUnitBatchRequest{
+    consortiumId: number;
+    delete?: number[];
+    update?: UnitFunctionalRequest[];
+    create?: UnitFunctionalRequest[];
+}
