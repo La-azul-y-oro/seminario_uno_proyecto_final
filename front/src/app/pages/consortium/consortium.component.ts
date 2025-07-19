@@ -98,7 +98,7 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
       tooltip: 'Generar liquidación',
       severity: 'info',
       hidden: !this.canGenerateLiquidation,
-      action: (data: any) => !this.canGenerateLiquidation ? this.openLiquidationDialog(data) : null
+      action: (data: any) => this.canGenerateLiquidation ? this.openLiquidationDialog(data) : null
     },
     {
       icon: 'pi pi-chart-bar',

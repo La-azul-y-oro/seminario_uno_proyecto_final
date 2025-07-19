@@ -54,8 +54,7 @@ export class FunctionalUnitDialogComponent {
   floorFactors: { floor: number, factor: number }[] = [];
   nomenclatureList = [
     { value: "pisoLetra", label: "Piso + Letra (1A, 1B, 1C...)" },
-    { value: "pisoNumero", label: "Piso + Número (101, 102, 103...)" },
-    { value: "letraPiso", label: "Letra + Piso (A1, B1, C1...)" },
+    { value: "pisoNumero", label: "Piso + Número (101, 102, 103...)" }
   ];
   isManualSelected: boolean = false;
 
@@ -201,8 +200,6 @@ export class FunctionalUnitDialogComponent {
         return `${floor}${letters[unit - 1]}`;
       case 'pisoNumero':
         return `${floor}${unit.toString().padStart(2, '0')}`;
-      case 'letraPiso':
-        return `${letters[unit - 1]}${floor}`;
       default:
         return `${floor}${letters[unit - 1]}`;
     }

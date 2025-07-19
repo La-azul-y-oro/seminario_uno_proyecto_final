@@ -42,12 +42,12 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.Coral;
-            label1.Location = new Point(432, 120);
+            label1.Location = new Point(476, 110);
             label1.Margin = new Padding(5, 0, 5, 0);
             label1.Name = "label1";
-            label1.Size = new Size(504, 38);
+            label1.Size = new Size(406, 38);
             label1.TabIndex = 0;
-            label1.Text = "Culjein Administración de Consorcios";
+            label1.Text = "Administración de Consorcios";
             // 
             // label2
             // 
