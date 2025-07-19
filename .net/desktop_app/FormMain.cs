@@ -12,6 +12,8 @@ namespace PracticaSeminario
         private readonly AuthService _authService = new AuthService();
         private readonly LiquidationService _liquidationService;
         private readonly ReportService _reportService;
+        private readonly FunctionalUnitService _functionalUnitService;
+        private readonly UserService _userService;
         private readonly ApiService _apiService;
         private Control? _currentControl;
 
@@ -21,6 +23,8 @@ namespace PracticaSeminario
             _apiService = new ApiService(_authService);
             _liquidationService = new LiquidationService(_authService);
             _reportService = new ReportService(_authService);
+            _functionalUnitService = new FunctionalUnitService(_authService);
+            _userService = new UserService(_authService);
         }
 
         private void LoadUserData()
@@ -34,7 +38,7 @@ namespace PracticaSeminario
             if (appLogin.ShowDialog() == DialogResult.OK)
             {
                 this.LoadUserData();
-                ShowControl(new ConceptControl(_apiService));
+                ShowControl(new ConsortiumControl(_apiService, _liquidationService, _reportService, _functionalUnitService, _userService));
             }
             else
             {
@@ -81,7 +85,7 @@ namespace PracticaSeminario
 
         private void tsmiConsorcios_Click(object sender, EventArgs e)
         {
-            ShowControl(new ConsortiumControl(_apiService, _liquidationService, _reportService));
+            ShowControl(new ConsortiumControl(_apiService, _liquidationService, _reportService, _functionalUnitService, _userService));
         }
 
         private void tsmiUsuarios_Click(object sender, EventArgs e)

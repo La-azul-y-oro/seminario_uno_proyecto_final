@@ -7,11 +7,11 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { PasswordModule } from 'primeng/password';
-import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
 import { AuthService } from '../../auth/auth.service';
 import { ForgotPasswordRequest, ResetPasswordRequest } from '../../interfaces/model.interfaces';
+import { ToastService } from '../toast/toast-service';
 
 @Component({
   selector: 'app-reset-pass',
@@ -25,8 +25,7 @@ import { ForgotPasswordRequest, ResetPasswordRequest } from '../../interfaces/mo
     FormsModule,
     InputTextModule,
     PasswordModule,
-    ReactiveFormsModule,
-    ToastModule
+    ReactiveFormsModule
   ],
   templateUrl: './reset-pass.component.html',
   styleUrl: './reset-pass.component.css'
@@ -35,7 +34,6 @@ export class ResetPassComponent {
   @Input() visible : boolean = false;
 
   @Output() onCloseDialog = new EventEmitter;
-  @Output() onToastEmit = new EventEmitter;
   
   title : string = "Recupero de contraseña";
 
@@ -54,7 +52,8 @@ export class ResetPassComponent {
 
   constructor (
         private readonly authService : AuthService,
-        private readonly fb : FormBuilder
+        private readonly fb : FormBuilder,
+        private readonly toastService : ToastService
   ){}
 
   sendToken(){
@@ -65,14 +64,14 @@ export class ResetPassComponent {
       this.loading = true;
       this.authService.resetPassword(tokenReq).subscribe({
         next: () => {
-          this.showToast('Su nueva contraseña se ha restaurado correctamente', 'Contraseña restaurada', 'success');
+          this.toastService.setSuccessMessage('Su nueva contraseña se ha restaurado correctamente');
           this.loading = false;
           this.resetAll();
         },
         error: (error) => {
           this.loading = false;
           console.error(error);
-          this.showToast('Ha ocurrido un error. Intente nuevamente o ponganse en contacto con el administrador.', 'Error', 'error');
+          this.toastService.setErrorMessage('Ha ocurrido un error. Intente nuevamente o ponganse en contacto con el administrador.');
         }
       })
     }
@@ -86,14 +85,14 @@ export class ResetPassComponent {
       this.loading = true;
       this.authService.forgotPassword(forgotReq).subscribe({
         next: () => {
-          this.showToast('Si el mail proporcionado existe estará recibiendo en el mismo el token para restaurar la contraseña.', 'Token enviado', 'success');
+          this.toastService.setSuccessMessage('Si el mail proporcionado existe estará recibiendo en el mismo el token para restaurar la contraseña.');
           this.loading = false;
           this.resetAll();
         },
         error: (error) => {
           this.loading = false;
           console.error(error);
-          this.showToast('Ha ocurrido un error. Intente nuevamente o ponganse en contacto con el administrador.', 'Error','error');
+          this.toastService.setErrorMessage('Ha ocurrido un error. Intente nuevamente o ponganse en contacto con el administrador.');
         }
       })
     }
@@ -110,16 +109,6 @@ export class ResetPassComponent {
     this.isTokenForm = false;
     this.isEmailForm = false;
     this.onCloseDialog.emit();
-  }
-
-  showToast(message : string, summary : string, severity: string) {
-    const toastData = {
-      severity: severity,
-      summary: summary,
-      detail: message,
-      life: 4000
-    };
-    this.onToastEmit.emit(toastData);
   }
 
 }

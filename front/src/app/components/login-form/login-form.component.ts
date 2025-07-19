@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
 import { emailCustomValidator } from '../../util/customValidators';
 import { PasswordModule } from 'primeng/password';
 import { AuthService } from '../../auth/auth.service';
-import { Role, UserLogin } from '../../interfaces/model.interfaces';
-import { ToastModule } from 'primeng/toast';
+import { UserLogin } from '../../interfaces/model.interfaces';
 import { MessageService } from 'primeng/api';
 import { markAllAsTouched } from '../../util/formUtils';
 import { ResetPassComponent } from '../reset-pass/reset-pass.component';
+import { ToastService } from '../toast/toast-service';
 
 @Component({
   selector: 'app-login-form',
@@ -24,8 +24,7 @@ import { ResetPassComponent } from '../reset-pass/reset-pass.component';
     CommonModule,
     ReactiveFormsModule,
     ResetPassComponent,
-    PasswordModule,
-    ToastModule
+    PasswordModule
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
@@ -39,6 +38,7 @@ export class LoginFormComponent {
     private readonly fb: FormBuilder,
     private readonly router: Router,
     private readonly messageService: MessageService,
+    private readonly toastService : ToastService
   ) { }
 
   userForm: FormGroup = this.fb.group({
@@ -69,9 +69,9 @@ export class LoginFormComponent {
         error: (error) => {
           this.loading = false;
           if (error.message?.includes('Error Status: 4')) {
-            this.showToastError('Las credenciales son inválidas.');
+            this.toastService.setErrorMessage('Las credenciales son inválidas.');
           } else {
-            this.showToastError('Ha ocurrido un error. Intente nuevamente o ponganse en contacto con el administrador.');
+            this.toastService.setErrorMessage('Ha ocurrido un error. Intente nuevamente o ponganse en contacto con el administrador.');
           }
         }
       })
@@ -81,17 +81,5 @@ export class LoginFormComponent {
   hasError(nameField: any) {
     let field = this.userForm.get(nameField);
     return (field?.dirty || field?.touched) && field?.invalid;
-  }
-
-  showToastError(message: string) {
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: message
-    });
-  }
-
-  showToast(dataToast: any) {
-    this.messageService.add(dataToast);
   }
 } 

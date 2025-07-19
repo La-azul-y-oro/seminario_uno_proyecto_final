@@ -26,7 +26,11 @@ namespace PracticaSeminario
 
             try
             {
-                // Llamar al servicio de autenticación
+                inkOlvidaPass.Enabled = false;
+                btnIngresar.Enabled = false;
+                txtUsuario.Enabled = false;
+                txtPass.Enabled = false;
+                btnIngresar.Text = "Cargando...";
                 String? authResponse = await _authService.LoginAsync(new LoginDto { Username = usuario, Password = password });
 
                 if (authResponse != null && !string.IsNullOrWhiteSpace(authResponse))
@@ -35,9 +39,19 @@ namespace PracticaSeminario
                     _authService.SetToken(responseObj["token"]);
 
                     this.DialogResult = DialogResult.OK;
+                    inkOlvidaPass.Enabled = true;
+                    btnIngresar.Enabled = true;
+                    txtUsuario.Enabled = true;
+                    txtPass.Enabled = true;
+                    btnIngresar.Text = "Ingresar";
                 }
                 else
                 {
+                    inkOlvidaPass.Enabled = true;
+                    btnIngresar.Enabled = true;
+                    txtUsuario.Enabled = true;
+                    txtPass.Enabled = true;
+                    btnIngresar.Text = "Ingresar";
                     MessageBox.Show("Credenciales incorrectas. Intente nuevamente.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }

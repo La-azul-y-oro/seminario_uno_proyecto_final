@@ -55,11 +55,8 @@
       class="w-100"
       />
   </div>
-   
-  <p-toast position="bottom-center" [style]="{ minWidth: '30vw', 'font-size': '15px' }"/>
 </div>
 <app-reset-pass
     [visible]="showRecoveryModal"
     (onCloseDialog)="showRecoveryModal = false"
-    (onToastEmit)="showToast($event)"
     />

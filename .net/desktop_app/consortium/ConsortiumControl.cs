@@ -1,45 +1,84 @@
-﻿using desktop_app.liquidation;
+﻿using System.Data;
+using desktop_app.dto;
+using desktop_app.liquidation;
 using desktop_app.models;
 using desktop_app.report;
 using desktop_app.services;
 
 namespace desktop_app.consortium
 {
-    public partial class ConsortiumControl : BaseUserControl
+    public partial class ConsortiumControl : UserControl
     {
+        public event EventHandler? NewClicked;
+        public event EventHandler? EditClicked;
+        public event EventHandler? DeleteClicked;
+        public event EventHandler? UpdateListClicked;
+
+        protected readonly ApiService? _apiService;
+
         private readonly LiquidationService _liquidationService;
         private readonly ReportService _reportService;
-        public ConsortiumControl(ApiService apiService, LiquidationService liquidationService, ReportService reportService) : base(apiService)
+        private readonly FunctionalUnitService _functionalUnitService;
+        private readonly UserService _userService;
+        
+        public ConsortiumControl(ApiService apiService, LiquidationService liquidationService, ReportService reportService, FunctionalUnitService functionalUnitService, UserService userService)
         {
             InitializeComponent();
+            _apiService = apiService;
             _liquidationService = liquidationService;
             _reportService = reportService;
+            _functionalUnitService = functionalUnitService;
+            _userService = userService;
 
-            NewClicked += (s, e) => OpenConsortiumForm(null);
-            EditClicked += (s, e) => EditSelectedConsortium();
-            DeleteClicked += (s, e) => DeleteSelectedConsortium();
-            UpdateListClicked += async (s, e) => await LoadDataAsync();
-            setLabelEntity("CONSORCIOS");
+            btnCreate.Click += (s, e) => OpenConsortiumForm(null);
+            btnUpdate.Click += (s, e) => EditSelectedConsortium();
+            btnDelete.Click += (s, e) => DeleteSelectedConsortium();
+            btnUpdateList.Click += (s, e) => LoadDataAsync();
+            this.LoadDataAsync();
 
             dgvEntity.CellContentClick += dgvEntity_CellContentClick;
         }
 
-        public override async void LoadData()
-        {
-            await LoadDataAsync();
-        }
-
         private async Task LoadDataAsync()
         {
-            dgvEntity.DataSource = await GetAll();
+            var consorcios = await GetAll();
+
+            dgvEntity.DataSource = null;
+            dgvEntity.AutoGenerateColumns = false; 
+
+            dgvEntity.Columns.Clear();
+
+            dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Name",
+                HeaderText = "Nombre",
+                Name = "colNombre",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Address",
+                HeaderText = "Dirección",
+                Name = "colDireccion",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
             AddActionButtons();
+
+            dgvEntity.DataSource = consorcios;
         }
 
-        private async Task<List<Consortium>> GetAll()
+        public void setLabelEntity(string entity)
+        {
+            this.labelEntity.Text = "CONSORCIOS";
+        }
+
+        private async Task<List<ConsortiumResponse>> GetAll()
         {
             try
             {
-                return await _apiService.GetAllAsync<Consortium>("consortium");
+                return await _apiService.GetAllAsync<ConsortiumResponse>("consortium");
             }
             catch (Exception ex)
             {
@@ -48,21 +87,24 @@ namespace desktop_app.consortium
             }
         }
 
-        private void OpenConsortiumForm(Consortium? consortium)
+        private void OpenConsortiumForm(ConsortiumResponse? dto)
         {
-            using var form = new ConsortiumForm(_apiService, consortium);
-            
+            var consortiumToProcess = (dto != null) ? GenerateConsortium(dto) : null;
+
+            using var form = new ConsortiumForm(_apiService, consortiumToProcess);
+
             if (form.ShowDialog() == DialogResult.OK)
             {
-                LoadData();
+                LoadDataAsync();
             }
         }
+
 
         private void EditSelectedConsortium()
         {
             if (dgvEntity.SelectedRows.Count > 0)
             {
-                var consortium = (Consortium)dgvEntity.SelectedRows[0].DataBoundItem;
+                var consortium = (ConsortiumResponse)dgvEntity.SelectedRows[0].DataBoundItem;
                 OpenConsortiumForm(consortium);
             }
             else
@@ -75,14 +117,14 @@ namespace desktop_app.consortium
         {
             if (dgvEntity.SelectedRows.Count > 0)
             {
-                var consortium = (Consortium)dgvEntity.SelectedRows[0].DataBoundItem;
+                var consortium = (ConsortiumResponse) dgvEntity.SelectedRows[0].DataBoundItem;
 
                 var confirm = MessageBox.Show($"¿Está seguro de eliminar este registro? ({consortium.Name})", "Confirmación", MessageBoxButtons.YesNo);
 
                 if (confirm == DialogResult.Yes)
                 {
                     await _apiService.DeleteAsync("consortium", consortium.Id);
-                    LoadData();
+                    LoadDataAsync();
                 }
             }
             else
@@ -95,6 +137,14 @@ namespace desktop_app.consortium
         {
             // Verificá que no estén ya agregadas
             if (dgvEntity.Columns["btnLiquidar"] != null) return;
+            
+            var btnUnidades = new DataGridViewButtonColumn
+            {
+                Name = "btnUnidades",
+                HeaderText = "Unidades",
+                Text = "Gestionar",
+                UseColumnTextForButtonValue = true
+            };
 
             var btnLiquidar = new DataGridViewButtonColumn
             {
@@ -112,63 +162,74 @@ namespace desktop_app.consortium
                 UseColumnTextForButtonValue = true
             };
 
-            var btnUnidades = new DataGridViewButtonColumn
-            {
-                Name = "btnUnidades",
-                HeaderText = "Unidades",
-                Text = "Gestionar",
-                UseColumnTextForButtonValue = true
-            };
-
+            dgvEntity.Columns.Add(btnUnidades);
             dgvEntity.Columns.Add(btnLiquidar);
             dgvEntity.Columns.Add(btnDescargar);
-            dgvEntity.Columns.Add(btnUnidades);
         }
 
         private void dgvEntity_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
 
             var columnName = dgvEntity.Columns[e.ColumnIndex].Name;
-            var rowData = (Consortium)dgvEntity.Rows[e.RowIndex].DataBoundItem;
+            var row = dgvEntity.Rows[e.RowIndex];
+            var consortium = row.DataBoundItem as ConsortiumResponse;
+            if (consortium == null) return;
 
             switch (columnName)
             {
                 case "btnLiquidar":
-                    GenerateLiquidation(rowData);
+                    GenerateLiquidation(consortium);
                     break;
 
                 case "btnDescargar":
-                    DownloadReportAsync(rowData);
+                    DownloadReportAsync(consortium);
                     break;
 
                 case "btnUnidades":
-                    ManageFunctionalUnits(rowData);
+                    ShowFunctionalUnits(consortium);
                     break;
             }
         }
 
-        private void GenerateLiquidation(Consortium consorcio)
-        {
-            using var form = new LiquidationForm(_liquidationService, consorcio);
-            form.ShowDialog();
-        }
+        private void ShowFunctionalUnits(ConsortiumResponse consortium) {
+            using var form = new FunctionalUnitForm(consortium, _functionalUnitService, _userService);
 
-        private async Task DownloadReportAsync(Consortium consorcio)
-        {
-            var list = await _liquidationService.GetAllByConsortiumIdAsync(consorcio.Id);
-
-            using var form = new ReportDownloadForm(list, _reportService, consorcio);
+            form.UnitsUpdated += (updatedUnits) =>
+            {
+                consortium.FunctionalUnits = updatedUnits;
+            };
 
             form.ShowDialog();
         }
 
-        private void ManageFunctionalUnits(Consortium consorcio)
+        private void GenerateLiquidation(ConsortiumResponse dto)
         {
-            MessageBox.Show($"Función aún no disponible, por favor dirigase al módulo de unidades funcionales.");
+            var consortium = GenerateConsortium(dto);
+
+            using var form = new LiquidationForm(_liquidationService, consortium);
+            form.ShowDialog();
         }
 
+        private async Task DownloadReportAsync(ConsortiumResponse dto)
+        {
+            var consortium = GenerateConsortium(dto);
 
+            var list = await _liquidationService.GetAllByConsortiumIdAsync(consortium.Id);
+
+            using var form = new ReportDownloadForm(list, _reportService, consortium);
+
+            form.ShowDialog();
+        }
+
+        private Consortium GenerateConsortium(ConsortiumResponse dto)
+        {
+            return new Consortium
+            {
+                Id = dto.Id,
+                Name = dto.Name,
+                Address = dto.Address
+            };
+        }
     }
-
 }
