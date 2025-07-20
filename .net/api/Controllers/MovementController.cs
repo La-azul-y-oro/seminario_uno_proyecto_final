@@ -1,4 +1,6 @@
-﻿using api.Models;
+﻿using api.Dto;
+using api.Mappers;
+using api.Models;
 using api.Services.Implementations;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -12,26 +14,30 @@ namespace api.Controllers
     public class MovementController : ControllerBase
     {
         private readonly IMovementService _movementService;
+        private readonly MovementMapper _movementMapper;
 
-        public MovementController(IMovementService movementService)
+        public MovementController(IMovementService movementService, MovementMapper movementMapper)
         {
             _movementService = movementService;
+            _movementMapper = movementMapper;
         }
 
         [HttpGet]
         [Authorize(Roles = "ADMIN,STAFF")]
-        public ActionResult<IEnumerable<Movement>> GetAll(){
+        public ActionResult<IEnumerable<MovementDTO>> GetAll(){
             var movements = _movementService.GetAll();
-            return Ok(movements);
+            var movementsDTO = movements.Select(u => _movementMapper.GetMovementDTO(u)).ToList();
+            return Ok(movementsDTO);
         }
 
         [HttpGet("{id}")]
         [Authorize(Roles = "ADMIN,STAFF")]
-        public ActionResult<Movement> GetById (int id){
+        public ActionResult<MovementDTO> GetById (int id){
 
             try{
                 var movement = _movementService.GetById(id);
-                return Ok(movement);
+                var movementDTO = _movementMapper.GetMovementDTO(movement);
+                return Ok(movementDTO);
             } catch(KeyNotFoundException){
                 return NotFound();
             }
@@ -39,15 +45,17 @@ namespace api.Controllers
 
         [HttpPost]
         [Authorize(Roles = "ADMIN,STAFF")]
-        public ActionResult<Movement> Create([FromBody] Movement movement){
-            if(movement == null){
+        public ActionResult<MovementDTO> Create([FromBody] MovementDTO movementDTO){
+            if(movementDTO == null){
                 return BadRequest();
             }
 
-            try
-            {
+            var movement = _movementMapper.GetMovement(movementDTO);
+
+            try{
                 _movementService.Create(movement);
-                return CreatedAtAction(nameof(GetById), new { id = movement.Id }, movement);
+
+                return CreatedAtAction(nameof(GetById), new { id = movement.Id}, _movementMapper.GetMovementDTO(movement) );
             }
             catch (InvalidOperationException e) {
                 return Conflict(e.Message);
@@ -56,13 +64,13 @@ namespace api.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "ADMIN,STAFF")]
-        public ActionResult<Movement> Update(int id, [FromBody] Movement movement){
-            if(movement == null){
+        public ActionResult<MovementDTO> Update(int id, [FromBody] MovementDTO movementDTO){
+            if(movementDTO == null){
                 return BadRequest();
             }
 
             try{
-                _movementService.Update(id, movement);
+                _movementService.Update(id, _movementMapper.GetMovement(movementDTO));
                 return NoContent();
             } catch(KeyNotFoundException) {
                 return NotFound();

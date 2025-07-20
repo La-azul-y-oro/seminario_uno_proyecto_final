@@ -185,7 +185,7 @@ export interface MovementRequest {
     conceptId: number;
     functionalUnitId?: number;
     comment?: string;
-    active?: boolean;
+    active: boolean;
 }
 
 export interface MovementResponse {
@@ -194,15 +194,37 @@ export interface MovementResponse {
     amount: number;
     movementType: MovementType;
     receipt?: string;
-    consortiumId: number;
-    supplierId?: number;
-    conceptId: number;
-    functionalUnitId?: number;
     comment?: string;
+
+    consortiumId: number;
+    consortiumName: string;
+
+    supplierId?: number;
+    supplierName?: string;
+
+    conceptId: number;
+    conceptName: string;
+
+    functionalUnitId?: number;
+    functionalUnitName?: string;
     active: boolean;
 }
 
 export enum MovementType {
     INGRESO = 'Ingreso',
     EGRESO = 'Egreso'
+}
+
+export interface FunctionalUnitRequest {
+    id: number;
+    name: string;
+    balance: number;
+    consortiumId: number;
+}
+
+export interface FunctionalUnitResponse{
+    id: number;
+    name: string;
+    balance: number;
+    consortiumId: number;
 }

@@ -24,7 +24,15 @@ export class MovementComponent extends GenericComponent<MovementRequest, Movemen
   override labelButtonAdd: string = "Agregar movimiento";
 
   columns = [
-    { header: "Nombre", field: "name", sortable: true }
+    { header: "Consorcio", field: "consortiumName", sortable: true },
+    { header: "Fecha", field: "date", sortable: true },
+    { header: "Tipo", field: "movementType", sortable: true },
+    { header: "Monto", field: "amount", sortable: true },
+    { header: "Concepto", field: "conceptName", sortable: true },
+    { header: "Unidad Funcional", field: "functionalUnitName", sortable: true },
+    { header: "Proveedor", field: "supplierName", sortable: true },
+    { header: "Recibo", field: "receipt", sortable: true },
+    { header: "Comentarios", field: "comment", sortable: true }
   ];
 
   buttonConfig: ActionButtonConfig[] = [
