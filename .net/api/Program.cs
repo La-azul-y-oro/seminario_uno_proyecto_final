@@ -35,7 +35,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<UserMapper>();
 builder.Services.AddScoped<FunctionalUnitMapper>();
 builder.Services.AddScoped<ConsortiumMapper>();
-
+builder.Services.AddScoped<MovementMapper>();
 
 builder.Services.AddCors(options =>
 {

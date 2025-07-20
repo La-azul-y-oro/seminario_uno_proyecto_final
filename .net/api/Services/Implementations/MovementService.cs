@@ -20,14 +20,26 @@ namespace api.Services.Implementations{
 
         public IEnumerable<Movement> GetAll()
         {
-            return _context.Movement.Where(m => m.Active).ToList();
+            return _context.Movement
+                .Include(m => m.Supplier)
+                .Include(m => m.Consortium)
+                .Include(m => m.Concept)
+                .Include(m => m.FunctionalUnit)
+                .Where(m => m.Active)
+                .ToList();
         }
 
         public Movement GetById(int id)
         {
-            var movement = _context.Movement.Find(id);
+            var movement = _context.Movement
+                    .Include(m => m.Supplier)
+                    .Include(m => m.Consortium)
+                    .Include(m => m.Concept)
+                    .Include(m => m.FunctionalUnit)
+                    .FirstOrDefault(m => m.Id == id && m.Active);
 
-            if(movement == null || !movement.Active){
+            if (movement == null)
+            {
                 throw new KeyNotFoundException();
             }
 
