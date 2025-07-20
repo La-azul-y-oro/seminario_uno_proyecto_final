@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Security.Policy;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using api.Auth;
+using desktop_app.dto;
 using desktop_app.utils;
 
 namespace desktop_app.auth
@@ -69,6 +71,38 @@ namespace desktop_app.auth
             }
         }
 
+        public async Task ResetPasswordAsync(ResetPasswordRequest changePasswordDto)
+        {
+            HttpContent content = JsonUtil.Serialize(changePasswordDto);
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.PostAsync("reset-password", content);
+
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error while reset password: {ex.Message}");
+            }
+        }
+
+
+        public async Task ForgotPasswordAsync(ForgotPasswordRequest forgotPasswordDto)
+        {
+            HttpContent content = JsonUtil.Serialize(forgotPasswordDto);
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.PostAsync("forgot-password", content);
+
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error while getting token: {ex.Message}");
+            }
+        }
 
 
         public void SetToken(string token)

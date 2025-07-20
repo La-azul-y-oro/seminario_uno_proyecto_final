@@ -1,6 +1,8 @@
 using System.Text.Json;
 using api.Auth;
 using desktop_app.auth;
+using desktop_app.concept;
+using desktop_app.services;
 
 namespace PracticaSeminario
 {
@@ -65,9 +67,8 @@ namespace PracticaSeminario
         private void inkOlvidaPass_LinkClicked(object sender,
         LinkLabelLinkClickedEventArgs e)
         {
-            MessageBox.Show("Lo siento, esta funci�n no esta disponible a�n.",
-            "Olvid� mi contrase�a",
-            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            using var form = new ResetPassForm(_authService);
+            form.ShowDialog();
         }
     }
 }
