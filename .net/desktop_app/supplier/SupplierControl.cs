@@ -1,36 +1,101 @@
-﻿using desktop_app.models;
+﻿using desktop_app.dto;
+using desktop_app.models;
 using desktop_app.services;
+using desktop_app.supplier;
 
 namespace desktop_app.supplier
 {
-    public partial class SupplierControl : BaseUserControl
+    public partial class SupplierControl : UserControl
     {
-        public SupplierControl(ApiService apiService) : base(apiService)
+        protected readonly ApiService? _apiService;
+        private List<ConceptResponse> _concepts;
+
+        public SupplierControl(ApiService apiService)
         {
             InitializeComponent();
-  
-                NewClicked += (s, e) => OpenSupplierForm(null);
-                EditClicked += (s, e) => EditSelectedSupplier();
-                DeleteClicked += (s, e) => DeleteSelectedSupplier();
-                UpdateListClicked += async (s, e) => await LoadDataAsync();
-                setLabelEntity("PROVEEDORES");
-        }
+            _apiService = apiService;
 
-        public override async void LoadData()
-        {
-            await LoadDataAsync();
+            LoadDataAsync();
+            GetAllConcepts();
+
+            dgvEntity.CellContentClick += dgvEntity_CellContentClick;
         }
 
         private async Task LoadDataAsync()
         {
-            dgvEntity.DataSource = await GetAll();
+            var suppliers = await GetAll();
+
+            dgvEntity.DataSource = null;
+            dgvEntity.AutoGenerateColumns = false;
+
+            dgvEntity.Columns.Clear();
+
+            dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Name",
+                HeaderText = "Nombre",
+                Name = "colNombre",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Cuit",
+                HeaderText = "Cuit",
+                Name = "colCuit",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Phone",
+                HeaderText = "Teléfono",
+                Name = "colPhone",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Email",
+                HeaderText = "Email",
+                Name = "colEmail",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "colCategorias",
+                HeaderText = "Categorías",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            AddActionButtons();
+
+            dgvEntity.CellFormatting += (s, e) =>
+            {
+                if (dgvEntity.Columns[e.ColumnIndex].Name == "colCategorias")
+                {
+                    var supplier = dgvEntity.Rows[e.RowIndex].DataBoundItem as SupplierResponse;
+                    if (supplier?.Concepts != null)
+                    {
+                        e.Value = string.Join(", ", supplier.Concepts.Select(c => c.Name));
+                    }
+                }
+            };
+
+            dgvEntity.DataSource = suppliers;
         }
 
-        private async Task<List<Supplier>> GetAll()
+        public void setLabelEntity(string entity)
+        {
+            this.labelEntity.Text = "PROVEEDORES";
+        }
+
+        private async Task<List<SupplierResponse>> GetAll()
         {
             try
             {
-                return await _apiService.GetAllAsync<Supplier>("supplier");
+                return await _apiService.GetAllAsync<SupplierResponse>("supplier");
             }
             catch (Exception ex)
             {
@@ -38,49 +103,109 @@ namespace desktop_app.supplier
                 return [];
             }
         }
-
-        private void OpenSupplierForm(Supplier? supplier)
+        private async Task GetAllConcepts()
         {
-            using var form = new SupplierForm(_apiService, supplier);
+            try
+            {
+                _concepts = await _apiService.GetAllAsync<ConceptResponse>("concept");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void OpenSupplierForm(SupplierResponse? dto)
+        {
+            var supplierToProcess = (dto != null) ? dto : null;
+
+            using var form = new SupplierForm(_apiService, _concepts, supplierToProcess);
+
             if (form.ShowDialog() == DialogResult.OK)
             {
-                LoadData();
+                LoadDataAsync();
             }
         }
 
-        private void EditSelectedSupplier()
+
+        private async void DeleteSelectedSupplier(SupplierResponse supplier)
         {
-            if (dgvEntity.SelectedRows.Count > 0)
+            var confirm = MessageBox.Show($"¿Está seguro de eliminar este registro? ({supplier.Name})", "Confirmación", MessageBoxButtons.YesNo);
+
+            if (confirm == DialogResult.Yes)
             {
-                var supplier = (Supplier)dgvEntity.SelectedRows[0].DataBoundItem;
-                OpenSupplierForm(supplier);
-            }
-            else
-            {
-                MessageBox.Show("Seleccione un registro para editar.");
+                await _apiService.DeleteAsync("supplier", supplier.Id);
+                LoadDataAsync();
             }
         }
 
-        private async void DeleteSelectedSupplier()
+        private void AddActionButtons()
         {
-            if (dgvEntity.SelectedRows.Count > 0)
-            {
-                var supplier = (Supplier)dgvEntity.SelectedRows[0].DataBoundItem;
+            // Verificá que no estén ya agregadas
+            if (dgvEntity.Columns["btnLiquidar"] != null) return;
 
-                var confirm = MessageBox.Show($"¿Está seguro de eliminar este registro? ({supplier.Name})", "Confirmación", MessageBoxButtons.YesNo);
-
-                if (confirm == DialogResult.Yes)
-                {
-                    await _apiService.DeleteAsync("supplier", supplier.Id);
-                    LoadData();
-                }
-            }
-            else
+            var btnEdit = new DataGridViewButtonColumn
             {
-                MessageBox.Show("Seleccione un registro para eliminar.");
+                Name = "btnEdit",
+                HeaderText = "Editar",
+                Text = "Editar",
+                UseColumnTextForButtonValue = true
+            };
+
+            var btnRemove = new DataGridViewButtonColumn
+            {
+                Name = "btnRemove",
+                HeaderText = "Eliminar",
+                Text = "Eliminar",
+                UseColumnTextForButtonValue = true
+            };
+
+            dgvEntity.Columns.Add(btnEdit);
+            dgvEntity.Columns.Add(btnRemove);
+        }
+
+        private void dgvEntity_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.ColumnIndex < 0) return;
+
+            var columnName = dgvEntity.Columns[e.ColumnIndex].Name;
+            var row = dgvEntity.Rows[e.RowIndex];
+            var supplier = row.DataBoundItem as SupplierResponse;
+            if (supplier == null) return;
+
+            switch (columnName)
+            {
+                case "btnEdit":
+                    OpenSupplierForm(supplier);
+                    break;
+
+                case "btnRemove":
+                    DeleteSelectedSupplier(supplier);
+                    break;
             }
         }
 
+        private Supplier GenerateSupplier(SupplierResponse dto)
+        {
+            return new Supplier
+            {
+                Id = dto.Id,
+                Cuit = dto.Cuit,
+                Name = dto.Name,
+                Phone = dto.Phone,
+                Email = dto.Email
+            };
+            // todo ver este objeto a generar....
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            OpenSupplierForm(null);
+        }
+
+        private void btnUpdateList_Click(object sender, EventArgs e)
+        {
+            LoadDataAsync();
+        }
     }
-
 }
