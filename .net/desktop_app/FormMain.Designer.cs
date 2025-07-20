@@ -40,7 +40,6 @@
             tsmiSupplier = new ToolStripMenuItem();
             tsmiUsuarios = new ToolStripMenuItem();
             labelUserInfo = new Label();
-            unidadesFuncionalesToolStripMenuItem = new ToolStripMenuItem();
             tableLayoutPanel1.SuspendLayout();
             mnsPrincipal.SuspendLayout();
             SuspendLayout();
@@ -105,7 +104,7 @@
             // 
             // mnuModulos
             // 
-            mnuModulos.DropDownItems.AddRange(new ToolStripItem[] { tsmiConceptos, tsmiConsorcios, tsmiSupplier, tsmiUsuarios, unidadesFuncionalesToolStripMenuItem });
+            mnuModulos.DropDownItems.AddRange(new ToolStripItem[] { tsmiConceptos, tsmiConsorcios, tsmiSupplier, tsmiUsuarios });
             mnuModulos.Name = "mnuModulos";
             mnuModulos.Size = new Size(104, 32);
             mnuModulos.Text = "Módulos";
@@ -113,28 +112,28 @@
             // tsmiConceptos
             // 
             tsmiConceptos.Name = "tsmiConceptos";
-            tsmiConceptos.Size = new Size(283, 32);
+            tsmiConceptos.Size = new Size(224, 32);
             tsmiConceptos.Text = "Conceptos";
             tsmiConceptos.Click += tsmiConceptos_Click;
             // 
             // tsmiConsorcios
             // 
             tsmiConsorcios.Name = "tsmiConsorcios";
-            tsmiConsorcios.Size = new Size(283, 32);
+            tsmiConsorcios.Size = new Size(224, 32);
             tsmiConsorcios.Text = "Consorcios";
             tsmiConsorcios.Click += tsmiConsorcios_Click;
             // 
             // tsmiSupplier
             // 
             tsmiSupplier.Name = "tsmiSupplier";
-            tsmiSupplier.Size = new Size(283, 32);
+            tsmiSupplier.Size = new Size(224, 32);
             tsmiSupplier.Text = "Proveedores";
             tsmiSupplier.Click += tsmiSupplier_Click;
             // 
             // tsmiUsuarios
             // 
             tsmiUsuarios.Name = "tsmiUsuarios";
-            tsmiUsuarios.Size = new Size(283, 32);
+            tsmiUsuarios.Size = new Size(224, 32);
             tsmiUsuarios.Text = "Usuarios";
             tsmiUsuarios.Click += tsmiUsuarios_Click;
             // 
@@ -147,13 +146,6 @@
             labelUserInfo.Size = new Size(494, 40);
             labelUserInfo.TabIndex = 4;
             labelUserInfo.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // unidadesFuncionalesToolStripMenuItem
-            // 
-            unidadesFuncionalesToolStripMenuItem.Name = "unidadesFuncionalesToolStripMenuItem";
-            unidadesFuncionalesToolStripMenuItem.Size = new Size(283, 32);
-            unidadesFuncionalesToolStripMenuItem.Text = "Unidades funcionales";
-            unidadesFuncionalesToolStripMenuItem.Click += unidadesFuncionalesToolStripMenuItem_Click;
             // 
             // FormMain
             // 
@@ -188,6 +180,5 @@
         private Label labelUserInfo;
         private ToolStripMenuItem tsmChangePass;
         private ToolStripMenuItem tsmiConsorcios;
-        private ToolStripMenuItem unidadesFuncionalesToolStripMenuItem;
     }
 }

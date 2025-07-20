@@ -1,7 +1,6 @@
 ﻿using desktop_app.auth;
 using desktop_app.concept;
 using desktop_app.consortium;
-using desktop_app.functional_unit;
 using desktop_app.services;
 using desktop_app.supplier;
 
@@ -92,11 +91,6 @@ namespace PracticaSeminario
         {
             // a implementar
             // ShowControl(new UserControl(_apiService));
-        }
-
-        private void unidadesFuncionalesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowControl(new FunctionalUnitControl(_apiService));
         }
     }
 }

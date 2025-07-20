@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="concept\ConceptControl.cs" />
+    <Compile Update="concept\ConceptControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="liquidation\LiquidationForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -56,13 +56,19 @@ namespace desktop_app.consortium
             });
 
             AddActionButtons();
+            SetTableStyle();
 
             dgvEntity.DataSource = consorcios;
         }
 
-        public void setLabelEntity(string entity)
+        private void SetTableStyle()
         {
-            this.labelEntity.Text = "CONSORCIOS";
+            dgvEntity.EnableHeadersVisualStyles = false;
+            dgvEntity.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
+            dgvEntity.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dgvEntity.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            dgvEntity.ColumnHeadersDefaultCellStyle.Padding = new Padding(5);
+            dgvEntity.DefaultCellStyle.Font = new Font("Segoe UI", 10);
         }
 
         private async Task<List<ConsortiumResponse>> GetAll()
@@ -104,23 +110,24 @@ namespace desktop_app.consortium
 
         private void AddActionButtons()
         {
-            // Verificá que no estén ya agregadas
             if (dgvEntity.Columns["btnLiquidar"] != null) return;
 
             var btnEdit = new DataGridViewButtonColumn
             {
                 Name = "btnEdit",
-                HeaderText = "Editar",
+                HeaderText = "",
                 Text = "Editar",
-                UseColumnTextForButtonValue = true
+                UseColumnTextForButtonValue = true,
+                Width = 120
             };
 
             var btnRemove = new DataGridViewButtonColumn
             {
                 Name = "btnRemove",
-                HeaderText = "Eliminar",
+                HeaderText = "",
                 Text = "Eliminar",
-                UseColumnTextForButtonValue = true
+                UseColumnTextForButtonValue = true,
+                Width = 120
             };
 
             var btnUnidades = new DataGridViewButtonColumn
@@ -128,7 +135,8 @@ namespace desktop_app.consortium
                 Name = "btnUnidades",
                 HeaderText = "Unidades",
                 Text = "Gestionar",
-                UseColumnTextForButtonValue = true
+                UseColumnTextForButtonValue = true,
+                Width = 120
             };
 
             var btnLiquidar = new DataGridViewButtonColumn
@@ -136,7 +144,8 @@ namespace desktop_app.consortium
                 Name = "btnLiquidar",
                 HeaderText = "Liquidación",
                 Text = "Generar",
-                UseColumnTextForButtonValue = true
+                UseColumnTextForButtonValue = true,
+                Width = 120
             };
 
             var btnDescargar = new DataGridViewButtonColumn
@@ -144,7 +153,8 @@ namespace desktop_app.consortium
                 Name = "btnDescargar",
                 HeaderText = "Reportes",
                 Text = "Descargar",
-                UseColumnTextForButtonValue = true
+                UseColumnTextForButtonValue = true,
+                Width = 120
             };
 
             dgvEntity.Columns.Add(btnEdit);

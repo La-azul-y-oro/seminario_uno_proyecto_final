@@ -83,12 +83,19 @@ namespace desktop_app.supplier
                 }
             };
 
+            SetTableStyle();
+
             dgvEntity.DataSource = suppliers;
         }
 
-        public void setLabelEntity(string entity)
+        private void SetTableStyle()
         {
-            this.labelEntity.Text = "PROVEEDORES";
+            dgvEntity.EnableHeadersVisualStyles = false;
+            dgvEntity.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
+            dgvEntity.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dgvEntity.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            dgvEntity.ColumnHeadersDefaultCellStyle.Padding = new Padding(5);
+            dgvEntity.DefaultCellStyle.Font = new Font("Segoe UI", 10);
         }
 
         private async Task<List<SupplierResponse>> GetAll()
@@ -141,23 +148,24 @@ namespace desktop_app.supplier
 
         private void AddActionButtons()
         {
-            // Verificá que no estén ya agregadas
-            if (dgvEntity.Columns["btnLiquidar"] != null) return;
+            if (dgvEntity.Columns["btnEdit"] != null) return;
 
             var btnEdit = new DataGridViewButtonColumn
             {
                 Name = "btnEdit",
-                HeaderText = "Editar",
+                HeaderText = "",
                 Text = "Editar",
-                UseColumnTextForButtonValue = true
+                UseColumnTextForButtonValue = true,
+                Width = 120
             };
 
             var btnRemove = new DataGridViewButtonColumn
             {
                 Name = "btnRemove",
-                HeaderText = "Eliminar",
+                HeaderText = "",
                 Text = "Eliminar",
-                UseColumnTextForButtonValue = true
+                UseColumnTextForButtonValue = true,
+                Width = 120
             };
 
             dgvEntity.Columns.Add(btnEdit);
@@ -183,19 +191,6 @@ namespace desktop_app.supplier
                     DeleteSelectedSupplier(supplier);
                     break;
             }
-        }
-
-        private Supplier GenerateSupplier(SupplierResponse dto)
-        {
-            return new Supplier
-            {
-                Id = dto.Id,
-                Cuit = dto.Cuit,
-                Name = dto.Name,
-                Phone = dto.Phone,
-                Email = dto.Email
-            };
-            // todo ver este objeto a generar....
         }
 
         private void btnCreate_Click(object sender, EventArgs e)
