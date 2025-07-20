@@ -64,7 +64,7 @@ export class ResetPassComponent {
       this.loading = true;
       this.authService.resetPassword(tokenReq).subscribe({
         next: () => {
-          this.toastService.setSuccessMessage('Su nueva contraseña se ha restaurado correctamente');
+          this.toastService.setSuccessMessage('Su contraseña se ha seteado correctamente');
           this.loading = false;
           this.resetAll();
         },

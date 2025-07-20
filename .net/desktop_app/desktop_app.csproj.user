@@ -4,6 +4,9 @@
     <Compile Update="auth\ChangePassForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="auth\ResetPassForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="BaseUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

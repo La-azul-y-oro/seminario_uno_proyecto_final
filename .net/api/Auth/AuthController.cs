@@ -80,6 +80,7 @@ namespace api.Auth
         [HttpPost("reset-password")]
         public IActionResult ResetPassword([FromBody] ResetPasswordRequest request)
         {
+            try {
             var user = _userService.GetByResetToken(request.Token);
             if (user == null || user.ResetTokenExpiration < DateTime.UtcNow)
                 return BadRequest("Invalid or expired token.");
@@ -90,6 +91,15 @@ namespace api.Auth
             _userService.Update(user);
 
             return Ok();
+            }
+            catch (KeyNotFoundException)
+            {
+                return BadRequest("Invalid or expired token.");
+            }
+            catch (Exception)
+            {
+                return Problem();
+            }
         }
 
 
