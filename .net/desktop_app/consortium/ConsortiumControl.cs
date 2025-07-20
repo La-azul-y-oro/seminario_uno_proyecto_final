@@ -9,18 +9,13 @@ namespace desktop_app.consortium
 {
     public partial class ConsortiumControl : UserControl
     {
-        public event EventHandler? NewClicked;
-        public event EventHandler? EditClicked;
-        public event EventHandler? DeleteClicked;
-        public event EventHandler? UpdateListClicked;
-
         protected readonly ApiService? _apiService;
 
         private readonly LiquidationService _liquidationService;
         private readonly ReportService _reportService;
         private readonly FunctionalUnitService _functionalUnitService;
         private readonly UserService _userService;
-        
+
         public ConsortiumControl(ApiService apiService, LiquidationService liquidationService, ReportService reportService, FunctionalUnitService functionalUnitService, UserService userService)
         {
             InitializeComponent();
@@ -30,11 +25,7 @@ namespace desktop_app.consortium
             _functionalUnitService = functionalUnitService;
             _userService = userService;
 
-            btnCreate.Click += (s, e) => OpenConsortiumForm(null);
-            btnUpdate.Click += (s, e) => EditSelectedConsortium();
-            btnDelete.Click += (s, e) => DeleteSelectedConsortium();
-            btnUpdateList.Click += (s, e) => LoadDataAsync();
-            this.LoadDataAsync();
+            LoadDataAsync();
 
             dgvEntity.CellContentClick += dgvEntity_CellContentClick;
         }
@@ -44,7 +35,7 @@ namespace desktop_app.consortium
             var consorcios = await GetAll();
 
             dgvEntity.DataSource = null;
-            dgvEntity.AutoGenerateColumns = false; 
+            dgvEntity.AutoGenerateColumns = false;
 
             dgvEntity.Columns.Clear();
 
@@ -100,36 +91,14 @@ namespace desktop_app.consortium
         }
 
 
-        private void EditSelectedConsortium()
+        private async void DeleteSelectedConsortium(ConsortiumResponse consortium)
         {
-            if (dgvEntity.SelectedRows.Count > 0)
-            {
-                var consortium = (ConsortiumResponse)dgvEntity.SelectedRows[0].DataBoundItem;
-                OpenConsortiumForm(consortium);
-            }
-            else
-            {
-                MessageBox.Show("Seleccione un registro para editar.");
-            }
-        }
+            var confirm = MessageBox.Show($"¿Está seguro de eliminar este registro? ({consortium.Name})", "Confirmación", MessageBoxButtons.YesNo);
 
-        private async void DeleteSelectedConsortium()
-        {
-            if (dgvEntity.SelectedRows.Count > 0)
+            if (confirm == DialogResult.Yes)
             {
-                var consortium = (ConsortiumResponse) dgvEntity.SelectedRows[0].DataBoundItem;
-
-                var confirm = MessageBox.Show($"¿Está seguro de eliminar este registro? ({consortium.Name})", "Confirmación", MessageBoxButtons.YesNo);
-
-                if (confirm == DialogResult.Yes)
-                {
-                    await _apiService.DeleteAsync("consortium", consortium.Id);
-                    LoadDataAsync();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Seleccione un registro para eliminar.");
+                await _apiService.DeleteAsync("consortium", consortium.Id);
+                LoadDataAsync();
             }
         }
 
@@ -137,7 +106,23 @@ namespace desktop_app.consortium
         {
             // Verificá que no estén ya agregadas
             if (dgvEntity.Columns["btnLiquidar"] != null) return;
-            
+
+            var btnEdit = new DataGridViewButtonColumn
+            {
+                Name = "btnEdit",
+                HeaderText = "Editar",
+                Text = "Editar",
+                UseColumnTextForButtonValue = true
+            };
+
+            var btnRemove = new DataGridViewButtonColumn
+            {
+                Name = "btnRemove",
+                HeaderText = "Eliminar",
+                Text = "Eliminar",
+                UseColumnTextForButtonValue = true
+            };
+
             var btnUnidades = new DataGridViewButtonColumn
             {
                 Name = "btnUnidades",
@@ -162,6 +147,8 @@ namespace desktop_app.consortium
                 UseColumnTextForButtonValue = true
             };
 
+            dgvEntity.Columns.Add(btnEdit);
+            dgvEntity.Columns.Add(btnRemove);
             dgvEntity.Columns.Add(btnUnidades);
             dgvEntity.Columns.Add(btnLiquidar);
             dgvEntity.Columns.Add(btnDescargar);
@@ -178,6 +165,14 @@ namespace desktop_app.consortium
 
             switch (columnName)
             {
+                case "btnEdit":
+                    OpenConsortiumForm(consortium);
+                    break;
+
+                case "btnRemove":
+                    DeleteSelectedConsortium(consortium);
+                    break;
+
                 case "btnLiquidar":
                     GenerateLiquidation(consortium);
                     break;
@@ -192,7 +187,8 @@ namespace desktop_app.consortium
             }
         }
 
-        private void ShowFunctionalUnits(ConsortiumResponse consortium) {
+        private void ShowFunctionalUnits(ConsortiumResponse consortium)
+        {
             using var form = new FunctionalUnitForm(consortium, _functionalUnitService, _userService);
 
             form.UnitsUpdated += (updatedUnits) =>
@@ -230,6 +226,16 @@ namespace desktop_app.consortium
                 Name = dto.Name,
                 Address = dto.Address
             };
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            btnCreate.Click += (s, e) => OpenConsortiumForm(null);
+        }
+
+        private void btnUpdateList_Click(object sender, EventArgs e)
+        {
+            btnUpdateList.Click += (s, e) => LoadDataAsync();
         }
     }
 }

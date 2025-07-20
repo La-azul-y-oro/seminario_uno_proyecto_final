@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tableLayoutPanel1 = new TableLayoutPanel();
+            panel1 = new Panel();
+            checkedConcepts = new CheckedListBox();
+            labelConceptos = new Label();
             label1 = new Label();
             txtName = new TextBox();
             btnAccept = new Button();
@@ -39,39 +41,47 @@
             txtPhone = new TextBox();
             txtMail = new TextBox();
             labelForm = new Label();
-            tableLayoutPanel1.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // panel1
             // 
-            tableLayoutPanel1.ColumnCount = 6;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 10F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 70F));
-            tableLayoutPanel1.Controls.Add(label1, 1, 1);
-            tableLayoutPanel1.Controls.Add(txtName, 2, 1);
-            tableLayoutPanel1.Controls.Add(btnAccept, 4, 3);
-            tableLayoutPanel1.Controls.Add(labelPhone, 1, 2);
-            tableLayoutPanel1.Controls.Add(labelCuit, 3, 1);
-            tableLayoutPanel1.Controls.Add(labelMail, 3, 2);
-            tableLayoutPanel1.Controls.Add(txtCUIT, 4, 1);
-            tableLayoutPanel1.Controls.Add(txtPhone, 2, 2);
-            tableLayoutPanel1.Controls.Add(txtMail, 4, 2);
-            tableLayoutPanel1.Controls.Add(labelForm, 1, 0);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 80F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Size = new Size(751, 335);
-            tableLayoutPanel1.TabIndex = 0;
+            panel1.Controls.Add(checkedConcepts);
+            panel1.Controls.Add(labelConceptos);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(txtName);
+            panel1.Controls.Add(btnAccept);
+            panel1.Controls.Add(labelPhone);
+            panel1.Controls.Add(labelCuit);
+            panel1.Controls.Add(labelMail);
+            panel1.Controls.Add(txtCUIT);
+            panel1.Controls.Add(txtPhone);
+            panel1.Controls.Add(txtMail);
+            panel1.Controls.Add(labelForm);
+            panel1.Dock = DockStyle.Fill;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(858, 447);
+            panel1.TabIndex = 0;
+            // 
+            // checkedConcepts
+            // 
+            checkedConcepts.FormattingEnabled = true;
+            checkedConcepts.IntegralHeight = false;
+            checkedConcepts.Location = new Point(510, 165);
+            checkedConcepts.Name = "checkedConcepts";
+            checkedConcepts.Size = new Size(302, 180);
+            checkedConcepts.TabIndex = 23;
+            // 
+            // labelConceptos
+            // 
+            labelConceptos.AutoSize = true;
+            labelConceptos.Font = new Font("Segoe UI", 11F);
+            labelConceptos.Location = new Point(403, 165);
+            labelConceptos.Name = "labelConceptos";
+            labelConceptos.Size = new Size(101, 25);
+            labelConceptos.TabIndex = 21;
+            labelConceptos.Text = "Conceptos";
             // 
             // label1
             // 
@@ -79,22 +89,21 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 11F);
             label1.ForeColor = SystemColors.ControlText;
-            label1.Location = new Point(64, 88);
-            label1.Margin = new Padding(3, 8, 3, 0);
+            label1.Location = new Point(48, 87);
+            label1.Margin = new Padding(3, 11, 3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(77, 20);
-            label1.TabIndex = 4;
+            label1.Size = new Size(99, 25);
+            label1.TabIndex = 14;
             label1.Text = "Proveedor";
             // 
             // txtName
             // 
-            txtName.Dock = DockStyle.Fill;
             txtName.Font = new Font("Segoe UI", 10F);
-            txtName.Location = new Point(147, 88);
-            txtName.Margin = new Padding(3, 8, 3, 2);
+            txtName.Location = new Point(153, 87);
+            txtName.Margin = new Padding(3, 11, 3, 3);
             txtName.Name = "txtName";
-            txtName.Size = new Size(195, 25);
-            txtName.TabIndex = 3;
+            txtName.Size = new Size(226, 30);
+            txtName.TabIndex = 13;
             // 
             // btnAccept
             // 
@@ -102,11 +111,11 @@
             btnAccept.BackColor = SystemColors.HotTrack;
             btnAccept.Font = new Font("Segoe UI", 11F);
             btnAccept.ForeColor = SystemColors.ControlLightLight;
-            btnAccept.Location = new Point(572, 248);
-            btnAccept.Margin = new Padding(9, 8, 3, 2);
+            btnAccept.Location = new Point(692, 376);
+            btnAccept.Margin = new Padding(10, 11, 3, 3);
             btnAccept.Name = "btnAccept";
-            btnAccept.Size = new Size(105, 34);
-            btnAccept.TabIndex = 1;
+            btnAccept.Size = new Size(120, 45);
+            btnAccept.TabIndex = 12;
             btnAccept.Text = "Crear";
             btnAccept.UseVisualStyleBackColor = false;
             btnAccept.Click += btnAccept_Click;
@@ -117,11 +126,11 @@
             labelPhone.AutoSize = true;
             labelPhone.Font = new Font("Segoe UI", 11F);
             labelPhone.ForeColor = SystemColors.ControlText;
-            labelPhone.Location = new Point(74, 168);
-            labelPhone.Margin = new Padding(3, 8, 3, 0);
+            labelPhone.Location = new Point(66, 249);
+            labelPhone.Margin = new Padding(3, 11, 3, 0);
             labelPhone.Name = "labelPhone";
-            labelPhone.Size = new Size(67, 20);
-            labelPhone.TabIndex = 5;
+            labelPhone.Size = new Size(84, 25);
+            labelPhone.TabIndex = 15;
             labelPhone.Text = "Teléfono";
             labelPhone.TextAlign = ContentAlignment.MiddleCenter;
             // 
@@ -131,11 +140,11 @@
             labelCuit.AutoSize = true;
             labelCuit.Font = new Font("Segoe UI", 11F);
             labelCuit.ForeColor = SystemColors.ControlText;
-            labelCuit.Location = new Point(436, 88);
-            labelCuit.Margin = new Padding(3, 8, 3, 0);
+            labelCuit.Location = new Point(98, 167);
+            labelCuit.Margin = new Padding(3, 11, 3, 0);
             labelCuit.Name = "labelCuit";
-            labelCuit.Size = new Size(40, 20);
-            labelCuit.TabIndex = 6;
+            labelCuit.Size = new Size(52, 25);
+            labelCuit.TabIndex = 16;
             labelCuit.Text = "CUIT";
             // 
             // labelMail
@@ -144,80 +153,72 @@
             labelMail.AutoSize = true;
             labelMail.Font = new Font("Segoe UI", 11F);
             labelMail.ForeColor = SystemColors.ControlText;
-            labelMail.Location = new Point(424, 168);
-            labelMail.Margin = new Padding(3, 8, 3, 0);
+            labelMail.Location = new Point(438, 87);
+            labelMail.Margin = new Padding(3, 11, 3, 0);
             labelMail.Name = "labelMail";
-            labelMail.Size = new Size(52, 20);
-            labelMail.TabIndex = 7;
+            labelMail.Size = new Size(66, 25);
+            labelMail.TabIndex = 17;
             labelMail.Text = "E-mail";
             // 
             // txtCUIT
             // 
-            txtCUIT.Dock = DockStyle.Fill;
             txtCUIT.Font = new Font("Segoe UI", 10F);
-            txtCUIT.Location = new Point(482, 88);
-            txtCUIT.Margin = new Padding(3, 8, 3, 2);
+            txtCUIT.Location = new Point(156, 166);
+            txtCUIT.Margin = new Padding(3, 11, 3, 3);
             txtCUIT.Name = "txtCUIT";
-            txtCUIT.Size = new Size(195, 25);
-            txtCUIT.TabIndex = 8;
+            txtCUIT.Size = new Size(223, 30);
+            txtCUIT.TabIndex = 18;
             // 
             // txtPhone
             // 
-            txtPhone.Dock = DockStyle.Fill;
             txtPhone.Font = new Font("Segoe UI", 10F);
-            txtPhone.Location = new Point(147, 168);
-            txtPhone.Margin = new Padding(3, 8, 3, 2);
+            txtPhone.Location = new Point(156, 249);
+            txtPhone.Margin = new Padding(3, 11, 3, 3);
             txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(195, 25);
-            txtPhone.TabIndex = 9;
+            txtPhone.Size = new Size(223, 30);
+            txtPhone.TabIndex = 19;
             // 
             // txtMail
             // 
-            txtMail.Dock = DockStyle.Fill;
             txtMail.Font = new Font("Segoe UI", 10F);
-            txtMail.Location = new Point(482, 168);
-            txtMail.Margin = new Padding(3, 8, 3, 2);
+            txtMail.Location = new Point(510, 87);
+            txtMail.Margin = new Padding(3, 11, 3, 3);
             txtMail.Name = "txtMail";
-            txtMail.Size = new Size(195, 25);
-            txtMail.TabIndex = 10;
+            txtMail.Size = new Size(223, 30);
+            txtMail.TabIndex = 20;
             // 
             // labelForm
             // 
             labelForm.AutoSize = true;
-            tableLayoutPanel1.SetColumnSpan(labelForm, 4);
-            labelForm.Dock = DockStyle.Fill;
             labelForm.Font = new Font("Segoe UI", 12F);
-            labelForm.Location = new Point(13, 0);
+            labelForm.Location = new Point(352, 26);
             labelForm.Name = "labelForm";
-            labelForm.Size = new Size(664, 80);
-            labelForm.TabIndex = 0;
+            labelForm.Size = new Size(155, 28);
+            labelForm.TabIndex = 11;
             labelForm.Text = "Crear proveedor";
             labelForm.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // SupplierForm
             // 
-            AcceptButton = btnAccept;
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(751, 335);
-            Controls.Add(tableLayoutPanel1);
+            ClientSize = new Size(858, 447);
+            Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             Name = "SupplierForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Concepto";
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            Text = "Proveedor";
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private TableLayoutPanel tableLayoutPanel1;
-        private Label labelForm;
-        private TextBox txtName;
+        private Panel panel1;
         private Label label1;
+        private TextBox txtName;
         private Button btnAccept;
         private Label labelPhone;
         private Label labelCuit;
@@ -225,5 +226,8 @@
         private TextBox txtCUIT;
         private TextBox txtPhone;
         private TextBox txtMail;
+        private Label labelForm;
+        private Label labelConceptos;
+        private CheckedListBox checkedConcepts;
     }
 }

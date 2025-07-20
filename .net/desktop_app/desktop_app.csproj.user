@@ -37,8 +37,5 @@
     <Compile Update="report\ReportDownloadForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="supplier\SupplierControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
   </ItemGroup>
 </Project>
