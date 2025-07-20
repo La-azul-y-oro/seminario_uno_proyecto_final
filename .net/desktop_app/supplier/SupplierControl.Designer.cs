@@ -112,6 +112,7 @@
             labelEntity.Name = "labelEntity";
             labelEntity.Size = new Size(904, 65);
             labelEntity.TabIndex = 5;
+            labelEntity.Text = "PROVEEDORES";
             labelEntity.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // SupplierControl

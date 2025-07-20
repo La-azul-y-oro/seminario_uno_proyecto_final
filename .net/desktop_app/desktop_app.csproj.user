@@ -7,9 +7,6 @@
     <Compile Update="BaseUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="concept\ConceptControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Update="concept\ConceptForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -26,12 +23,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="FormMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="functional_unit\FunctionalUnitControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="functional_unit\FunctionalUnitForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="report\ReportDownloadForm.cs">
