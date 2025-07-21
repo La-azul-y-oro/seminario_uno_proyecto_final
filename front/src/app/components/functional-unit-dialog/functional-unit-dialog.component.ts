@@ -14,6 +14,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { FunctionalUnitBatchRequest, UnitFunctionalConsortium } from '../../interfaces/model.interfaces';
+import { noWhitespaceValidator } from '../../util/customValidators';
 
 @Component({
   selector: 'app-functional-unit-dialog',
@@ -102,7 +103,7 @@ export class FunctionalUnitDialogComponent {
     this.functionalUnitList?.forEach((u: any) => {
       this.units.push(this.fb.group({
         id: [u.id],
-        name: [u.name, Validators.required],
+        name: [u.name, [Validators.required, Validators.pattern(/^\S+$/)]],
         factor: [u.factor, [Validators.required, Validators.min(0), Validators.max(100)]],
         balance: [u.balance],
         consortiumId: [u.consortiumId]
@@ -209,7 +210,6 @@ export class FunctionalUnitDialogComponent {
     this.showMainForm = true;
     this.isManualSelected = true;
 
-    // Opcional: Scroll hacia el formulario principal
     setTimeout(() => {
       const element = document.querySelector('form[formGroupName="form"]');
       if (element) {
