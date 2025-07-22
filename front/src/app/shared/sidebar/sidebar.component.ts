@@ -56,7 +56,7 @@ export class SidebarComponent {
     label: 'Usuarios',
     icon: 'pi pi-users',
     path: 'usuarios',
-    visible: hasValidRoles(this.authService.currentUserData, ["ADMIN"])
+    visible: hasValidRoles(this.authService.userData, ["ADMIN"])
   }];
 
   constructor (

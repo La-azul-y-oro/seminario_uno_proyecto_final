@@ -35,6 +35,7 @@ builder.Services.AddScoped<UserMapper>();
 builder.Services.AddScoped<FunctionalUnitMapper>();
 builder.Services.AddScoped<ConsortiumMapper>();
 
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddCors(options =>
 {

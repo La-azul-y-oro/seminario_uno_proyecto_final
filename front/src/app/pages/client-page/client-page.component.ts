@@ -68,7 +68,7 @@ export class ClientPageComponent {
     ).subscribe({
       next: (response) => {
         this.dataList = response;
-
+        this.isEmpty = this.dataList.length <= 0;
       },
       error: (error) => {
         console.error("Error al cargar los datos:", error);

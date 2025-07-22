@@ -2,6 +2,7 @@
 using api.Context;
 using api.Mappers;
 using api.Models;
+using api.Services.Implementations;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,15 @@ namespace api.Auth
         private readonly IUserService _userService;
         private readonly ApplicationDbContext _context;
         private readonly UserMapper _userMapper;
+        private readonly IEmailService _emailService;
 
-        public AuthController(JwtService jwtService, IUserService userService, ApplicationDbContext context, UserMapper userMapper)
+        public AuthController(JwtService jwtService, IUserService userService, ApplicationDbContext context, UserMapper userMapper, IEmailService emailService)
         {
             _jwtService = jwtService;
             _userService = userService;
             _context = context;
             _userMapper = userMapper;
+            _emailService = emailService;
         }
 
         [HttpPost("register")]
@@ -71,8 +74,7 @@ namespace api.Auth
             user.ResetTokenExpiration = DateTime.UtcNow.AddHours(1);
             _userService.Update(user);
 
-            // TODO IMPLEMENTAR UN SERVICIO DE EMAIL
-            // _emailService.SendResetPasswordEmail(user.Email, resetToken);
+            _emailService.SendResetPasswordEmail(user.Email, resetToken);
 
             return Ok();
         }
