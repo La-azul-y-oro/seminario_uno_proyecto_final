@@ -61,7 +61,7 @@ CREATE TABLE concept_supplier (
     supplier_id INT NOT NULL,
     PRIMARY KEY (concept_id, supplier_id),
     FOREIGN KEY (concept_id) REFERENCES concept(id),
-    FOREIGN KEY (supplier_id) REFERENCES supplier(id),
+    FOREIGN KEY (supplier_id) REFERENCES supplier(id)
 );
 
 -- Table: movement

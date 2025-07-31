@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GenericComponent } from '../generic-component.class';
-import { UnitFunctionalRequest } from '../../interfaces/model.interfaces';
+import { FunctionalUnitRequest, FunctionalUnitResponse } from '../../interfaces/model.interfaces';
 import { PageComponent } from '../../components/page/page.component';
 import { ActionButtonConfig } from '../../components/action-buttons/action-buttons.component';
 import { FunctionalUnitService } from '../../services/functional-unit.service';
@@ -17,7 +17,7 @@ import { AuthService } from '../../auth/auth.service';
   templateUrl: './unit-functional.component.html',
   styleUrl: './unit-functional.component.css'
 })
-export class UnitFunctionalComponent extends GenericComponent<UnitFunctionalRequest, UnitFunctionalRequest> {
+export class UnitFunctionalComponent extends GenericComponent<FunctionalUnitRequest, FunctionalUnitResponse> {
   override title = "Unidades funcionales";
 
   columns = [

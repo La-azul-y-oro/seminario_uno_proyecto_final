@@ -1,1 +1,9 @@
-<p>movement-form works!</p>
+<app-form 
+    #form
+    [titleOnCreate]="'Crear movimiento'"
+    [titleOnUpdate]="'Actualizar movimiento'"
+    [fields]="fields"
+    (onSave)="saveData($event)"
+    (onUpdate)="updateData($event)"
+    [data]="data"
+/>
