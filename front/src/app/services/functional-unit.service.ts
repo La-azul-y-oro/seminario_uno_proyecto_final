@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AssignClientsRequest, UnitFunctionalConsortium, UnitFunctionalRequest } from '../interfaces/model.interfaces';
+import { AssignClientsRequest, FunctionalUnitRequest, FunctionalUnitResponse, UnitFunctionalConsortium } from '../interfaces/model.interfaces';
 import { GenericService } from './generic-service.class';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -8,7 +8,7 @@ import { environment } from '../../enviroments/enviroments';
 @Injectable({
   providedIn: 'root'
 })
-export class FunctionalUnitService extends GenericService<UnitFunctionalRequest, UnitFunctionalRequest> {
+export class FunctionalUnitService extends GenericService<FunctionalUnitRequest, FunctionalUnitResponse> {
   constructor(httpClient: HttpClient) {
     super(httpClient, "functionalunit");
   }

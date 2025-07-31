@@ -131,14 +131,6 @@ export interface FinancialRequest {
     month?: number;
 }
 
-export interface UnitFunctionalRequest {
-    id: number;
-    balance: number;
-    factor: number;
-    consortiumId: number;
-    active?: boolean;
-}
-
 export interface UnitFunctionalConsortium {
     id: number;
     name: string;
@@ -170,8 +162,8 @@ export interface LiquidationForClient {
 export interface FunctionalUnitBatchRequest{
     consortiumId: number;
     delete?: number[];
-    update?: UnitFunctionalRequest[];
-    create?: UnitFunctionalRequest[];
+    update?: FunctionalUnitRequest[];
+    create?: FunctionalUnitRequest[];
 }
 
 export interface MovementRequest {
@@ -220,6 +212,8 @@ export interface FunctionalUnitRequest {
     name: string;
     balance: number;
     consortiumId: number;
+    factor: number;
+    active?: boolean;
 }
 
 export interface FunctionalUnitResponse{
@@ -227,4 +221,6 @@ export interface FunctionalUnitResponse{
     name: string;
     balance: number;
     consortiumId: number;
+    factor: number;
+    active?: boolean;
 }

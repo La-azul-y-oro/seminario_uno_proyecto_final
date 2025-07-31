@@ -21,7 +21,6 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IConceptService, ConceptService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IConsortiumService, ConsortiumService>();
-builder.Services.AddScoped<IGenericService<Movement, int>, MovementService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IFunctionalUnitService, FunctionalUnitService>();
 builder.Services.AddScoped<IMovementService, MovementService>();

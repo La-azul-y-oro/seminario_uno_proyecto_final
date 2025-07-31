@@ -9,6 +9,12 @@
     [isEmpty]="isEmpty"
     (onCreate)="openForm()"
 />
+<app-movement-form
+    #form
+    [data]="dataObject"
+    (onSave)="save($event)"
+    (onUpdate)="update($event)"
+    />
 <app-toast #toast />
 <app-confirm-dialog
     #dialog
