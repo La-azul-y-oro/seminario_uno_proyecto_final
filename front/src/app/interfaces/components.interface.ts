@@ -28,6 +28,7 @@ export interface FormField{
     max? : number;
     maxLength? : number;
     defaultValue? : any;
+    dateFormat?: string;
 }
 
 export enum TypeField{

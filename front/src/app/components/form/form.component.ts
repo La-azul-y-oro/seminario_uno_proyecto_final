@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -12,6 +12,7 @@ import { FormField, TypeField } from '../../interfaces/components.interface';
 import { markAllAsTouched } from '../../util/formUtils';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-form',
@@ -27,7 +28,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ReactiveFormsModule,
     PasswordModule,
     MultiSelectModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    CalendarModule
   ],
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
@@ -73,7 +75,6 @@ export class FormComponent implements OnChanges {
       this.isEditMode = false;
     }
   }
-
 
   private buildForm() {
     this.form = this.fb.group({});
@@ -127,6 +128,8 @@ export class FormComponent implements OnChanges {
         return field === TypeField.PASSWORD;
       case TypeField.MULTISELECT:
         return field === TypeField.MULTISELECT;
+      case TypeField.CALENDAR:
+        return field === TypeField.CALENDAR;
       default:
         return false;
     }

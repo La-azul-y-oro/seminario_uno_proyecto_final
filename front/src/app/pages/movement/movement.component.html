@@ -14,7 +14,12 @@
     [data]="dataObject"
     (onSave)="save($event)"
     (onUpdate)="update($event)"
-    />
+    [consortiumList]="consortiumList"
+    [supplierList]="supplierList"
+    [conceptList]="conceptList"
+    [functionalUnitList]="functionalUnitList"
+    [isReady]="!isLoadingEntities()"
+/>
 <app-toast #toast />
 <app-confirm-dialog
     #dialog
