@@ -67,6 +67,17 @@
                   >
                 </p-multiSelect>
 
+                <p-calendar *ngIf="isFieldType(field.type, 'calendar')"
+                  [formControlName]="field.controlName"
+                  [showIcon]="true"
+                  [placeholder]="field.placeholder"
+                  [dateFormat]="field.dateFormat || 'dd/mm/yy'"
+                  [showButtonBar]="true"
+                  [style]="{ width: '100%' }"
+                  appendTo="body"
+                  >
+                </p-calendar>
+
                 <p-password *ngIf="isFieldType(field.type, 'password') && !isEditMode"
                   [id]="field.controlName"
                   [formControlName]="field.controlName"

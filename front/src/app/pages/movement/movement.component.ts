@@ -153,4 +153,8 @@ export class MovementComponent extends GenericComponent<MovementRequest, Movemen
       },
     });
   }
+
+  isLoadingEntities(): boolean{
+    return this.isLoadingConcepts || this.isLoadingConsortiums || this.isLoadingFunctionalUnits || this.isLoadingSuppliers;
+  }
 }

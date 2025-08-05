@@ -19,14 +19,25 @@ export class MovementFormComponent extends GenericFormComponent<MovementRequest>
   @Input() consortiumList: ConsortiumResponse[] = [];
   @Input() supplierList: SupplierResponse[] = [];
   @Input() conceptList: ConceptResponse[] = [];
-  @Input() functionalUnitList: FunctionalUnitResponse[] = []; 
+  @Input() functionalUnitList: FunctionalUnitResponse[] = [];
+  @Input() isReady : boolean = false;
+  @Input() hasError : boolean = false;
 
   movementTypeOptions = Object.values(MovementType).map(value => ({
     name: value,
     id: value
   }));
 
-  fields: FormField[] = [{
+  override fields: FormField[] = [];
+
+  ngOnChanges(){
+    if(this.conceptList.length > 0 && this.supplierList.length > 0 && this.consortiumList.length > 0 && this.functionalUnitList.length > 0){
+      this.initializeFields();
+    }
+  }
+
+  initializeFields(){
+  this.fields = [{
     label: 'Fecha',
     controlName: 'date',
     type: TypeField.CALENDAR,
@@ -96,4 +107,5 @@ export class MovementFormComponent extends GenericFormComponent<MovementRequest>
     placeholder: 'Ingrese un comentario (opcional)'
   }
 ]
+}
 }
