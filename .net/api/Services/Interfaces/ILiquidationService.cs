@@ -10,6 +10,8 @@ namespace api.Services.Interfaces
 
         Liquidation GetByPeriodAndConsortiumId(String period, int consortiumId);
 
+        Liquidation GetByPeriodAndConsortiumIdNotNull(String period, int consortiumId);
+
         Liquidation FindById(int liquidationId);
     }
 }

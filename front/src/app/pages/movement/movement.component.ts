@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GenericComponent } from '../generic-component.class';
-import { ConceptResponse, ConsortiumResponse, FunctionalUnitResponse, MovementRequest, MovementResponse, SupplierResponse } from '../../interfaces/model.interfaces';
+import { ConceptResponse, ConsortiumResponse, FunctionalUnitResponse, MovementRequest, MovementResponse, MovementTypeMap, SupplierResponse } from '../../interfaces/model.interfaces';
 import { ActionButtonConfig } from '../../components/action-buttons/action-buttons.component';
 import { MovementService } from '../../services/movement.service';
 import { PageComponent } from '../../components/page/page.component';
@@ -40,7 +40,7 @@ export class MovementComponent extends GenericComponent<MovementRequest, Movemen
   columns = [
     { header: "Consorcio", field: "consortiumName", sortable: true },
     { header: "Fecha", field: "date", sortable: true },
-    { header: "Tipo", field: "movementType", sortable: true },
+    { header: "Tipo", field: "type", sortable: true },
     { header: "Monto", field: "amount", sortable: true },
     { header: "Concepto", field: "conceptName", sortable: true },
     { header: "Unidad Funcional", field: "functionalUnitName", sortable: true },
@@ -78,26 +78,33 @@ export class MovementComponent extends GenericComponent<MovementRequest, Movemen
   }
 
   constructor(
-    service: MovementService, 
+    service: MovementService,
     private readonly consortiumService: ConsortiumService,
     private readonly supplierService: SupplierService,
     private readonly functionalUnitService: FunctionalUnitService,
     private readonly conceptService: ConceptService,
-    confirmService: ConfirmDialogService, 
-    toastService: ToastService, 
+    confirmService: ConfirmDialogService,
+    toastService: ToastService,
     authService: AuthService
   ) {
     super(service, confirmService, toastService, authService);
   }
 
-  loadConsortiums(){
+  override transformResponseData(data: MovementResponse[]): any[] {
+    return data.map(movement => ({
+      ...movement,
+      type: MovementTypeMap[movement.type] ?? movement.type
+    }));
+  }
+
+  loadConsortiums() {
     this.consortiumService.getAll().pipe(
       finalize(() => {
         this.isLoadingConsortiums = false;
       })
     ).subscribe({
       next: (response) => {
-        this.consortiumList = response.filter(e => (e as any).active);
+        this.consortiumList = this.filterData(response);
       },
       error: (error) => {
         this.hasError = true;
@@ -106,14 +113,14 @@ export class MovementComponent extends GenericComponent<MovementRequest, Movemen
     });
   }
 
-  loadSuppliers(){
+  loadSuppliers() {
     this.supplierService.getAll().pipe(
       finalize(() => {
         this.isLoadingSuppliers = false;
       })
     ).subscribe({
       next: (response) => {
-        this.supplierList = response.filter(e => (e as any).active);
+        this.supplierList = this.filterData(response);
       },
       error: (error) => {
         this.hasError = true;
@@ -122,14 +129,14 @@ export class MovementComponent extends GenericComponent<MovementRequest, Movemen
     });
   }
 
-  loadFunctionalUnits(){
+  loadFunctionalUnits() {
     this.functionalUnitService.getAll().pipe(
       finalize(() => {
         this.isLoadingFunctionalUnits = false;
       })
     ).subscribe({
       next: (response) => {
-        this.functionalUnitList = response.filter(e => (e as any).active);
+        this.functionalUnitList = this.filterData(response);
       },
       error: (error) => {
         this.hasError = true;
@@ -145,7 +152,7 @@ export class MovementComponent extends GenericComponent<MovementRequest, Movemen
       })
     ).subscribe({
       next: (response) => {
-        this.conceptList = response.filter(e => (e as any).active);
+        this.conceptList = this.filterData(response);
       },
       error: (error) => {
         this.hasError = true;
@@ -154,7 +161,20 @@ export class MovementComponent extends GenericComponent<MovementRequest, Movemen
     });
   }
 
-  isLoadingEntities(): boolean{
+  isLoadingEntities(): boolean {
     return this.isLoadingConcepts || this.isLoadingConsortiums || this.isLoadingFunctionalUnits || this.isLoadingSuppliers;
+  }
+
+  hasErrorEntities(): boolean {
+    const concepts = !this.isLoadingConcepts && this.conceptList.length <= 0;
+    const consortium = !this.isLoadingConsortiums && this.consortiumList.length <= 0;
+    const functionalUnits = !this.isLoadingFunctionalUnits && this.functionalUnitList.length <= 0;
+    const suppliers = !this.isLoadingSuppliers && this.supplierList.length <= 0;
+
+    return concepts || consortium || functionalUnits || suppliers;
+  }
+
+  filterData(response: any[]) {
+    return response.filter(e => !(e as any).hasOwnProperty('active') || (e as any).active);
   }
 }

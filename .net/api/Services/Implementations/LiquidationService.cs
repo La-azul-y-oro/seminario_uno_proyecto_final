@@ -51,10 +51,17 @@ namespace api.Services.Implementations
             return _context.Liquidation.Where(m => m.ConsortiumId == consortiumId).ToList();
         }
 
-        public Liquidation GetByPeriodAndConsortiumId(string period, int consortiumId)
+        public Liquidation? GetByPeriodAndConsortiumId(string period, int consortiumId)
         {
             var liquidation = _context.Liquidation.FirstOrDefault(l => l.Period == period && l.ConsortiumId == consortiumId);
 
+            return liquidation;
+        }
+
+        public Liquidation? GetByPeriodAndConsortiumIdNotNull(string period, int consortiumId)
+        {
+            var liquidation = _context.Liquidation.FirstOrDefault(l => l.Period == period && l.ConsortiumId == consortiumId);
+            
             if (liquidation == null)
                 throw new KeyNotFoundException("Liquidation not found");
 

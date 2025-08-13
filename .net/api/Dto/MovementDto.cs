@@ -10,6 +10,8 @@ namespace api.Dto
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public decimal Amount { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public MovementType Type { get; set; }
         public string? Receipt { get; set; }
         public int ConsortiumId { get; set; }
