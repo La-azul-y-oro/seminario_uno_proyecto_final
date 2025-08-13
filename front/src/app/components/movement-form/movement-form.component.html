@@ -6,5 +6,7 @@
     (onSave)="saveData($event)"
     (onUpdate)="updateData($event)"
     [data]="data"
-    [isReady]="isReady"
+    [textError]="'No se han encontrado datos asociados para utilizar'"
+    [isReady]="isReady"    
+    [hasReadyError]="hasError"
 />

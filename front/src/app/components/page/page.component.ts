@@ -60,11 +60,11 @@ export class PageComponent {
   };
 
   actionButtonStyleExpandable = {
-      height: '20px',
-      width: '20px', 
-      padding: '0px',
-      marginLeft: '5px',
-      marginRight: '5px'
+    height: '20px',
+    width: '20px',
+    padding: '0px',
+    marginLeft: '5px',
+    marginRight: '5px'
   };
 
   create() {
@@ -82,6 +82,14 @@ export class PageComponent {
 
     if (field === 'role' && value in Role) {
       return Role[value as keyof typeof Role]; // Traducir la key al valor
+    }
+
+    if (field === 'date') {
+      const date = new Date(value);
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
     }
 
     return value;

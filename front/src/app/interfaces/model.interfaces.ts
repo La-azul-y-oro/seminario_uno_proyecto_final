@@ -139,27 +139,27 @@ export interface UnitFunctionalConsortium {
     clients?: Client[];
 }
 
-export interface AssignClientsRequest{
+export interface AssignClientsRequest {
     functionalId: number;
     clientsIds: number[];
 }
 
-export interface ClientFunctionalUnit{
-   id: number;
-   name: string;
-   balance: number;
-   factor: number;
-   consortium: string;
-   liquidations: LiquidationForClient[];
+export interface ClientFunctionalUnit {
+    id: number;
+    name: string;
+    balance: number;
+    factor: number;
+    consortium: string;
+    liquidations: LiquidationForClient[];
 }
 
 export interface LiquidationForClient {
-  id: number;
-  period: string;
-  expirationDate: string;
+    id: number;
+    period: string;
+    expirationDate: string;
 }
 
-export interface FunctionalUnitBatchRequest{
+export interface FunctionalUnitBatchRequest {
     consortiumId: number;
     delete?: number[];
     update?: FunctionalUnitRequest[];
@@ -170,7 +170,7 @@ export interface MovementRequest {
     id: number;
     date: Date;
     amount: number;
-    movementType: MovementType;
+    type: MovementType;
     receipt?: string;
     consortiumId: number;
     supplierId?: number;
@@ -184,7 +184,7 @@ export interface MovementResponse {
     id: number;
     date: Date;
     amount: number;
-    movementType: MovementType;
+    type: MovementType;
     receipt?: string;
     comment?: string;
 
@@ -203,9 +203,14 @@ export interface MovementResponse {
 }
 
 export enum MovementType {
-    INGRESO = 'Ingreso',
-    EGRESO = 'Egreso'
+    INGRESO = "INGRESO",
+    EGRESO = "EGRESO"
 }
+
+export const MovementTypeMap: Record<MovementType, string> = {
+    [MovementType.INGRESO]: 'Ingreso',
+    [MovementType.EGRESO]: 'Egreso',
+};
 
 export interface FunctionalUnitRequest {
     id: number;
@@ -216,7 +221,7 @@ export interface FunctionalUnitRequest {
     active?: boolean;
 }
 
-export interface FunctionalUnitResponse{
+export interface FunctionalUnitResponse {
     id: number;
     name: string;
     balance: number;
