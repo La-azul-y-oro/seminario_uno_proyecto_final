@@ -53,9 +53,9 @@ namespace api.Controllers
             var movement = _movementMapper.GetMovement(movementDTO);
 
             try{
-                _movementService.Create(movement);
+                var createdMovement = _movementService.CreateAndReturn(movement);
 
-                return CreatedAtAction(nameof(GetById), new { id = movement.Id}, _movementMapper.GetMovementDTO(movement) );
+                return CreatedAtAction(nameof(GetById), new { id = createdMovement.Id}, _movementMapper.GetMovementDTO(createdMovement) );
             }
             catch (InvalidOperationException e) {
                 return Conflict(e.Message);
