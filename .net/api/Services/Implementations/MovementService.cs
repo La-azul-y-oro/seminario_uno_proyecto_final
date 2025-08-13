@@ -73,7 +73,7 @@ namespace api.Services.Implementations{
             _context.SaveChanges();
         }
 
-        public void Create(Movement entity)
+        public Movement CreateAndReturn(Movement entity)
         {
             if (entity.Type.Equals(MovementType.EGRESO)){
                 validateLiquidationPeriod(entity);
@@ -86,7 +86,16 @@ namespace api.Services.Implementations{
             {
                 updateFunctionalUnitBalance(entity);
             }
+
+            return _context.Movement
+                .Include(m => m.Supplier)
+                .Include(m => m.Consortium)
+                .Include(m => m.Concept)
+                .Include(m => m.FunctionalUnit)
+                .First(m => m.Id == entity.Id);
         }
+
+        public void Create(Movement entity) { }
 
         public void Delete(int id)
         {

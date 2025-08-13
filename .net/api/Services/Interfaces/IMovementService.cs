@@ -6,5 +6,7 @@ namespace api.Services.Interfaces
     {
         List<Movement> GetByConsortiumAndMonthAndYear(int consortiumId, int month, int year);
         List<Movement> GetByConsortiumAndYear(int consortiumId, int year);
+
+        Movement CreateAndReturn(Movement entity);
     }
 }
