@@ -15,6 +15,7 @@ import { SupplierService } from '../../services/supplier.service';
 import { FunctionalUnitService } from '../../services/functional-unit.service';
 import { ConceptService } from '../../services/concept.service';
 import { finalize } from 'rxjs';
+import { hasValidRoles } from '../../util/rolesUtil';
 
 @Component({
   selector: 'app-movement',
@@ -32,10 +33,15 @@ export class MovementComponent extends GenericComponent<MovementRequest, Movemen
 
   override title = "Movimientos";
   override labelButtonAdd: string = "Agregar movimiento";
+
   isLoadingConsortiums: boolean = true;
   isLoadingSuppliers: boolean = true;
   isLoadingFunctionalUnits: boolean = true;
   isLoadingConcepts: boolean = true;
+
+  canCreate: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
+  canEdit: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
+  canRemove: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
 
   columns = [
     { header: "Consorcio", field: "consortiumName", sortable: true },
@@ -54,13 +60,15 @@ export class MovementComponent extends GenericComponent<MovementRequest, Movemen
       icon: 'pi pi-pencil',
       tooltip: 'Editar registro',
       severity: 'success',
-      action: (data: any) => this.openFormEdit(data)
+      hidden: !this.canEdit,
+      action: (data: any) => this.canEdit ? this.openFormEdit(data) : null
     },
     {
       icon: 'pi pi-trash',
       tooltip: 'Borrar registro',
       severity: 'danger',
-      action: (data: any) => this.openConfirmDialog(data)
+      hidden: !this.canRemove,
+      action: (data: any) => this.canRemove ? this.openConfirmDialog(data) : null
     }
   ];
 
