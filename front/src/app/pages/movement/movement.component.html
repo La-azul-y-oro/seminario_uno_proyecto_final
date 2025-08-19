@@ -22,8 +22,3 @@
     [isReady]="!isLoadingEntities()"
     [hasError]="hasErrorEntities()"
 />
-<app-toast #toast />
-<app-confirm-dialog
-    #dialog
-    (onConfirm)="deleteItem($event)"
-/>

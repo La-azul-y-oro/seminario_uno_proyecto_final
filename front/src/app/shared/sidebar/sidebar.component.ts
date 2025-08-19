@@ -43,6 +43,11 @@ export class SidebarComponent {
     path: 'unidades-funcionales'
   },
   {
+    label: 'Movimientos',
+    icon: 'pi pi-arrow-right-arrow-left',
+    path: 'movimientos'
+  },
+  {
     label: 'Conceptos',
     icon: 'pi pi-book',
     path: 'conceptos'
