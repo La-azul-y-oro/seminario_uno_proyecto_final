@@ -39,6 +39,7 @@
             tsmiConsorcios = new ToolStripMenuItem();
             tsmiSupplier = new ToolStripMenuItem();
             tsmiUsuarios = new ToolStripMenuItem();
+            tsmiMovimientos = new ToolStripMenuItem();
             labelUserInfo = new Label();
             tableLayoutPanel1.SuspendLayout();
             mnsPrincipal.SuspendLayout();
@@ -104,7 +105,7 @@
             // 
             // mnuModulos
             // 
-            mnuModulos.DropDownItems.AddRange(new ToolStripItem[] { tsmiConceptos, tsmiConsorcios, tsmiSupplier, tsmiUsuarios });
+            mnuModulos.DropDownItems.AddRange(new ToolStripItem[] { tsmiConceptos, tsmiConsorcios, tsmiSupplier, tsmiUsuarios, tsmiMovimientos });
             mnuModulos.Name = "mnuModulos";
             mnuModulos.Size = new Size(104, 32);
             mnuModulos.Text = "Módulos";
@@ -136,6 +137,13 @@
             tsmiUsuarios.Size = new Size(224, 32);
             tsmiUsuarios.Text = "Usuarios";
             tsmiUsuarios.Click += tsmiUsuarios_Click;
+            // 
+            // tsmiMovimientos
+            // 
+            tsmiMovimientos.Name = "tsmiMovimientos";
+            tsmiMovimientos.Size = new Size(224, 32);
+            tsmiMovimientos.Text = "Movimientos";
+            tsmiMovimientos.Click += tsmiMovimientos_Click;
             // 
             // labelUserInfo
             // 
@@ -180,5 +188,6 @@
         private Label labelUserInfo;
         private ToolStripMenuItem tsmChangePass;
         private ToolStripMenuItem tsmiConsorcios;
+        private ToolStripMenuItem tsmiMovimientos;
     }
 }

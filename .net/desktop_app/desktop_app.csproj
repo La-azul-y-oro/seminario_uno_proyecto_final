@@ -19,6 +19,12 @@
     <Compile Update="liquidation\LiquidationForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="movement\MovementControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="movement\MovementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="supplier\SupplierControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
