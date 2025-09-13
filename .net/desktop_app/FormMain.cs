@@ -1,6 +1,7 @@
 ﻿using desktop_app.auth;
 using desktop_app.concept;
 using desktop_app.consortium;
+using desktop_app.movement;
 using desktop_app.services;
 using desktop_app.supplier;
 
@@ -91,6 +92,11 @@ namespace PracticaSeminario
         {
             // a implementar
             // ShowControl(new UserControl(_apiService));
+        }
+
+        private void tsmiMovimientos_Click(object sender, EventArgs e)
+        {
+            ShowControl(new MovementControl(_apiService));
         }
     }
 }
