@@ -51,6 +51,13 @@ namespace desktop_app.services
                 _authService.AddAuthorizationHeader(_httpClient);
                 HttpContent content = JsonUtil.Serialize(data);
 
+                // debug request
+                if (content is StringContent sc)
+                {
+                    string json = await sc.ReadAsStringAsync();
+                    MessageBox.Show(json, "JSON enviado");
+                }
+
                 HttpResponseMessage response = await _httpClient.PostAsync(endpoint, content);
                 response.EnsureSuccessStatusCode();
 

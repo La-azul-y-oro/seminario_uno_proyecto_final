@@ -37,17 +37,17 @@ namespace desktop_app.movement
 
             dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "Date",
-                HeaderText = "Fecha",
-                Name = "colFecha",
+                DataPropertyName = "ConsortiumName",
+                HeaderText = "Consorcio",
+                Name = "colConsorcio",
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
 
             dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "Amount",
-                HeaderText = "Monto",
-                Name = "colMonto",
+                DataPropertyName = "Date",
+                HeaderText = "Fecha",
+                Name = "colFecha",
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
 
@@ -61,17 +61,9 @@ namespace desktop_app.movement
 
             dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
             {
-                DataPropertyName = "ConsortiumName",
-                HeaderText = "Consorcio",
-                Name = "colConsorcio",
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-            });
-
-            dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                DataPropertyName = "SupplierName",
-                HeaderText = "Proveedor",
-                Name = "colProveedor",
+                DataPropertyName = "Amount",
+                HeaderText = "Monto",
+                Name = "colMonto",
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
 
@@ -88,6 +80,22 @@ namespace desktop_app.movement
                 DataPropertyName = "FunctionalUnitName",
                 HeaderText = "Unidad Funcional",
                 Name = "colUnidadFuncional",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "SupplierName",
+                HeaderText = "Proveedor",
+                Name = "colProveedor",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
+
+            dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Receipt",
+                HeaderText = "Recibo",
+                Name = "colRecibo",
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
 

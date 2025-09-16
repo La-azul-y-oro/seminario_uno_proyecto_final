@@ -29,6 +29,7 @@ namespace desktop_app.movement
             InitFunctionalUnits();
             InitSuppliers();
             InitConcepts();
+            InitTypes();
 
             if (_movement != null)
             {
@@ -68,6 +69,12 @@ namespace desktop_app.movement
             comboSupplier.SelectedIndex = -1;
         }
 
+        private void InitTypes()
+        {
+            comboType.DataSource = Enum.GetValues(typeof(MovementType));
+            comboType.SelectedIndex = -1;
+        }
+
         private void LoadMovement()
         {
             labelForm.Text = "Actualizar Movimiento";
@@ -75,6 +82,8 @@ namespace desktop_app.movement
 
             dateTimePicker1.Value = _movement.Date;
             txtAmount.Text = _movement.Amount.ToString();
+            txtComment.Text = _movement.Comment;
+            txtReceipt.Text = _movement.Receipt;
 
             comboType.SelectedItem = _movement.Type;
             comboConsortium.SelectedValue = _movement.ConsortiumId;
@@ -108,11 +117,14 @@ namespace desktop_app.movement
                 {
                     Date = dateTimePicker1.Value,
                     Amount = amount,
+                    Comment = txtComment.Text,
+                    Receipt = txtReceipt.Text,
                     Type = (MovementType)comboType.SelectedItem,
                     ConsortiumId = (int)comboConsortium.SelectedValue,
                     FunctionalUnitId = (int)comboFU.SelectedValue,
                     SupplierId = (int)comboSupplier.SelectedValue,
-                    ConceptId = (int)comboConcept.SelectedValue
+                    ConceptId = (int)comboConcept.SelectedValue,
+                    Active = true
                 };
 
                 if (_movement == null)
