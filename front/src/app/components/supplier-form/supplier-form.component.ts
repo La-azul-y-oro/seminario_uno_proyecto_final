@@ -62,7 +62,7 @@ export class SupplierFormComponent extends GenericFormComponent<SupplierRequest>
     },
     {
       label: 'Categorias',
-      controlName: 'ConceptIds',
+      controlName: 'concepts',
       type: TypeField.MULTISELECT,
       placeholder: 'Seleccione las categorias',
       errorMessage: 'Seleccione al menos una categoria',

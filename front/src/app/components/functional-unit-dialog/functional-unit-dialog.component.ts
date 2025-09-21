@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -37,15 +37,15 @@ import { noWhitespaceValidator } from '../../util/customValidators';
   templateUrl: './functional-unit-dialog.component.html',
   styleUrl: './functional-unit-dialog.component.css'
 })
-export class FunctionalUnitDialogComponent {
+export class FunctionalUnitDialogComponent implements OnChanges{
   @Input() visible: boolean = false;
   @Input() consortiumId!: number | undefined;
   @Input() functionalUnitList: any[] = [];
 
   @Output() onCancel = new EventEmitter;
 
-  form: FormGroup;
-  units: FormArray;
+  form!: FormGroup;
+  units!: FormArray;
   totalFactor = 0;
 
   loadingMethod: 'automatic' | 'manual' | null = null;
@@ -75,16 +75,22 @@ export class FunctionalUnitDialogComponent {
     private readonly functionalUnitService: FunctionalUnitService
   ) {
     this.generatorForm = this.initGeneratorForm();
-
     this.setupFormSubscriptions();
+    this.initializeForm();
+  }
 
-    this.form = this.fb.group({
-      units: this.fb.array([])
-    });
+  initializeForm(): void {
+    this.form = this.initForm();
     this.units = this.form.get('units') as FormArray;
   }
 
-  initGeneratorForm() {
+  initForm(): FormGroup {
+    return this.fb.group({
+      units: this.fb.array([])
+    });
+  }
+
+  initGeneratorForm(): FormGroup {
     return this.fb.group({
       floors: [null, [Validators.required, Validators.min(1), Validators.max(50)]],
       unitsPerFloor: [null, [Validators.required, Validators.min(1), Validators.max(20)]],
@@ -94,23 +100,49 @@ export class FunctionalUnitDialogComponent {
     });
   }
 
-
   ngOnChanges(): void {
+    this.clearFormArray();
     this.loadUnits();
   }
 
-  loadUnits() {
-    this.functionalUnitList?.forEach((u: any) => {
-      this.units.push(this.fb.group({
-        id: [u.id],
-        name: [u.name, [Validators.required, Validators.pattern(/^\S+$/)]],
-        factor: [u.factor, [Validators.required, Validators.min(0), Validators.max(100)]],
-        balance: [u.balance],
-        consortiumId: [u.consortiumId]
-      }));
-    });
+  clearFormArray(): void {
+    while (this.units.length !== 0) {
+      this.units.removeAt(0);
+    }
+    // Resetear el estado del formulario
+    this.form.markAsUntouched();
+    this.form.markAsPristine();
+    this.units.markAsUntouched();
+    this.units.markAsPristine();
+  }
 
+
+  loadUnits(): void {
+    this.clearFormArray();
+    
+    this.functionalUnitList?.forEach((u: any) => {
+      const unitFormGroup = this.createUnitFormGroup(u);
+      this.units.push(unitFormGroup);
+    });
+    
     this.recalculateTotal();
+  }
+
+  // Método helper para crear un FormGroup de unidad
+  createUnitFormGroup(unit: any = null): FormGroup {
+    return this.fb.group({
+      id: [unit?.id || null],
+      name: [
+        unit?.name || '', 
+        [Validators.required, noWhitespaceValidator, Validators.pattern(/^\S+$/)]
+      ],
+      factor: [
+        unit?.factor || 0, 
+        [Validators.required, Validators.min(0), Validators.max(100)]
+      ],
+      balance: [unit?.balance || 0],
+      consortiumId: [unit?.consortiumId || this.consortiumId]
+    });
   }
 
   private setupFormSubscriptions() {
@@ -161,7 +193,7 @@ export class FunctionalUnitDialogComponent {
     this.loadUnits();
     this.showMainForm = true;
 
-    // Opcional: Scroll hacia el formulario principal
+    // Scroll hacia el formulario principal
     setTimeout(() => {
       const element = document.querySelector('form[formGroupName="form"]');
       if (element) {
@@ -218,7 +250,6 @@ export class FunctionalUnitDialogComponent {
     }, 100);
   }
 
-
   onFactorChange() {
     this.recalculateTotal();
   }
@@ -233,32 +264,27 @@ export class FunctionalUnitDialogComponent {
     return unit.get('balance')?.value === 0;
   }
 
-  removeUnit(index: number) {
+  removeUnit(index: number): void {
     const unit = this.units.at(index) as FormGroup;
     if (!this.canDelete(unit)) return;
-
+    
     const id = unit.get('id')?.value;
     if (id) {
       this.deletedUnitIds.push(id);
     }
-
+    
     this.units.removeAt(index);
     this.recalculateTotal();
-    this.form.updateValueAndValidity();
+    
+    this.form.markAsTouched();
   }
 
   addUnit(): void {
-    const newUnit = this.fb.group({
-      name: ['', Validators.required],
-      factor: [0, [Validators.required, Validators.min(1), Validators.max(100)]],
-      balance: [0],
-      consortiumId: [this.consortiumId]
-    });
+    const newUnit = this.createUnitFormGroup();
     this.units.push(newUnit);
-
     this.recalculateTotal();
-
-    this.form.updateValueAndValidity();
+    
+    this.form.markAsTouched();
   }
 
   canSave(): boolean {
@@ -310,20 +336,15 @@ export class FunctionalUnitDialogComponent {
   }
 
   closeDialog(data: UnitFunctionalConsortium[] = []) {
-    this.cleanData();
+    this.resetForm();
     this.onCancel.emit(data);
   }
 
-  cleanData() {
-    this.units = this.fb.array([]);
-    this.generatorForm.reset();
-    this.generatorForm = this.initGeneratorForm();
+  resetForm(): void {
+    this.clearFormArray();
+    this.form.reset();
+    this.initializeForm();
     this.deletedUnitIds = [];
-    this.consortiumId = undefined;
-    this.functionalUnitList = [];
-    this.isManualSelected = false;
-    this.loadingMethod = null;
-    this.showMainForm = false;
   }
 
   showTooltipCannotDelete(unit: any) {

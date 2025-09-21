@@ -48,9 +48,9 @@ namespace api.Services.Implementations
                 Email = supplierDto.Email
             };
 
-            if (supplierDto.ConceptIds.Any())
+            if (supplierDto.Concepts.Any())
             {
-                supplier.Concepts = _conceptService.GetByIds(supplierDto.ConceptIds);
+                supplier.Concepts = _conceptService.GetByIds(supplierDto.Concepts);
             }
 
             Create(supplier);
@@ -79,9 +79,9 @@ namespace api.Services.Implementations
 
             supplier.Concepts.Clear();
 
-            if (supplierDto.ConceptIds.Any())
+            if (supplierDto.Concepts.Any())
             {
-                var concepts = _conceptService.GetByIds(supplierDto.ConceptIds);
+                var concepts = _conceptService.GetByIds(supplierDto.Concepts);
                 foreach (var concept in concepts)
                 {
                     supplier.Concepts.Add(concept);

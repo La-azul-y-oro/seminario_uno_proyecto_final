@@ -21,7 +21,6 @@ import { hasValidRoles } from '../../util/rolesUtil';
   styleUrl: './user.component.css'
 })
 export class UserComponent extends GenericComponent<UserRequest, UserResponse> {
-
   override title = "Usuarios";
   override labelButtonAdd = "Agregar usuario";
 
@@ -51,7 +50,7 @@ export class UserComponent extends GenericComponent<UserRequest, UserResponse> {
       tooltip: 'Borrar registro',
       severity: 'danger',
       hidden: !this.canRemove,
-      action: (data: any) => this.canRemove ? this.openConfirmDialog(data) : null
+      action: (data: any) => this.canRemove ? this.handleRemoveUser(data) : null
     }
   ];
 
@@ -63,4 +62,14 @@ export class UserComponent extends GenericComponent<UserRequest, UserResponse> {
   ) {
     super(service, confirmService, toastService, authService);
   }
+
+  handleRemoveUser(data: any) {
+    const userEmail = this.authService.userData?.sub;
+    if(userEmail === data.email){
+      this.toastService.setErrorMessage('El usuario que intenta eliminar es el mismo con el que se encuentra logueado.');
+    } else{
+      this.openConfirmDialog(data)
+    }
+  }
+
 }
