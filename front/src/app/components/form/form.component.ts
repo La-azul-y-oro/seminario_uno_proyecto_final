@@ -165,13 +165,19 @@ export class FormComponent implements OnChanges {
   private ungroupFormFields(organizedData: any) {
     Object.keys(organizedData).forEach(key => {
       const value = organizedData[key];
-
       if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
         Object.keys(value).forEach(subKey => {
           this.form.get(subKey)?.patchValue(value[subKey]);
         });
       } else {
-        this.form.get(key)?.patchValue(value);
+        // Verificar si es un campo multiselect y el valor es un array de objetos
+        if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'object' && value[0].hasOwnProperty('id')) {
+          // Extraer solo los IDs para campos multiselect
+          const ids = value.map(item => item.id);
+          this.form.get(key)?.patchValue(ids);
+        } else {
+          this.form.get(key)?.patchValue(value);
+        }
       }
     });
   }

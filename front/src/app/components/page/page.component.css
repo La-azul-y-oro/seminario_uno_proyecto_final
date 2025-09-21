@@ -19,6 +19,10 @@
     width: 0.8rem;
 }
 
+::ng-deep .p-element.p-ripple.p-datepicker-trigger.p-button-icon-only{
+    width: 1.8rem;
+}
+
 ::ng-deep .p-button-icon.pi.pi-chevron-right,
 ::ng-deep .p-button-icon.pi.pi-chevron-down
 {

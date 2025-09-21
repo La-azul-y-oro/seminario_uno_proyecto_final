@@ -38,11 +38,6 @@ export class SidebarComponent {
     path: 'consorcios'
   },
   {
-    label: 'Unidades Funcionales',
-    icon: 'pi pi-home',
-    path: 'unidades-funcionales'
-  },
-  {
     label: 'Movimientos',
     icon: 'pi pi-arrow-right-arrow-left',
     path: 'movimientos'
@@ -61,7 +56,7 @@ export class SidebarComponent {
     label: 'Usuarios',
     icon: 'pi pi-users',
     path: 'usuarios',
-    visible: hasValidRoles(this.authService.currentUserData, ["ADMIN"])
+    visible: hasValidRoles(this.authService.userData, ["ADMIN"])
   }];
 
   constructor (
