@@ -31,5 +31,8 @@
     <Compile Update="report\ReportDownloadForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="users\UsersControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
