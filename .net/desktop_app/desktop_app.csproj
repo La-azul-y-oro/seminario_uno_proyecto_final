@@ -40,6 +40,10 @@
     <Compile Update="consortium\ConsortiumForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="users\UsersControl.cs" />
+    <Compile Update="users\UsersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

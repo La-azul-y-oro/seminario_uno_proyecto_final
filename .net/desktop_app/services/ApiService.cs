@@ -1,6 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using desktop_app.auth;
-using desktop_app.utils; // Asegúrate de importar AuthService
+using desktop_app.utils;
 
 namespace desktop_app.services
 {
