@@ -38,23 +38,23 @@ namespace PracticaSeminario
                 if (authResponse != null && !string.IsNullOrWhiteSpace(authResponse))
                 {
                     var responseObj = JsonSerializer.Deserialize<Dictionary<string, string>>(authResponse);
-                    _authService.SetToken(responseObj["token"]);
+                    var token = responseObj["token"];
 
-                    this.DialogResult = DialogResult.OK;
-                    inkOlvidaPass.Enabled = true;
-                    btnIngresar.Enabled = true;
-                    txtUsuario.Enabled = true;
-                    txtPass.Enabled = true;
-                    btnIngresar.Text = "Ingresar";
+                    if (_authService.GetRole(token).Equals("ADMIN"))
+                    {
+                        _authService.SetToken(responseObj["token"]);
+
+                        this.DialogResult = DialogResult.OK;
+                        resetElements();
+                    }
+                    else
+                    {
+                        ShowInvalidCredentials();
+                    }
                 }
                 else
                 {
-                    inkOlvidaPass.Enabled = true;
-                    btnIngresar.Enabled = true;
-                    txtUsuario.Enabled = true;
-                    txtPass.Enabled = true;
-                    btnIngresar.Text = "Ingresar";
-                    MessageBox.Show("Credenciales incorrectas. Intente nuevamente.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    ShowInvalidCredentials();
                 }
             }
             catch (Exception ex)
@@ -69,6 +69,21 @@ namespace PracticaSeminario
         {
             using var form = new ResetPassForm(_authService);
             form.ShowDialog();
+        }
+
+        private void ShowInvalidCredentials()
+        {
+            resetElements();
+            MessageBox.Show("Credenciales incorrectas. Intente nuevamente.", "Login", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void resetElements()
+        {
+            inkOlvidaPass.Enabled = true;
+            btnIngresar.Enabled = true;
+            txtUsuario.Enabled = true;
+            txtPass.Enabled = true;
+            btnIngresar.Text = "Ingresar";
         }
     }
 }
