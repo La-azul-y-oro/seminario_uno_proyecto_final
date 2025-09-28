@@ -26,7 +26,6 @@ export class ConceptComponent extends GenericComponent<ConceptRequest, ConceptRe
   override labelButtonAdd = "Agregar concepto";
 
   canCreate : boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
-  canEdit : boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
   canRemove : boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
 
   columns = [
@@ -35,13 +34,6 @@ export class ConceptComponent extends GenericComponent<ConceptRequest, ConceptRe
   ];
 
   buttonConfig : ActionButtonConfig[] = [
-    { 
-      icon: 'pi pi-pencil', 
-      tooltip: 'Editar registro', 
-      severity: 'success', 
-      hidden: !this.canEdit,
-      action: (data: any) => this.canEdit ? this.openFormEdit(data) : null
-    },
     { 
       icon: 'pi pi-trash', 
       tooltip: 'Borrar registro', 

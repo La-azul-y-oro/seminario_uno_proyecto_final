@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using desktop_app.models;
 
 namespace desktop_app.dto
 {
@@ -10,6 +6,7 @@ namespace desktop_app.dto
     {
         public int Id { get; set; }
         public required string Name { get; set; }
+        public MovementType Type { get; set; }
         public bool Active { get; set; }
     }
 }

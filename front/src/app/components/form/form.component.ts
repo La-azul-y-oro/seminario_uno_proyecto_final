@@ -136,11 +136,11 @@ export class FormComponent implements OnChanges {
   }
 
   resetAll() {
-    this.form.reset();
+    this.form?.reset();
     this.data = undefined;
     this.isEditMode = false;
     this.title = this.titleOnCreate;
-    this.form.enable();
+    this.form?.enable();
   }
 
   private groupFormFields() {
