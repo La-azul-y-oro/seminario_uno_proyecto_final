@@ -35,6 +35,13 @@ namespace desktop_app.concept
                 Name = "colNombre",
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
+            dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                DataPropertyName = "Type",
+                HeaderText = "Tipo",
+                Name = "colTipo",
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            });
 
             AddActionButtons();
 

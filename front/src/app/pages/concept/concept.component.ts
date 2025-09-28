@@ -30,7 +30,8 @@ export class ConceptComponent extends GenericComponent<ConceptRequest, ConceptRe
   canRemove : boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
 
   columns = [
-    { header: "Nombre", field: "name", sortable: true }
+    { header: "Nombre", field: "name", sortable: true },
+    { header: "Tipo", field: "type", sortable: true }
   ];
 
   buttonConfig : ActionButtonConfig[] = [
