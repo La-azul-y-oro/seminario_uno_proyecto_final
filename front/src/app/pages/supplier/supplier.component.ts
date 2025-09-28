@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GenericComponent } from '../generic-component.class';
-import { ConceptResponse, SupplierRequest, SupplierResponse } from '../../interfaces/model.interfaces';
+import { ConceptResponse, MovementType, SupplierRequest, SupplierResponse } from '../../interfaces/model.interfaces';
 import { PageComponent } from '../../components/page/page.component';
 import { ActionButtonConfig } from '../../components/action-buttons/action-buttons.component';
 import { SupplierService } from '../../services/supplier.service';
@@ -88,7 +88,7 @@ export class SupplierComponent extends GenericComponent<SupplierRequest, Supplie
       })
     ).subscribe({
       next: (response) => {
-        this.conceptList = response.filter(e => (e as any).active);
+        this.conceptList = response.filter(e => (e as any).active && e.type === MovementType.EGRESO);
       },
       error: (error) => {
         this.hasError = true;

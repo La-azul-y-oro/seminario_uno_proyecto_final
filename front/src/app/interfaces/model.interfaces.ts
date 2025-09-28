@@ -8,6 +8,7 @@ export interface ConceptRequest {
 export interface ConceptResponse {
     id: number;
     name: string;
+    type: MovementType;
     active: boolean;
 }
 

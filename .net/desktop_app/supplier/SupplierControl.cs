@@ -114,7 +114,9 @@ namespace desktop_app.supplier
         {
             try
             {
-                _concepts = await _apiService.GetAllAsync<ConceptResponse>("concept");
+                var allConcepts = await _apiService.GetAllAsync<ConceptResponse>("concept");
+                _concepts = allConcepts.FindAll(c => c.Type == MovementType.EGRESO);
+
             }
             catch (Exception ex)
             {

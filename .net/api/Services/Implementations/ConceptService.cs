@@ -40,6 +40,7 @@ namespace api.Services.Implementations
                 throw new KeyNotFoundException("Concept not found");
 
             concept.Name = entity.Name;
+            concept.Type = entity.Type;
             _context.SaveChanges();
         }
 

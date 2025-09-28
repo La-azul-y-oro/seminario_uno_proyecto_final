@@ -99,16 +99,7 @@ namespace desktop_app.concept
 
         private void AddActionButtons()
         {
-            if (dgvEntity.Columns["btnEdit"] != null) return;
-
-            var btnEdit = new DataGridViewButtonColumn
-            {
-                Name = "btnEdit",
-                HeaderText = "",
-                Text = "Editar",
-                UseColumnTextForButtonValue = true,
-                Width = 120
-            };
+            if (dgvEntity.Columns["btnRemove"] != null) return;
 
             var btnRemove = new DataGridViewButtonColumn
             {
@@ -119,7 +110,6 @@ namespace desktop_app.concept
                 Width = 120
             };
 
-            dgvEntity.Columns.Add(btnEdit);
             dgvEntity.Columns.Add(btnRemove);
         }
 
@@ -134,10 +124,6 @@ namespace desktop_app.concept
 
             switch (columnName)
             {
-                case "btnEdit":
-                    OpenConceptForm(concept);
-                    break;
-
                 case "btnRemove":
                     DeleteSelectedConcept(concept);
                     break;
