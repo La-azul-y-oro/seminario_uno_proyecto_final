@@ -41,12 +41,12 @@
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 6;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 17F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 15F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 31F));
             tableLayoutPanel1.Controls.Add(labelForm, 1, 0);
             tableLayoutPanel1.Controls.Add(txtName, 2, 2);
             tableLayoutPanel1.Controls.Add(label1, 1, 2);
@@ -55,13 +55,14 @@
             tableLayoutPanel1.Controls.Add(txtAddress, 4, 2);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 109F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 109F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 109F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 109F));
-            tableLayoutPanel1.Size = new Size(992, 451);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 82F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 82F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 82F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 82F));
+            tableLayoutPanel1.Size = new Size(868, 338);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // labelForm
@@ -70,9 +71,9 @@
             tableLayoutPanel1.SetColumnSpan(labelForm, 4);
             labelForm.Dock = DockStyle.Fill;
             labelForm.Font = new Font("Segoe UI", 12F);
-            labelForm.Location = new Point(20, 0);
+            labelForm.Location = new Point(18, 0);
             labelForm.Name = "labelForm";
-            labelForm.Size = new Size(934, 109);
+            labelForm.Size = new Size(814, 82);
             labelForm.TabIndex = 0;
             labelForm.Text = "Crear consorcio";
             labelForm.TextAlign = ContentAlignment.MiddleCenter;
@@ -81,10 +82,10 @@
             // 
             txtName.Dock = DockStyle.Fill;
             txtName.Font = new Font("Segoe UI", 10F);
-            txtName.Location = new Point(161, 229);
-            txtName.Margin = new Padding(3, 11, 3, 3);
+            txtName.Location = new Point(141, 172);
+            txtName.Margin = new Padding(3, 8, 3, 2);
             txtName.Name = "txtName";
-            txtName.Size = new Size(323, 30);
+            txtName.Size = new Size(281, 25);
             txtName.TabIndex = 3;
             // 
             // label1
@@ -93,10 +94,10 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 11F);
             label1.ForeColor = SystemColors.ControlText;
-            label1.Location = new Point(74, 229);
-            label1.Margin = new Padding(3, 11, 3, 0);
+            label1.Location = new Point(71, 172);
+            label1.Margin = new Padding(3, 8, 3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(81, 25);
+            label1.Size = new Size(64, 20);
             label1.TabIndex = 4;
             label1.Text = "Nombre";
             // 
@@ -106,10 +107,10 @@
             btnAccept.BackColor = SystemColors.HotTrack;
             btnAccept.Font = new Font("Segoe UI", 11F);
             btnAccept.ForeColor = SystemColors.ControlLightLight;
-            btnAccept.Location = new Point(834, 338);
-            btnAccept.Margin = new Padding(10, 11, 3, 3);
+            btnAccept.Location = new Point(727, 254);
+            btnAccept.Margin = new Padding(9, 8, 3, 2);
             btnAccept.Name = "btnAccept";
-            btnAccept.Size = new Size(120, 45);
+            btnAccept.Size = new Size(105, 34);
             btnAccept.TabIndex = 1;
             btnAccept.Text = "Crear";
             btnAccept.UseVisualStyleBackColor = false;
@@ -121,10 +122,10 @@
             labelAddress.AutoSize = true;
             labelAddress.Font = new Font("Segoe UI", 11F);
             labelAddress.ForeColor = SystemColors.ControlText;
-            labelAddress.Location = new Point(533, 229);
-            labelAddress.Margin = new Padding(3, 11, 3, 0);
+            labelAddress.Location = new Point(473, 172);
+            labelAddress.Margin = new Padding(3, 8, 3, 0);
             labelAddress.Name = "labelAddress";
-            labelAddress.Size = new Size(92, 25);
+            labelAddress.Size = new Size(72, 20);
             labelAddress.TabIndex = 5;
             labelAddress.Text = "Dirección";
             // 
@@ -132,20 +133,21 @@
             // 
             txtAddress.Dock = DockStyle.Fill;
             txtAddress.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            txtAddress.Location = new Point(631, 229);
-            txtAddress.Margin = new Padding(3, 11, 3, 4);
+            txtAddress.Location = new Point(551, 172);
+            txtAddress.Margin = new Padding(3, 8, 3, 3);
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(323, 29);
+            txtAddress.Size = new Size(281, 25);
             txtAddress.TabIndex = 6;
             // 
             // ConsortiumForm
             // 
             AcceptButton = btnAccept;
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(992, 451);
+            ClientSize = new Size(868, 338);
             Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             Name = "ConsortiumForm";
             StartPosition = FormStartPosition.CenterScreen;

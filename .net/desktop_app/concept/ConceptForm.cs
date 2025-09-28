@@ -11,6 +11,7 @@ namespace desktop_app.concept
         public ConceptForm(ApiService apiService, Concept? concept = null)
         {
             InitializeComponent();
+            InitTypes();
 
             _apiService = apiService;
             _concept = concept;
@@ -20,16 +21,24 @@ namespace desktop_app.concept
                 labelForm.Text = "Actualizar Concepto";
                 btnAccept.Text = "Actualizar";
                 txtName.Text = _concept.Name;
+                comboType.SelectedItem = _concept.Type;
             }
+        }
+
+        private void InitTypes()
+        {
+            comboType.DataSource = Enum.GetValues(typeof(MovementType));
+            comboType.SelectedIndex = -1;
         }
 
         private async void btnAccept_Click(object sender, EventArgs e)
         {
             string Name = txtName.Text;
-
-            if (string.IsNullOrWhiteSpace(Name))
+            MovementType Type = (MovementType) comboType.SelectedItem;
+             
+            if (string.IsNullOrWhiteSpace(Name) || string.IsNullOrWhiteSpace(Type.ToString()))
             {
-                MessageBox.Show("El concepto no puede ser nulo o en blanco", "Concepto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor complete correctamente todos los campos", "Concepto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             try
@@ -37,7 +46,8 @@ namespace desktop_app.concept
                 var newConcept = new Concept
                 {
                     Name = Name,
-                    Active = true,
+                    Type = Type,
+                    Active = true
                 };
 
                 if (_concept == null)
@@ -46,7 +56,7 @@ namespace desktop_app.concept
                 }
                 else
                 {
-                    await _apiService.PutAsync($"concept",_concept.Id, newConcept);
+                    await _apiService.PutAsync($"concept", _concept.Id, newConcept);
                 }
 
                 MessageBox.Show("Guardado con éxito");

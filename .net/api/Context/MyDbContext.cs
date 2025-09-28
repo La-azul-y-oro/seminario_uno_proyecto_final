@@ -49,6 +49,9 @@ namespace api.Context
                 .WithMany()
                 .HasForeignKey(m => m.ConsortiumId);
             
+            modelBuilder.Entity<Concept>()
+                .Property(m => m.Type)
+                .HasConversion<string>();
                 
             modelBuilder.Entity<Movement>()
                 .Property(m => m.Type)

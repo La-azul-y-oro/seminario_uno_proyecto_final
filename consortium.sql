@@ -52,6 +52,7 @@ CREATE TABLE supplier (
 CREATE TABLE concept (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    type ENUM('INGRESO', 'EGRESO') NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE
 );
 
@@ -69,7 +70,7 @@ CREATE TABLE movement (
     id INT AUTO_INCREMENT PRIMARY KEY,
     date DATETIME NOT NULL,
     amount DECIMAL(12, 2) NOT NULL,
-    type ENUM('ingreso', 'egreso') NOT NULL,
+    type ENUM('INGRESO', 'EGRESO') NOT NULL,
     receipt VARCHAR(255),
     consortium_id INT NOT NULL,
     supplier_id INT,
