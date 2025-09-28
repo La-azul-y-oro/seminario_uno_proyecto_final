@@ -124,6 +124,13 @@ namespace desktop_app.auth
             Role = jwtToken.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
         }
 
+        public string GetRole(string token){
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+
+            return jwtToken.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value;
+        } 
+
         public string GetUserInfo()
         {
             return $"{Name} {LastName} {(string.IsNullOrWhiteSpace(Role) ? "" : "- " + Role)}";
