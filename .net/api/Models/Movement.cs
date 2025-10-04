@@ -38,5 +38,10 @@ namespace api.Models
 
         [StringLength(255)]
         public string? Comment { get; set; }
+
+        public Movement Clone()
+        {
+            return (Movement)this.MemberwiseClone();
+        }
     }
 }

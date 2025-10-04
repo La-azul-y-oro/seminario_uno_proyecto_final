@@ -46,20 +46,13 @@ namespace desktop_app.services
 
         public async Task<bool> PostAsync<T>(string endpoint, T data)
         {
-            try
-            {
-                _authService.AddAuthorizationHeader(_httpClient);
-                HttpContent content = JsonUtil.Serialize(data);
+            _authService.AddAuthorizationHeader(_httpClient);
+            HttpContent content = JsonUtil.Serialize(data);
 
-                HttpResponseMessage response = await _httpClient.PostAsync(endpoint, content);
-                response.EnsureSuccessStatusCode();
+            HttpResponseMessage response = await _httpClient.PostAsync(endpoint, content);
+            response.EnsureSuccessStatusCode();
 
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error while creating data in {endpoint}: {ex.Message}");
-            }
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> PutAsync<T>(string endpoint, int id, T data)
@@ -82,18 +75,11 @@ namespace desktop_app.services
 
         public async Task<bool> DeleteAsync(string endpoint, int id)
         {
-            try
-            {
-                _authService.AddAuthorizationHeader(_httpClient);
-                HttpResponseMessage response = await _httpClient.DeleteAsync($"{endpoint}/{id}");
-                response.EnsureSuccessStatusCode();
+            _authService.AddAuthorizationHeader(_httpClient);
+            HttpResponseMessage response = await _httpClient.DeleteAsync($"{endpoint}/{id}");
+            response.EnsureSuccessStatusCode();
 
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Error while deleting data from {endpoint}/{id}: {ex.Message}");
-            }
+            return response.IsSuccessStatusCode;
         }
     }
 

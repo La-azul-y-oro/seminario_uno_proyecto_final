@@ -35,7 +35,7 @@ export class PageComponent {
   @Input() data: any[] = [];
   @Input() cols!: Column[];
   @Input() buttonConfig!: ActionButtonConfig[];
-  @Input() canCreate: boolean = true; //TODO ajustar cuando se avance con la seguridad (iniciar en false)
+  @Input() canCreate: boolean = true;
   @Input() isLoading: boolean = false;
   @Input() hasError: boolean = false;
   @Input() isEmpty: boolean = false;
@@ -90,6 +90,12 @@ export class PageComponent {
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = date.getFullYear();
       return `${day}/${month}/${year}`;
+    }
+
+    if(field === 'amount' || field === 'balance'){
+      console.log(value)
+      const num = Number(value);
+      return num.toFixed(2).replace('.', ',');
     }
 
     return value;

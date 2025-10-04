@@ -47,30 +47,32 @@
             dgvEntity.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableLayoutPanel1.SetColumnSpan(dgvEntity, 4);
             dgvEntity.Dock = DockStyle.Fill;
-            dgvEntity.Location = new Point(3, 68);
+            dgvEntity.Location = new Point(3, 51);
+            dgvEntity.Margin = new Padding(3, 2, 3, 2);
             dgvEntity.Name = "dgvEntity";
             dgvEntity.ReadOnly = true;
             dgvEntity.RowHeadersWidth = 51;
-            dgvEntity.Size = new Size(1120, 447);
+            dgvEntity.Size = new Size(979, 335);
             dgvEntity.TabIndex = 0;
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 216F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 189F));
             tableLayoutPanel1.Controls.Add(btnUpdateList, 1, 2);
             tableLayoutPanel1.Controls.Add(dgvEntity, 0, 1);
             tableLayoutPanel1.Controls.Add(btnCreate, 1, 0);
             tableLayoutPanel1.Controls.Add(labelEntity, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(3, 2, 3, 2);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 49F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tableLayoutPanel1.Size = new Size(1126, 583);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 49F));
+            tableLayoutPanel1.Size = new Size(985, 437);
             tableLayoutPanel1.TabIndex = 1;
             // 
             // btnUpdateList
@@ -78,10 +80,10 @@
             btnUpdateList.Dock = DockStyle.Fill;
             btnUpdateList.Font = new Font("Segoe UI", 12F);
             btnUpdateList.ImageAlign = ContentAlignment.BottomLeft;
-            btnUpdateList.Location = new Point(931, 523);
-            btnUpdateList.Margin = new Padding(21, 5, 21, 5);
+            btnUpdateList.Location = new Point(814, 392);
+            btnUpdateList.Margin = new Padding(18, 4, 18, 4);
             btnUpdateList.Name = "btnUpdateList";
-            btnUpdateList.Size = new Size(174, 55);
+            btnUpdateList.Size = new Size(153, 41);
             btnUpdateList.TabIndex = 6;
             btnUpdateList.Text = "Actualizar listado";
             btnUpdateList.UseVisualStyleBackColor = true;
@@ -93,10 +95,10 @@
             btnCreate.Dock = DockStyle.Fill;
             btnCreate.Font = new Font("Segoe UI", 12F);
             btnCreate.ForeColor = SystemColors.ButtonHighlight;
-            btnCreate.Location = new Point(940, 5);
-            btnCreate.Margin = new Padding(30, 5, 30, 5);
+            btnCreate.Location = new Point(822, 4);
+            btnCreate.Margin = new Padding(26, 4, 26, 4);
             btnCreate.Name = "btnCreate";
-            btnCreate.Size = new Size(156, 55);
+            btnCreate.Size = new Size(137, 41);
             btnCreate.TabIndex = 1;
             btnCreate.Text = "Nuevo";
             btnCreate.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -110,18 +112,19 @@
             labelEntity.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelEntity.Location = new Point(3, 0);
             labelEntity.Name = "labelEntity";
-            labelEntity.Size = new Size(904, 65);
+            labelEntity.Size = new Size(790, 49);
             labelEntity.TabIndex = 5;
-            labelEntity.Text = "PROVEEDORES";
+            labelEntity.Text = "MOVIMIENTOS";
             labelEntity.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // SupplierControl
+            // MovementControl
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(tableLayoutPanel1);
-            Name = "SupplierControl";
-            Size = new Size(1126, 583);
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "MovementControl";
+            Size = new Size(985, 437);
             ((System.ComponentModel.ISupportInitialize)dgvEntity).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();

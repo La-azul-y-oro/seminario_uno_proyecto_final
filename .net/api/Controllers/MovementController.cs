@@ -62,25 +62,8 @@ namespace api.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        [Authorize(Roles = "ADMIN,STAFF")]
-        public ActionResult<MovementDTO> Update(int id, [FromBody] MovementDTO movementDTO){
-            if(movementDTO == null){
-                return BadRequest();
-            }
-
-            try{
-                _movementService.Update(id, _movementMapper.GetMovement(movementDTO));
-                return NoContent();
-            } catch(KeyNotFoundException) {
-                return NotFound();
-            } catch (InvalidOperationException e) {
-                return Conflict(e.Message);
-            }
-        }
-
         [HttpDelete("{id}")]
-        [Authorize(Roles = "ADMIN,STAFF")]
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Delete(int id){
             try{
                 _movementService.Delete(id);

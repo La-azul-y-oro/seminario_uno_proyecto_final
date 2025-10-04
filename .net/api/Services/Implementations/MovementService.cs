@@ -1,7 +1,6 @@
 using api.Context;
 using api.Models;
 using api.Services.Interfaces;
-using DocumentFormat.OpenXml.Bibliography;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Services.Implementations{
@@ -109,6 +108,13 @@ namespace api.Services.Implementations{
             {
                 validateLiquidationPeriod(movement);
             }
+            if (movement.Type.Equals(MovementType.INGRESO))
+            {
+                var copyMovement = movement.Clone();
+                copyMovement.Amount = (-1) * copyMovement.Amount;
+
+                updateFunctionalUnitBalance(copyMovement);
+            }
 
             movement.Active = false;
             _context.SaveChanges();
@@ -153,7 +159,7 @@ namespace api.Services.Implementations{
         private void updateFunctionalUnitBalance(Movement entity)
         {
             if (entity.FunctionalUnitId != null) {
-                _functionalUnitService.UpdateBalance(entity.Id, entity.Amount);
+                _functionalUnitService.UpdateBalance((int) entity.FunctionalUnitId, entity.Amount);
             }
         }
     }

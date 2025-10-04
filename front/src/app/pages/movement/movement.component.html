@@ -11,14 +11,14 @@
     [hideCreateButton]="!canCreate"
 />
 <app-movement-form
-    #form
+    [visible]="formVisible"
     [data]="dataObject"
-    (onSave)="save($event)"
+    (saveEmit)="handlePostCreate($event)"
     (onUpdate)="update($event)"
     [consortiumList]="consortiumList"
     [supplierList]="supplierList"
     [conceptList]="conceptList"
-    [functionalUnitList]="functionalUnitList"
     [isReady]="!isLoadingEntities()"
-    [hasError]="hasErrorEntities()"
+    [hasReadyError]="hasErrorEntities()"
+    (closeEmit)="formVisible = false"
 />
