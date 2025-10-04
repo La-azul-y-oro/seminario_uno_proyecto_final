@@ -114,10 +114,14 @@ export abstract class GenericComponent<TRequest, TResponse> implements OnInit {
         if (this.dataList.length == 0) this.isEmpty = true;
       },
       error: error => {
-        this.toastService.showErrorDelete();
-        console.error(error);
+        this.handleDeleteError(error);
       }
     });
+  }
+
+  handleDeleteError(error: any) {
+    this.toastService.showErrorDelete();
+    console.error(error);
   }
 
   handlePostCreate(response: TResponse) {

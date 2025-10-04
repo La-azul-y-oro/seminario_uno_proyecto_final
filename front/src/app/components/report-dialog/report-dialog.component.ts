@@ -54,34 +54,13 @@ export class ReportDialogComponent implements OnChanges {
   selectedExpensa: any = null;
 
   constructor(
-    private readonly primengConfig: PrimeNGConfig,
     private readonly liquidationService: LiquidationService
   ) { }
-
-  ngOnInit() {
-    this.setConfigLanguage();
-  }
 
   ngOnChanges() {
     if (this.consortiumId !== undefined && this.visible) {
       this.getLiquidations();
     }
-  }
-
-  setConfigLanguage() {
-    this.primengConfig.setTranslation({
-      dayNames: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
-      dayNamesShort: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
-      dayNamesMin: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
-      monthNames: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio",
-        "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-      monthNamesShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago",
-        "Sep", "Oct", "Nov", "Dic"],
-      today: 'Hoy',
-      clear: 'Limpiar',
-      dateFormat: 'dd/mm/yy',
-      firstDayOfWeek: 1
-    });
   }
 
   getLiquidations() {

@@ -40,7 +40,7 @@ export class ClientDialogComponent {
   availableClients: any[] = []; // Lista completa de clientes
   idClientsToAdd: any[] = [];
 
-tooltipEnabled = true;
+  tooltipEnabled = true;
 
   constructor(
     private readonly functionalUnitService: FunctionalUnitService,
@@ -73,13 +73,17 @@ tooltipEnabled = true;
   }
 
   removeClient(client: any) {
-
-    this.confirmService.open(client, `Desvincular cliente ${client.fullName}` )
+    this.confirmService.open(
+      {
+        id: client,
+        header: `Desvincular cliente ${client.fullName}`
+      }
+    )
       .subscribe((data) => {
         this.idClientsToAdd = this.bindClients.filter(c => c.id !== data.id).map(c => c.id);
 
         this.confirmRemoveClients();
-    });
+      });
   }
 
   openAddClientModal() {
@@ -126,7 +130,7 @@ tooltipEnabled = true;
     });
   }
 
-  
+
   postConfirm() {
     const newClients = this.availableClients.filter(obj => this.idClientsToAdd.includes(obj.id));
 

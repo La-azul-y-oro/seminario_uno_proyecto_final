@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ConfirmDialogComponent } from './confirm-dialog.component';
+import { ConfirmDialogComponent, DialogConfirmConfig } from './confirm-dialog.component';
 import { Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -18,9 +18,9 @@ export class ConfirmDialogService {
     });
   }
 
-  open(id: any, header: string = 'Eliminar registro') {
+  open(config: DialogConfirmConfig) {
     this.confirmSubject = new Subject<any>();
-    this.dialogComponent.openDialog(id, header);
+    this.dialogComponent.openDialog(config);
     return this.confirmSubject.asObservable();
   }
 }

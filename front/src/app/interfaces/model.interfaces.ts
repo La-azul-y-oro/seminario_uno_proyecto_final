@@ -208,11 +208,6 @@ export enum MovementType {
     EGRESO = "EGRESO"
 }
 
-export const MovementTypeMap: Record<MovementType, string> = {
-    [MovementType.INGRESO]: 'Ingreso',
-    [MovementType.EGRESO]: 'Egreso',
-};
-
 export interface FunctionalUnitRequest {
     id: number;
     name: string;

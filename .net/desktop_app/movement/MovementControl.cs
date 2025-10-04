@@ -1,5 +1,4 @@
 ﻿using desktop_app.dto;
-using desktop_app.models;
 using desktop_app.services;
 
 namespace desktop_app.movement
@@ -10,7 +9,6 @@ namespace desktop_app.movement
         private List<ConsortiumResponse> _consortiums;
         private List<ConceptResponse> _concepts;
         private List<SupplierResponse> _suppliers;
-        private List<FunctionalUnitResponse> _functionalUnits;
 
         public MovementControl(ApiService apiService)
         {
@@ -19,7 +17,6 @@ namespace desktop_app.movement
 
             LoadDataAsync();
             GetAllConsortiums();
-            GetAllFunctionalUnits();
             GetAllSuppliers();
             GetAllConcepts();
 
@@ -29,6 +26,10 @@ namespace desktop_app.movement
         private async Task LoadDataAsync()
         {
             var movements = await GetAll();
+
+            movements = movements
+               .OrderByDescending(m => m.Id)
+               .ToList();
 
             dgvEntity.DataSource = null;
             dgvEntity.AutoGenerateColumns = false;
@@ -62,7 +63,7 @@ namespace desktop_app.movement
             dgvEntity.Columns.Add(new DataGridViewTextBoxColumn
             {
                 DataPropertyName = "Amount",
-                HeaderText = "Monto",
+                HeaderText = "Monto ($)",
                 Name = "colMonto",
                 AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
             });
@@ -148,18 +149,6 @@ namespace desktop_app.movement
             }
         }
 
-        private async Task GetAllFunctionalUnits()
-        {
-            try
-            {
-                _functionalUnits = await _apiService.GetAllAsync<FunctionalUnitResponse>("functionalunit");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al cargar datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private async Task GetAllSuppliers()
         {
             try
@@ -184,11 +173,9 @@ namespace desktop_app.movement
             }
         }
 
-        private void OpenMovementForm(MovementResponse? dto)
+        private void OpenMovementForm()
         {
-            var movementToProcess = (dto != null) ? dto : null;
-
-            using var form = new MovementForm(_apiService, _concepts, _consortiums, _functionalUnits, _suppliers, movementToProcess);
+            using var form = new MovementForm(_apiService, _concepts, _consortiums, _suppliers);
 
             if (form.ShowDialog() == DialogResult.OK)
             {
@@ -203,23 +190,30 @@ namespace desktop_app.movement
 
             if (confirm == DialogResult.Yes)
             {
-                await _apiService.DeleteAsync("movement", movement.Id);
-                LoadDataAsync();
+                try
+                {
+                    await _apiService.DeleteAsync("movement", movement.Id);
+                    LoadDataAsync();
+                }
+                catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.Conflict)
+                {
+                    MessageBox.Show(
+                        "No se permiten procesar movimientos para un periodo ya liquidado.",
+                        "Ha ocurrido un error al guardar el movimiento.",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
         private void AddActionButtons()
         {
-            if (dgvEntity.Columns["btnEdit"] != null) return;
-
-            var btnEdit = new DataGridViewButtonColumn
-            {
-                Name = "btnEdit",
-                HeaderText = "",
-                Text = "Editar",
-                UseColumnTextForButtonValue = true,
-                Width = 120
-            };
+            if (dgvEntity.Columns["btnRemove"] != null) return;
 
             var btnRemove = new DataGridViewButtonColumn
             {
@@ -230,7 +224,6 @@ namespace desktop_app.movement
                 Width = 120
             };
 
-            dgvEntity.Columns.Add(btnEdit);
             dgvEntity.Columns.Add(btnRemove);
         }
 
@@ -245,10 +238,6 @@ namespace desktop_app.movement
 
             switch (columnName)
             {
-                case "btnEdit":
-                    OpenMovementForm(movement);
-                    break;
-
                 case "btnRemove":
                     DeleteSelectedMovement(movement);
                     break;
@@ -257,7 +246,7 @@ namespace desktop_app.movement
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            OpenMovementForm(null);
+            OpenMovementForm();
         }
 
         private void btnUpdateList_Click(object sender, EventArgs e)
