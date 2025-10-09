@@ -288,7 +288,8 @@ export class FunctionalUnitDialogComponent implements OnChanges{
   }
 
   canSave(): boolean {
-    return this.totalFactor === 100 && this.form.valid;
+    const totalFactor = Math.round(this.totalFactor * 100) / 100
+    return  totalFactor === 100.00 && this.form.valid;
   }
 
   save() {

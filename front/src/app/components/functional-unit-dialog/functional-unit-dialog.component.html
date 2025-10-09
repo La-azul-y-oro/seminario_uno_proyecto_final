@@ -300,7 +300,7 @@
       <div
         class="ms-3 mt-3"
         style="font-size: 0.85rem; color: #f97316"
-        *ngIf="totalFactor !== 100 && units.controls.length > 0"
+        *ngIf="!canSave() && units.controls.length > 0"
       >
         <i 
           class="pi pi-exclamation-triangle"
