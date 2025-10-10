@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -37,20 +37,18 @@ import { noWhitespaceValidator } from '../../util/customValidators';
   templateUrl: './functional-unit-dialog.component.html',
   styleUrl: './functional-unit-dialog.component.css'
 })
-export class FunctionalUnitDialogComponent implements OnChanges{
+export class FunctionalUnitDialogComponent implements OnChanges {
   @Input() visible: boolean = false;
   @Input() consortiumId!: number | undefined;
   @Input() functionalUnitList: any[] = [];
-
   @Output() onCancel = new EventEmitter;
-
+  
   form!: FormGroup;
   units!: FormArray;
+  generatorForm: FormGroup;
   totalFactor = 0;
-
   loadingMethod: 'automatic' | 'manual' | null = null;
   showMainForm: boolean = false;
-  generatorForm: FormGroup;
   previewUnits: any[] = [];
   floorFactors: { floor: number, factor: number }[] = [];
   nomenclatureList = [
@@ -58,9 +56,7 @@ export class FunctionalUnitDialogComponent implements OnChanges{
     { value: "pisoNumero", label: "Piso + Número (101, 102, 103...)" }
   ];
   isManualSelected: boolean = false;
-
   deletedUnitIds: number[] = [];
-
   actionButtonStyle = {
     height: '30px',
     width: '30px',
@@ -68,7 +64,7 @@ export class FunctionalUnitDialogComponent implements OnChanges{
     marginLeft: '5px',
     marginRight: '5px'
   };
-
+  
   constructor(
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService,
@@ -100,22 +96,44 @@ export class FunctionalUnitDialogComponent implements OnChanges{
     });
   }
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['visible'] && changes['visible'].currentValue === true) {
+      this.resetCompleteState();
+    }
+    
+    if (changes['functionalUnitList'] || changes['consortiumId']) {
+      this.loadUnits();
+    }
+  }
+
+  private resetCompleteState(): void {
     this.clearFormArray();
-    this.loadUnits();
+    this.form.reset();
+    this.generatorForm.reset({
+      nomenclature: 'pisoLetra',
+      baseFactor: 2.5,
+      differentFactorsByFloor: false
+    });
+    
+    this.showMainForm = false;
+    this.loadingMethod = null;
+    this.isManualSelected = false;
+    this.previewUnits = [];
+    this.floorFactors = [];
+    this.deletedUnitIds = [];
+    this.totalFactor = 0;
+    
+    this.form.markAsPristine();
+    this.form.markAsUntouched();
+    this.generatorForm.markAsPristine();
+    this.generatorForm.markAsUntouched();
   }
 
   clearFormArray(): void {
     while (this.units.length !== 0) {
       this.units.removeAt(0);
     }
-    // Resetear el estado del formulario
-    this.form.markAsUntouched();
-    this.form.markAsPristine();
-    this.units.markAsUntouched();
-    this.units.markAsPristine();
   }
-
 
   loadUnits(): void {
     this.clearFormArray();
@@ -128,7 +146,6 @@ export class FunctionalUnitDialogComponent implements OnChanges{
     this.recalculateTotal();
   }
 
-  // Método helper para crear un FormGroup de unidad
   createUnitFormGroup(unit: any = null): FormGroup {
     return this.fb.group({
       id: [unit?.id || null],
@@ -146,14 +163,12 @@ export class FunctionalUnitDialogComponent implements OnChanges{
   }
 
   private setupFormSubscriptions() {
-    // Observar cambios en la cantidad de pisos
     this.generatorForm.get('floors')?.valueChanges.subscribe(floors => {
       if (floors && this.generatorForm.get('differentFactorsByFloor')?.value) {
         this.generateFloorFactors(floors);
       }
     });
 
-    // Observar cambios en el checkbox de factores diferenciados
     this.generatorForm.get('differentFactorsByFloor')?.valueChanges.subscribe(isDifferent => {
       if (isDifferent) {
         const floors = this.generatorForm.get('floors')?.value;
@@ -169,7 +184,6 @@ export class FunctionalUnitDialogComponent implements OnChanges{
   private generateFloorFactors(floors: number) {
     const baseFactor = this.generatorForm.get('baseFactor')?.value || 2.5;
     this.floorFactors = [];
-
     for (let i = 1; i <= floors; i++) {
       this.floorFactors.push({
         floor: i,
@@ -180,20 +194,17 @@ export class FunctionalUnitDialogComponent implements OnChanges{
 
   generatePreview() {
     if (!this.generatorForm.valid) return;
-
     const formData = this.generatorForm.value;
     this.previewUnits = this.createUnitsList(formData);
   }
 
   generateUnits() {
     if (!this.generatorForm.valid) return;
-
     const formData = this.generatorForm.value;
     this.functionalUnitList = this.createUnitsList(formData);
     this.loadUnits();
     this.showMainForm = true;
-
-    // Scroll hacia el formulario principal
+    
     setTimeout(() => {
       const element = document.querySelector('form[formGroupName="form"]');
       if (element) {
@@ -221,13 +232,11 @@ export class FunctionalUnitDialogComponent implements OnChanges{
         });
       }
     }
-
     return units;
   }
 
   private generateUnitName(floor: number, unit: number, nomenclature: string): string {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
     switch (nomenclature) {
       case 'pisoLetra':
         return `${floor}${letters[unit - 1]}`;
@@ -241,7 +250,7 @@ export class FunctionalUnitDialogComponent implements OnChanges{
   proceedToManualForm() {
     this.showMainForm = true;
     this.isManualSelected = true;
-
+    
     setTimeout(() => {
       const element = document.querySelector('form[formGroupName="form"]');
       if (element) {
@@ -275,7 +284,6 @@ export class FunctionalUnitDialogComponent implements OnChanges{
     
     this.units.removeAt(index);
     this.recalculateTotal();
-    
     this.form.markAsTouched();
   }
 
@@ -283,20 +291,18 @@ export class FunctionalUnitDialogComponent implements OnChanges{
     const newUnit = this.createUnitFormGroup();
     this.units.push(newUnit);
     this.recalculateTotal();
-    
     this.form.markAsTouched();
   }
 
   canSave(): boolean {
-    const totalFactor = Math.round(this.totalFactor * 100) / 100
-    return  totalFactor === 100.00 && this.form.valid;
+    const totalFactor = Math.round(this.totalFactor * 100) / 100;
+    return totalFactor === 100.00 && this.form.valid;
   }
 
   save() {
     if (!this.canSave()) return;
-
+    
     const current = this.units.value;
-
     const toCreate = current.filter((u: any) => !u.id);
     const toUpdate = current.filter((u: any) => {
       const original = this.functionalUnitList.find(o => o.id === u.id);
@@ -308,7 +314,6 @@ export class FunctionalUnitDialogComponent implements OnChanges{
       ...u,
       consortiumId: this.consortiumId
     }));
-
     const toDelete = this.deletedUnitIds;
 
     const result = {
@@ -326,26 +331,22 @@ export class FunctionalUnitDialogComponent implements OnChanges{
   updateData(data: FunctionalUnitBatchRequest) {
     this.functionalUnitService.updateFunctionalUnits(data).subscribe({
       next: (response) => {
-        this.toastService.setSuccessMessage("Las unidades funcionales se han procesado con éxito.")
+        this.toastService.setSuccessMessage("Las unidades funcionales se han procesado con éxito.");
         this.closeDialog(response);
       },
       error: (error) => {
-        this.toastService.setErrorMessage("Ha ocurrido un error al procesar las unidades funcionales.")
+        this.toastService.setErrorMessage("Ha ocurrido un error al procesar las unidades funcionales.");
         console.error("Error al procesar unidades funcionales:", error);
       }
     });
   }
 
   closeDialog(data: UnitFunctionalConsortium[] = []) {
-    this.resetForm();
     this.onCancel.emit(data);
   }
 
   resetForm(): void {
-    this.clearFormArray();
-    this.form.reset();
-    this.initializeForm();
-    this.deletedUnitIds = [];
+    this.resetCompleteState();
   }
 
   showTooltipCannotDelete(unit: any) {
@@ -356,7 +357,7 @@ export class FunctionalUnitDialogComponent implements OnChanges{
   suggestedFactor() {
     const floors = this.generatorForm.get('floors')?.value;
     const unitsPerFloor = this.generatorForm.get('unitsPerFloor')?.value;
-
+    
     if (floors && unitsPerFloor) {
       return Number(100 / (floors * unitsPerFloor)).toFixed(2);
     } else {
