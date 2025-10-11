@@ -1,4 +1,7 @@
-﻿namespace api.Dto
+﻿using api.Models;
+using System.Text.Json.Serialization;
+
+namespace api.Dto
 {
     public class Client
     {
@@ -9,5 +12,8 @@
         public required string LastName { get; set; }
 
         public required string Email { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public OccupantType? OccupantType { get; set; }
     }
 }

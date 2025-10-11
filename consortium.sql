@@ -88,6 +88,7 @@ CREATE TABLE movement (
 CREATE TABLE user_functional_unit (
     user_id INT NOT NULL,
     functional_unit_id INT NOT NULL,
+    occupant_type ENUM('PROPIETARIO', 'INQUILINO') NOT NULL,
     PRIMARY KEY (user_id, functional_unit_id),
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (functional_unit_id) REFERENCES functional_unit(id)

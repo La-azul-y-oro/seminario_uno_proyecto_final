@@ -304,9 +304,14 @@ namespace desktop_app.consortium
             try
             {
                 _functionalUnitsUpdate = await _functionalUnitService.ProcessBatchAsync(batch);
-                MessageBox.Show("Unidades guardadas correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Unidades guardadas correctamente.",
+                    "Éxito",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information
+                );
                 UnitsUpdated?.Invoke(_functionalUnitsUpdate);
-                this.Close();
+                LoadFunctionalUnits(_functionalUnitsUpdate);
             }
             catch (Exception ex)
             {
@@ -342,6 +347,16 @@ namespace desktop_app.consortium
             {
                 var row = dgvUnits.Rows[e.RowIndex];
                 var functionalUnit = row.Tag as FunctionalUnitResponse;
+
+                if(functionalUnit == null) {
+                    MessageBox.Show(
+                        "La unidad funcional aún no se encuentra confirmada. Por favor actualice el listado de unidades funcionales antes de asignar clientes.",
+                        "Unidades Funcionales",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
+                    return;
+
+                }
 
                 using var form = new ClientForm(_userService, _functionalUnitService, _clients, functionalUnit);
 

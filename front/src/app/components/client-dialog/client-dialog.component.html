@@ -11,9 +11,10 @@
     <div class="text-end">
       <p-button
         (onClick)="openAddClientModal()"
-        label="Agregar clientes"
-        icon="pi pi-plus"
+        label="Gestionar clientes"
+        icon="pi pi-address-book"
         size="small"
+        severity="info"
       />
     </div>
   </div>
@@ -33,7 +34,7 @@
           <th>Nombre</th>
           <th>Apellido</th>
           <th>Email</th>
-          <th>Acciones</th>
+          <th>Tipo</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-client>
@@ -41,21 +42,12 @@
           <td>{{ client.firstName }}</td>
           <td>{{ client.lastName }}</td>
           <td>{{ client.email }}</td>
-          <td>
-            <i
-              (click)="removeClient(client)"
-              class="pi pi-times-circle"
-              [pTooltip]="'Remover Usuario'"
-              style="color: #dc3545"
-              onKeyPress=""
-            >
-            </i>
-          </td>
+          <td>{{ client.occupantType }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="4" class="text-center">
+          <td colspan="5" class="text-center">
             No existen clientes asociados.
           </td>
         </tr>
@@ -79,50 +71,107 @@
 <p-dialog
   header="Seleccionar clientes"
   [(visible)]="addClientModalVisible"
-  [style]="{ minWidth: '400px' }"
-  (onHide)="cancelAddClient()"
+  [style]="{ minWidth: '600px' }"
+  (onHide)="cancelClients()"
 >
-  <input type="text" class="d-none" />
   <div class="w-100">
-    <div class="mb-3">
-      <p-multiSelect
-        #multiSelectRef
-        inputId="clientMultiSelect"
-        [options]="availableClients"
-        optionLabel="fullName"
-        optionValue="id"
-        placeholder="Seleccionar clientes"
-        appendTo="body"
-        [style]="{ width: '100%' }"
-        (onChange)="addClient($event)"
-        emptyMessage="No hay clientes disponibles"
-        emptyFilterMessage="Sin resultados"
-        selectedItemsLabel="{0} Clientes seleccionados"
-        [maxSelectedLabels]=2
+    <div class="row mb-4 text-end">
+      <p-button
+        label="Agregar Cliente"
+        icon="pi pi-plus"
+        size="small"
+        (onClick)="addNewClient()"
+        [disabled]="availableClientsFiltered.length === 0"
+      />
+      <small
+        class="mt-2 ms-2 text-muted"
+        *ngIf="availableClientsFiltered.length === 0"
       >
-        <ng-template let-client pTemplate="item">
-          {{ client.firstName }} {{ client.lastName }} ({{ client.email }})
-        </ng-template>
-      </p-multiSelect>
+        No hay más clientes disponibles
+      </small>
     </div>
 
-    <div class="row">
+    <p-table
+      [value]="selectedClients"
+      [tableStyle]="{ 'min-width': '100%' }"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 50%">Cliente <span class="text-danger">*</span></th>
+          <th style="width: 35%">Tipo <span class="text-danger">*</span></th>
+          <th style="width: 15%">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+        <tr>
+          <td>
+            <p-dropdown
+              [(ngModel)]="item.client"
+              [options]="getAvailableClientsForItem(item)"
+              optionLabel="fullName"
+              placeholder="Seleccionar cliente"
+              [style]="{ width: '100%' }"
+              [filter]="true"
+              appendTo="body"
+              filterBy="firstName,lastName,email"
+              [styleClass]="!item.client ? 'ng-invalid ng-dirty' : ''"
+              dataKey="id"
+            >
+              <ng-template let-client pTemplate="item">
+                {{ client.firstName }} {{ client.lastName }} ({{
+                  client.email
+                }})
+              </ng-template>
+              <ng-template let-client pTemplate="selectedItem">
+                {{ client.firstName }} {{ client.lastName }}
+              </ng-template>
+            </p-dropdown>
+          </td>
+          <td>
+            <p-dropdown
+              [(ngModel)]="item.type"
+              [options]="clientTypes"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Seleccionar tipo"
+              appendTo="body"
+              [style]="{ width: '100%' }"
+              [styleClass]="!item.type ? 'ng-invalid ng-dirty' : ''"
+            />
+          </td>
+          <td class="text-center">
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [text]="true"
+              (onClick)="removeClient(rowIndex)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="3" class="text-center">No hay clientes vinculados.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <div class="row mt-4 text-end">
       <div class="col">
         <p-button
           label="Cancelar"
           severity="secondary"
           size="small"
           class="me-2"
-          (onClick)="cancelAddClient()"
-          [classList]="'me-3'"
+          (onClick)="cancelClients()"
         />
-
         <p-button
           label="Guardar"
           icon="pi pi-check"
           size="small"
-          (onClick)="confirmAddClients()"
-          [disabled]="!idClientsToAdd.length"
+          (onClick)="confirmClients()"
+          [disabled]="!canSave"
         />
       </div>
     </div>

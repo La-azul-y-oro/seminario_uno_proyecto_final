@@ -7,7 +7,7 @@ namespace api.Services.Interfaces
     {
         List<FunctionalUnitResponse> FindByConsortiumId(int consortiumId);
         void UpdateBalance(int id, decimal amount);
-        void UpdateClientsToFunctionalUnit(int FunctionalId, List<int> ClientsIds);
+        void UpdateClientsToFunctionalUnit(int FunctionalId, List<ClientFunctionalUnitDto> clients);
         List<ClientFunctionalUnit> GetByClientId(int ClientId);
         Task ProcessBatchOperations(FunctionalUnitBatchRequest request);
     }

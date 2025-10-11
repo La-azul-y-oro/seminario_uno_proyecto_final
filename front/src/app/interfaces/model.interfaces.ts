@@ -100,6 +100,12 @@ export interface Client {
     firstName: string;
     lastName: string;
     email: string;
+    occupantType: OccupantType | null;
+}
+
+export enum OccupantType{
+    PROPIETARIO = "PROPIETARIO",
+    INQUILINO = "INQUILINO"
 }
 
 export interface Liquidation {
@@ -142,7 +148,12 @@ export interface UnitFunctionalConsortium {
 
 export interface AssignClientsRequest {
     functionalId: number;
-    clientsIds: number[];
+    clients: ClientFunctionalUnitDto[];
+}
+
+export interface ClientFunctionalUnitDto{
+    clientId: number;
+    occupantType: OccupantType
 }
 
 export interface ClientFunctionalUnit {

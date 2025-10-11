@@ -135,12 +135,12 @@ namespace api.Controllers
                 return BadRequest();
             }
 
-            if (request.ClientsIds == null)
+            if (request.Clients == null)
             {
                 return BadRequest();
             }
 
-            _functionalUnitService.UpdateClientsToFunctionalUnit(request.FunctionalId, request.ClientsIds);
+            _functionalUnitService.UpdateClientsToFunctionalUnit(request.FunctionalId, request.Clients);
 
             return Ok();
         }

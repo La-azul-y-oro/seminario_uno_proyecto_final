@@ -21,6 +21,8 @@ namespace api.Context
 
         public DbSet<Liquidation> Liquidation { get; set; }
 
+        public DbSet<UserFunctionalUnit> UserFunctionalUnit { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
@@ -31,15 +33,6 @@ namespace api.Context
                 .Property(u => u.Role)
                 .HasConversion<string>();
 
-            modelBuilder.Entity<User>()
-                .HasMany(u => u.FunctionalUnits)
-                .WithMany(fu => fu.Users)
-                .UsingEntity(
-                    "user_functional_unit",
-                    l => l.HasOne(typeof(FunctionalUnit)).WithMany().HasForeignKey("functional_unit_id"),
-                    r => r.HasOne(typeof(User)).WithMany().HasForeignKey("user_id"),
-                    j => j.HasKey("user_id", "functional_unit_id"));
-
             modelBuilder.Entity<FunctionalUnit>()
                 .HasIndex(fu => new { fu.Name, fu.ConsortiumId })
                 .IsUnique();
@@ -48,7 +41,27 @@ namespace api.Context
                 .HasOne(m => m.Consortium)
                 .WithMany()
                 .HasForeignKey(m => m.ConsortiumId);
-            
+
+            modelBuilder.Entity<UserFunctionalUnit>()
+                .HasKey(ufu => new { ufu.UserId, ufu.FunctionalUnitId });
+
+            modelBuilder.Entity<UserFunctionalUnit>()
+                .HasOne(ufu => ufu.User)
+                .WithMany(u => u.UserFunctionalUnits)
+                .HasForeignKey(ufu => ufu.UserId);
+
+            modelBuilder.Entity<UserFunctionalUnit>()
+                .HasOne(ufu => ufu.FunctionalUnit)
+                .WithMany(fu => fu.UserFunctionalUnits)
+                .HasForeignKey(ufu => ufu.FunctionalUnitId);
+
+            modelBuilder.Entity<UserFunctionalUnit>()
+                .ToTable("user_functional_unit");
+
+            modelBuilder.Entity<UserFunctionalUnit>()
+                .Property(ufu => ufu.OccupantType)
+                .HasConversion<string>();
+
             modelBuilder.Entity<Concept>()
                 .Property(m => m.Type)
                 .HasConversion<string>();
