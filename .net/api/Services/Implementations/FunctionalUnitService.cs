@@ -188,6 +188,8 @@ namespace api.Services.Implementations
         public List<FunctionalUnitResponse> FindByConsortiumId(int consortiumId)
         {
             return _context.FunctionalUnit
+                .Include(fu => fu.UserFunctionalUnits)
+                    .ThenInclude(ufu => ufu.User)
                 .Where(fu => fu.ConsortiumId == consortiumId && fu.Active)
                 .ToList()
                 .Select(u => _functionalUnitMapper.GetFunctionalUnitResponse(u))
@@ -207,10 +209,10 @@ namespace api.Services.Implementations
             _context.SaveChanges();
         }
 
-        public void UpdateClientsToFunctionalUnit(int FunctionalId, List<int> ClientsIds)
+        public void UpdateClientsToFunctionalUnit(int FunctionalId, List<ClientFunctionalUnitDto> clients)
         {
             var functionalUnit = _context.FunctionalUnit
-                .Include(fu => fu.Users)
+                .Include(fu => fu.UserFunctionalUnits)
                 .FirstOrDefault(fu => fu.Id == FunctionalId && fu.Active);
 
             if (functionalUnit == null)
@@ -218,24 +220,32 @@ namespace api.Services.Implementations
                 throw new ArgumentException($"Functional unit with ID {FunctionalId} not found or inactive");
             }
 
-            functionalUnit.Users.Clear();
+            functionalUnit.UserFunctionalUnits.Clear();
 
-            if (ClientsIds != null && ClientsIds.Any())
+            if (clients != null && clients.Any())
             {
+                var clientIds = clients.Select(c => c.ClientId).ToList();
+
                 var users = _context.User
-                    .Where(u => ClientsIds.Contains(u.Id) && u.Active)
+                    .Where(u => clientIds.Contains(u.Id) && u.Active)
                     .ToList();
 
-                if (users.Count != ClientsIds.Count)
+                if (users.Count != clientIds.Count)
                 {
                     var foundIds = users.Select(u => u.Id).ToList();
-                    var missingIds = ClientsIds.Except(foundIds).ToList();
+                    var missingIds = clientIds.Except(foundIds).ToList();
                     throw new ArgumentException($"Users not found or inactive: {string.Join(", ", missingIds)}");
                 }
 
-                foreach (var user in users)
+                foreach (var client in clients)
                 {
-                    functionalUnit.Users.Add(user);
+                    var userFunctionalUnit = new UserFunctionalUnit
+                    {
+                        UserId = client.ClientId,
+                        FunctionalUnitId = FunctionalId,
+                        OccupantType = client.OccupantType
+                    };
+                    functionalUnit.UserFunctionalUnits.Add(userFunctionalUnit);
                 }
             }
 
@@ -244,11 +254,10 @@ namespace api.Services.Implementations
 
         public List<ClientFunctionalUnit> GetByClientId(int ClientId)
         {
-            // Obtener las unidades funcionales del cliente con sus consorcios
             var functionalUnits = _context.FunctionalUnit
                 .Include(fu => fu.Consortium)
-                .Include(fu => fu.Users)
-                .Where(fu => fu.Users.Any(u => u.Id == ClientId && u.Active))
+                .Include(fu => fu.UserFunctionalUnits)
+                .Where(fu => fu.UserFunctionalUnits.Any(ufu => ufu.UserId == ClientId && ufu.User.Active))
                 .Where(fu => fu.Active)
                 .ToList();
 

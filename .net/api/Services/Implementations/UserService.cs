@@ -100,12 +100,13 @@ namespace api.Services.Implementations
 
         public List<Client> FindClientsByFunctionalUnitId(int functionalUnitId)
         {
-            var users = _context.User
-                .Where(u => u.FunctionalUnits.Any(fu => fu.Id == functionalUnitId))
-                .Where(u => u.Role == Role.CLIENT && u.Active == true)
+            var userFunctionalUnits = _context.Set<UserFunctionalUnit>()
+                .Include(ufu => ufu.User)
+                .Where(ufu => ufu.FunctionalUnitId == functionalUnitId)
+                .Where(ufu => ufu.User.Role == Role.CLIENT && ufu.User.Active == true)
                 .ToList();
 
-            return users.Select(user => _userMapper.GetClient(user)).ToList();
+            return userFunctionalUnits.Select(ufu => _userMapper.GetClient(ufu.User, ufu.OccupantType)).ToList();
         }
 
         public List<Client> GetAllClients()

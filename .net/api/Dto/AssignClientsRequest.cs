@@ -3,6 +3,6 @@
     public class AssignClientsRequest
     {
         public int FunctionalId { get; set; }
-        public List<int> ClientsIds { get; set; } = new List<int>();
+        public List<ClientFunctionalUnitDto> Clients { get; set; } = new List<ClientFunctionalUnitDto>();
     }
 }

@@ -37,6 +37,6 @@ namespace api.Models
         [Column("reset_token_expiration")]
         public DateTime? ResetTokenExpiration { get; set; }
 
-        public ICollection<FunctionalUnit> FunctionalUnits { get; set; } = new List<FunctionalUnit>();
+        public ICollection<UserFunctionalUnit> UserFunctionalUnits { get; set; } = new List<UserFunctionalUnit>();
     }
 }

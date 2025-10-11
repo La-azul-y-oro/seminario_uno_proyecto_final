@@ -26,5 +26,12 @@ namespace api.Mappers
         {
             return _mapper.Map<Client>(user);
         }
+
+        public Client GetClient(User user, OccupantType occupantType)
+        {
+            var client = _mapper.Map<Client>(user);
+            client.OccupantType = occupantType;
+            return client;
+        }
     }
 }

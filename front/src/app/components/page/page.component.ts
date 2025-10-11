@@ -93,7 +93,6 @@ export class PageComponent {
     }
 
     if(field === 'amount' || field === 'balance'){
-      console.log(value)
       const num = Number(value);
       return num.toFixed(2).replace('.', ',');
     }
