@@ -11,9 +11,7 @@ import { ReportDialogComponent } from '../../components/report-dialog/report-dia
 import { ReportService } from '../../services/report.service';
 import { FunctionalUnitDialogComponent } from '../../components/functional-unit-dialog/functional-unit-dialog.component';
 import { FunctionalUnitService } from '../../services/functional-unit.service';
-import { concat, Observable } from 'rxjs';
 import { ColumnExpandData } from '../../interfaces/components.interface';
-import { ClientDialogComponent } from "../../components/client-dialog/client-dialog.component";
 import { UserService } from '../../services/user.service';
 import { ConfirmDialogService } from '../../components/confirm-dialog/confirm-dialog-service';
 import { ToastService } from '../../components/toast/toast-service';
@@ -28,8 +26,7 @@ import { hasValidRoles } from '../../util/rolesUtil';
     PageComponent,
     LiquidationDialogComponent,
     ReportDialogComponent,
-    FunctionalUnitDialogComponent,
-    ClientDialogComponent
+    FunctionalUnitDialogComponent
   ],
   templateUrl: './consortium.component.html',
   styleUrl: './consortium.component.css'
@@ -61,22 +58,6 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
   canGetReport: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
   canManageFunctionalUnit: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
   canManageClients: boolean = hasValidRoles(this.authService.userData, ["ADMIN", "STAFF"]);
-
-  override expandData: ColumnExpandData = {
-    key: "functionalUnits",
-    column: [
-      { header: "Unidad", field: "name", sortable: true },
-      { header: "Factor (%)", field: "factor", sortable: true },
-      { header: "Balance ($)", field: "balance", sortable: true }
-    ],
-    actionButtons: [{
-      icon: 'pi pi-user-plus',
-      tooltip: 'Clientes vinculados',
-      severity: 'success',
-      isDisabled: !this.canManageClients,
-      action: (data: any) => this.canManageClients ? this.openBindUsersForm(data) : null
-    }]
-  }
 
   buttonConfig: ActionButtonConfig[] = [
     {
@@ -120,7 +101,6 @@ export class ConsortiumComponent extends GenericComponent<ConsortiumRequest, Con
     service: ConsortiumService,
     private readonly liquidationService: LiquidationService,
     private readonly reportService: ReportService,
-    private readonly functionalUnitService: FunctionalUnitService,
     private readonly userService: UserService,
     confirmService: ConfirmDialogService,
     toastService: ToastService,

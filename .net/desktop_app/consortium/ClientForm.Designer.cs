@@ -33,6 +33,8 @@
             comboClients = new ComboBox();
             btnAdd = new Button();
             labelNoData = new Label();
+            comboOccupantType = new ComboBox();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)dvgClients).BeginInit();
             SuspendLayout();
             // 
@@ -89,11 +91,31 @@
             labelNoData.Text = "No existen usuarios vinculados";
             labelNoData.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // comboOccupantType
+            // 
+            comboOccupantType.FormattingEnabled = true;
+            comboOccupantType.Location = new Point(398, 345);
+            comboOccupantType.Name = "comboOccupantType";
+            comboOccupantType.Size = new Size(211, 28);
+            comboOccupantType.TabIndex = 6;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 12F);
+            label1.Location = new Point(398, 305);
+            label1.Name = "label1";
+            label1.Size = new Size(55, 28);
+            label1.TabIndex = 7;
+            label1.Text = "Tipo:";
+            // 
             // ClientForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1051, 450);
+            Controls.Add(label1);
+            Controls.Add(comboOccupantType);
             Controls.Add(labelNoData);
             Controls.Add(btnAdd);
             Controls.Add(comboClients);
@@ -113,5 +135,7 @@
         private ComboBox comboClients;
         private Button btnAdd;
         private Label labelNoData;
+        private ComboBox comboOccupantType;
+        private Label label1;
     }
 }

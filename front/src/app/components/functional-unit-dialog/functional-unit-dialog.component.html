@@ -4,6 +4,7 @@
   [modal]="true"
   [style]="{ width: '800px', height: '650px' }"
   (onHide)="closeDialog()"
+  [styleClass]="openClientDialog ? 'dialog-with-overlay' : ''"
 >
   <div
     *ngIf="
@@ -280,8 +281,20 @@
                   [outlined]="true"
                   [pTooltip]="showTooltipCannotDelete(unit)"
                   [style]="actionButtonStyle"
-                  (click)="canDelete(unit) ? removeUnit(rowIndex) : null"
+                  (click)="canDelete(unit) ? removeUnit(unit) : null"
                   [ngClass]="{ disabled: !canDelete(unit) }"
+                  onkeypress
+                  class="me-2"
+                />
+                <p-button
+                  icon="pi pi-user-plus"
+                  severity="info"
+                  [rounded]="true"
+                  [outlined]="true"
+                  [pTooltip]="showTooltipCannotAddClients(unit)"
+                  [style]="actionButtonStyle"
+                  (click)="canHandleUsers(unit) ? handleUsers(unit) : null"
+                  [ngClass]="{ disabled: !canHandleUsers(unit) }"
                   onkeypress
                 />
               </td>
@@ -322,7 +335,7 @@
 
         <div class="d-flex gap-2">
           <p-button
-            label="Cancelar"
+            label="Cerrar"
             (click)="closeDialog()"
             severity="secondary"
             styleClass="p-button-sm"
@@ -341,3 +354,11 @@
     </form>
   </div>
 </p-dialog>
+
+<app-client-dialog
+  [visible]="openClientDialog"
+  [clients]="clients"
+  [functionalUnit]="functionalUnit!"
+  (closeEmit)="handleCloseClientDialog($event)"
+>
+</app-client-dialog>

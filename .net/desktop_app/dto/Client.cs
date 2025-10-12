@@ -1,4 +1,7 @@
-﻿namespace desktop_app.dto
+﻿using System.Text.Json.Serialization;
+using desktop_app.models;
+
+namespace desktop_app.dto
 {
     public class Client
     {
@@ -9,5 +12,8 @@
         public required string LastName { get; set; }
 
         public required string Email { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public OccupantType? OccupantType { get; set; }
     }
 }

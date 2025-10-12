@@ -350,7 +350,7 @@ namespace desktop_app.consortium
 
                 if(functionalUnit == null) {
                     MessageBox.Show(
-                        "La unidad funcional aún no se encuentra confirmada. Por favor actualice el listado de unidades funcionales antes de asignar clientes.",
+                        "La unidad funcional aún no se encuentra confirmada. Por favor actualice el listado de unidades funcionales antes de gestionar clientes.",
                         "Unidades Funcionales",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning);
