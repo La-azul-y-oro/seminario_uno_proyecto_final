@@ -1,4 +1,5 @@
 ﻿using desktop_app.dto;
+using desktop_app.models;
 using desktop_app.services;
 
 namespace desktop_app.consortium
@@ -24,7 +25,8 @@ namespace desktop_app.consortium
 
             InitializeGrid();
             InitializeData();
-            InitComboBox();
+            InitComboBoxClient();
+            InitComboBoxType();
         }
 
         private void InitializeGrid()
@@ -51,6 +53,12 @@ namespace desktop_app.consortium
             {
                 Name = "colEmail",
                 HeaderText = "Email"
+            });
+
+            dvgClients.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                Name = "colTipo",
+                HeaderText = "Tipo"
             });
 
             var colAcciones = new DataGridViewButtonColumn
@@ -84,14 +92,21 @@ namespace desktop_app.consortium
 
                     await _functionalUnitService.UpdateClientsAsync(new AssignClientsRequest
                     {
-                        FunctionalId = (int) _unit.Id,
-                        ClientsIds = _unit.Clients.Select(c => c.Id).ToList()
+                        FunctionalId = (int)_unit.Id,
+                        Clients = _unit.Clients
+                            .Select(c => new ClientFunctionalUnitDto
+                            {
+                                ClientId = c.Id,
+                                OccupantType = (OccupantType) c.OccupantType 
+                            })
+                            .ToList()
                     });
+
 
                     MessageBox.Show("El cliente fue correctamente removido.");
 
                     InitializeData();
-                    InitComboBox();
+                    InitComboBoxClient();
                 }
                 catch (Exception ex)
                 {
@@ -111,7 +126,13 @@ namespace desktop_app.consortium
                 labelNoData.Visible = false;
                 foreach (var client in _unit.Clients)
                 {
-                    int rowIndex = dvgClients.Rows.Add(client.Id, client.FirstName, client.LastName, client.Email);
+                    int rowIndex = dvgClients.Rows.Add(
+                        client.Id,
+                        client.FirstName,
+                        client.LastName,
+                        client.Email,
+                        client.OccupantType
+                        );
                     dvgClients.Rows[rowIndex].Tag = client;
                 }
             }
@@ -122,7 +143,7 @@ namespace desktop_app.consortium
             }
         }
 
-        private void InitComboBox()
+        private void InitComboBoxClient()
         {
             var placeholder = new Client { Id = -1, FirstName = "-- Seleccionar cliente --", LastName = null, Email = null };
 
@@ -143,16 +164,28 @@ namespace desktop_app.consortium
             comboClients.ValueMember = "Id";
         }
 
+        private void InitComboBoxType()
+        {
+            comboOccupantType.DataSource = Enum.GetValues(typeof(OccupantType));
+            comboOccupantType.SelectedIndex = -1;
+        }
+
         private async void btnAdd_Click(object sender, EventArgs e)
         {
             if (comboClients.SelectedIndex <= 0) return; // 0 es "Seleccionar cliente…"
 
             var selectedClientCombo = comboClients.SelectedItem as ClientComboItem;
+            var selectedType = comboOccupantType.SelectedItem;
 
-            if (selectedClientCombo == null) return;
+            if (selectedClientCombo == null || selectedType == null) {
+                MessageBox.Show($"Por favor complete ambos campos");
+                return;
+            }
+            
 
             var client = _allClients.Find(c => c.Id == selectedClientCombo.Id);
-            
+            client.OccupantType = (OccupantType) selectedType;
+
 
             if (_unit.Clients.Any(c => c.Id == client.Id))
             {
@@ -166,14 +199,21 @@ namespace desktop_app.consortium
 
                 await _functionalUnitService.UpdateClientsAsync(new AssignClientsRequest
                 {
-                    FunctionalId = (int) _unit.Id,
-                    ClientsIds = _unit.Clients.Select(c => c.Id).ToList()
+                    FunctionalId = (int)_unit.Id,
+                    Clients = _unit.Clients
+                            .Select(c => new ClientFunctionalUnitDto
+                            {
+                                ClientId = c.Id,
+                                OccupantType = (OccupantType) c.OccupantType
+                            })
+                            .ToList()
                 });
 
                 MessageBox.Show("El cliente fue correctamente asignado.");
 
                 InitializeData();
-                InitComboBox();               
+                InitComboBoxClient();
+                InitComboBoxType();
             }
             catch (Exception ex)
             {
@@ -181,7 +221,6 @@ namespace desktop_app.consortium
                 MessageBox.Show($"Error al agregar cliente: {ex.Message}");
             }
         }
-
     }
 }
 

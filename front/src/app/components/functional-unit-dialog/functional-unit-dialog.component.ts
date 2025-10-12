@@ -13,8 +13,9 @@ import { ToastService } from '../toast/toast-service';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
-import { FunctionalUnitBatchRequest, UnitFunctionalConsortium } from '../../interfaces/model.interfaces';
+import { Client, FunctionalUnitBatchRequest } from '../../interfaces/model.interfaces';
 import { noWhitespaceValidator } from '../../util/customValidators';
+import { ClientDialogComponent } from '../client-dialog/client-dialog.component';
 
 @Component({
   selector: 'app-functional-unit-dialog',
@@ -32,7 +33,8 @@ import { noWhitespaceValidator } from '../../util/customValidators';
     InputNumberModule,
     InputTextModule,
     ProgressSpinnerModule,
-    DropdownModule
+    DropdownModule,
+    ClientDialogComponent
   ],
   templateUrl: './functional-unit-dialog.component.html',
   styleUrl: './functional-unit-dialog.component.css'
@@ -41,8 +43,14 @@ export class FunctionalUnitDialogComponent implements OnChanges {
   @Input() visible: boolean = false;
   @Input() consortiumId!: number | undefined;
   @Input() functionalUnitList: any[] = [];
-  @Output() onCancel = new EventEmitter;
+  @Input() clients!: Client[];
+  @Output() cancelEmit = new EventEmitter;
+
+  openClientDialog: boolean = false;
+  functionalUnit: any = null;
   
+  initialFunctionalUnits: any[] = [];
+
   form!: FormGroup;
   units!: FormArray;
   generatorForm: FormGroup;
@@ -102,6 +110,7 @@ export class FunctionalUnitDialogComponent implements OnChanges {
     }
     
     if (changes['functionalUnitList'] || changes['consortiumId']) {
+      this.initialFunctionalUnits = [...this.functionalUnitList];
       this.loadUnits();
     }
   }
@@ -287,6 +296,26 @@ export class FunctionalUnitDialogComponent implements OnChanges {
     this.form.markAsTouched();
   }
 
+  canHandleUsers(unit: FormGroup): boolean {
+    return unit.value.id;
+  }
+
+  handleUsers(unit: any){
+    this.openClientDialog = true;
+    this.functionalUnit = this.functionalUnitList.find(u => u.id === unit.value.id);
+  }
+
+  handleCloseClientDialog($event: any) {
+    if($event){
+      const index = this.functionalUnitList.findIndex(fu => fu.id === $event.id);
+      if(index !== -1) {
+        this.functionalUnitList[index] = $event;
+      }
+    }
+    this.functionalUnit = null;
+    this.openClientDialog = false;
+  }
+
   addUnit(): void {
     const newUnit = this.createUnitFormGroup();
     this.units.push(newUnit);
@@ -332,7 +361,7 @@ export class FunctionalUnitDialogComponent implements OnChanges {
     this.functionalUnitService.updateFunctionalUnits(data).subscribe({
       next: (response) => {
         this.toastService.setSuccessMessage("Las unidades funcionales se han procesado con éxito.");
-        this.closeDialog(response);
+        this.initialFunctionalUnits = response;
       },
       error: (error) => {
         this.toastService.setErrorMessage("Ha ocurrido un error al procesar las unidades funcionales.");
@@ -341,8 +370,8 @@ export class FunctionalUnitDialogComponent implements OnChanges {
     });
   }
 
-  closeDialog(data: UnitFunctionalConsortium[] = []) {
-    this.onCancel.emit(data);
+  closeDialog() {
+    this.cancelEmit.emit(this.initialFunctionalUnits);
   }
 
   resetForm(): void {
@@ -352,6 +381,10 @@ export class FunctionalUnitDialogComponent implements OnChanges {
   showTooltipCannotDelete(unit: any) {
     const canDelete = this.canDelete(unit);
     return canDelete ? "Remover" : "No se pueden borrar las unidades con balance distinto de 0 (cero)";
+  }
+
+  showTooltipCannotAddClients(unit: any) {
+    return (this.canHandleUsers(unit)) ? "Gestionar Usuarios" : "La unidad funcional aún no se encuentra confirmada. Por favor actualice el listado de unidades funcionales antes de gestionar clientes.";
   }
 
   suggestedFactor() {

@@ -28,12 +28,10 @@ import { DropdownModule } from 'primeng/dropdown';
   styleUrl: './client-dialog.component.css'
 })
 export class ClientDialogComponent implements OnChanges {
-  // Primer modal
   @Input() visible: boolean = false;
 
-  @Output() cancelEmit = new EventEmitter;
+  @Output() closeEmit = new EventEmitter;
 
-  //Segundo modal
   selectedClients: Array<{ client: any, type: 'INQUILINO' | 'PROPIETARIO' | null }> = [];
 
   clientTypes = [
@@ -41,10 +39,8 @@ export class ClientDialogComponent implements OnChanges {
     { label: 'PROPIETARIO', value: 'PROPIETARIO' }
   ];
 
-  addClientModalVisible: boolean = false;
   private hadClientsOnOpen = false;
 
-  //Compartido
   @Input() functionalUnit!: UnitFunctionalConsortium;
   @Input() clients!: Client[];
   bindClients: Client[] = [];
@@ -54,9 +50,8 @@ export class ClientDialogComponent implements OnChanges {
     private readonly toastService: ToastService
   ) { }
 
-  //Primer modal
   ngOnChanges(): void {
-    if (this.clients.length > 0) {
+    if (this.clients?.length > 0) {
       this.clients = this.clients.map(c => ({
         ...c,
         fullName: `${c.firstName} ${c.lastName}`
@@ -70,21 +65,24 @@ export class ClientDialogComponent implements OnChanges {
       })
       );
     }
+
+    if(this.clients.length > 0){
+      this.initClientList();
+    }
   }
 
   closeDialog() {
-    this.cancelClients();
+    this.selectedClients = [];
+    this.hadClientsOnOpen = false;
     this.bindClients = [];
-    if (!this.addClientModalVisible) {
-      this.cancelEmit.emit(this.functionalUnit);
-    }
+    this.closeEmit.emit(this.functionalUnit);
   }
 
   getHeader(): string | undefined {
     return `Clientes asociados - Unidad ${this.functionalUnit?.name}`
   }
 
-  openAddClientModal() {
+  initClientList() {
     this.hadClientsOnOpen = this.bindClients.length > 0;
 
     this.selectedClients = this.bindClients.map(bindClient => {
@@ -94,11 +92,8 @@ export class ClientDialogComponent implements OnChanges {
         type: bindClient.occupantType
       };
     });
-
-    this.addClientModalVisible = true;
   }
 
-  //Segundo modal
   addNewClient() {
     this.selectedClients.push({ client: null, type: null });
   }
@@ -134,17 +129,11 @@ export class ClientDialogComponent implements OnChanges {
     });
   }
 
-  cancelClients() {
-    this.selectedClients = [];
-    this.hadClientsOnOpen = false;
-    this.addClientModalVisible = false;
-  }
-
   get availableClientsFiltered() {
     const selectedIds = this.selectedClients
       .filter(sc => sc.client !== null)
       .map(sc => sc.client.id);
-    return this.clients.filter(client =>
+    return this.clients?.filter(client =>
       !selectedIds.includes(client.id)
     );
   }
@@ -178,7 +167,9 @@ export class ClientDialogComponent implements OnChanges {
     }));
 
     this.functionalUnit.clients = this.bindClients;
-    this.selectedClients = [];
-    this.addClientModalVisible = false;
+  }
+
+  canAddMoreClients() {
+    return this.availableClientsFiltered && this.availableClientsFiltered.length > 0
   }
 }

@@ -8,8 +8,6 @@
     [hasError]="hasError"
     [isEmpty]="isEmpty"
     (onCreate)="openForm()"
-    [expandable]="true"
-    [expandData]="expandData"
     [hideCreateButton]="!canCreate"
     [messageNoDataExpandable]="'El consorcio aún no posee unidades funcionales asociadas'"
 />
@@ -37,11 +35,6 @@
     [visible]="showFunctionalUnitDialog"
     [consortiumId]="consortiumId!"
     [functionalUnitList]="functionalUnitList"
-    (onCancel)="resetUnitFunctionalData($event)"
-/>
-<app-client-dialog 
-    [visible]="showBindUsersDialog"
     [clients]="clients"
-    [functionalUnit]="functionalUnit!"
-    (cancelEmit)="resetClientsData($event)"
+    (cancelEmit)="resetUnitFunctionalData($event)"
 />
