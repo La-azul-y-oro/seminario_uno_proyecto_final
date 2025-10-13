@@ -21,6 +21,7 @@ namespace PracticaSeminario
         public FormMain()
         {
             InitializeComponent();
+            layoutPanel.Visible = false;
             _apiService = new ApiService(_authService);
             _liquidationService = new LiquidationService(_authService);
             _reportService = new ReportService(_authService);
@@ -30,6 +31,7 @@ namespace PracticaSeminario
 
         private void LoadUserData()
         {
+            layoutPanel.Visible = true;
             string userInfo = _authService.GetUserInfo();
             labelUserInfo.Text = userInfo;
         }

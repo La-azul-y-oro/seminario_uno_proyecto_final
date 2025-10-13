@@ -43,7 +43,7 @@
             dgvEntity.AllowUserToDeleteRows = false;
             dgvEntity.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvEntity.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dgvEntity.BackgroundColor = Color.FromArgb(224, 252, 254);
+            dgvEntity.BackgroundColor = Color.WhiteSmoke;
             dgvEntity.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableLayoutPanel1.SetColumnSpan(dgvEntity, 4);
             dgvEntity.Dock = DockStyle.Fill;
@@ -56,9 +56,10 @@
             // 
             // tableLayoutPanel1
             // 
+            tableLayoutPanel1.BackColor = Color.Gainsboro;
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 216F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 240F));
             tableLayoutPanel1.Controls.Add(btnUpdateList, 1, 2);
             tableLayoutPanel1.Controls.Add(dgvEntity, 0, 1);
             tableLayoutPanel1.Controls.Add(btnCreate, 1, 0);
@@ -75,28 +76,34 @@
             // 
             // btnUpdateList
             // 
+            btnUpdateList.BackColor = Color.DimGray;
             btnUpdateList.Dock = DockStyle.Fill;
-            btnUpdateList.Font = new Font("Segoe UI", 12F);
+            btnUpdateList.FlatAppearance.BorderSize = 0;
+            btnUpdateList.FlatStyle = FlatStyle.Flat;
+            btnUpdateList.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnUpdateList.ForeColor = SystemColors.Control;
             btnUpdateList.ImageAlign = ContentAlignment.BottomLeft;
-            btnUpdateList.Location = new Point(931, 523);
-            btnUpdateList.Margin = new Padding(21, 5, 21, 5);
+            btnUpdateList.Location = new Point(907, 528);
+            btnUpdateList.Margin = new Padding(21, 10, 21, 10);
             btnUpdateList.Name = "btnUpdateList";
-            btnUpdateList.Size = new Size(174, 55);
+            btnUpdateList.Size = new Size(198, 45);
             btnUpdateList.TabIndex = 6;
             btnUpdateList.Text = "Actualizar listado";
-            btnUpdateList.UseVisualStyleBackColor = true;
+            btnUpdateList.UseVisualStyleBackColor = false;
             btnUpdateList.Click += btnUpdateList_Click;
             // 
             // btnCreate
             // 
-            btnCreate.BackColor = Color.MidnightBlue;
+            btnCreate.BackColor = Color.FromArgb(16, 185, 129);
             btnCreate.Dock = DockStyle.Fill;
-            btnCreate.Font = new Font("Segoe UI", 12F);
-            btnCreate.ForeColor = SystemColors.ButtonHighlight;
-            btnCreate.Location = new Point(940, 5);
-            btnCreate.Margin = new Padding(30, 5, 30, 5);
+            btnCreate.FlatAppearance.BorderSize = 0;
+            btnCreate.FlatStyle = FlatStyle.Flat;
+            btnCreate.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnCreate.ForeColor = Color.White;
+            btnCreate.Location = new Point(916, 10);
+            btnCreate.Margin = new Padding(30, 10, 30, 10);
             btnCreate.Name = "btnCreate";
-            btnCreate.Size = new Size(156, 55);
+            btnCreate.Size = new Size(180, 45);
             btnCreate.TabIndex = 1;
             btnCreate.Text = "Nuevo";
             btnCreate.TextImageRelation = TextImageRelation.ImageBeforeText;
@@ -106,11 +113,12 @@
             // labelEntity
             // 
             labelEntity.AutoSize = true;
+            labelEntity.BackColor = Color.Gainsboro;
             labelEntity.Dock = DockStyle.Fill;
             labelEntity.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             labelEntity.Location = new Point(3, 0);
             labelEntity.Name = "labelEntity";
-            labelEntity.Size = new Size(904, 65);
+            labelEntity.Size = new Size(880, 65);
             labelEntity.TabIndex = 5;
             labelEntity.Text = "PROVEEDORES";
             labelEntity.TextAlign = ContentAlignment.MiddleCenter;

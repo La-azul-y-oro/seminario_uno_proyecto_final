@@ -56,6 +56,7 @@
             // 
             // panelSecondary
             // 
+            panelSecondary.BackColor = Color.WhiteSmoke;
             panelSecondary.Controls.Add(txtComment);
             panelSecondary.Controls.Add(label8);
             panelSecondary.Controls.Add(btnAccept);
@@ -71,38 +72,43 @@
             panelSecondary.Controls.Add(comboFU);
             panelSecondary.Controls.Add(txtReceipt);
             panelSecondary.Controls.Add(label9);
-            panelSecondary.Location = new Point(0, 109);
+            panelSecondary.Font = new Font("Segoe UI", 13.8F);
+            panelSecondary.Location = new Point(0, 145);
+            panelSecondary.Margin = new Padding(3, 4, 3, 4);
             panelSecondary.Name = "panelSecondary";
-            panelSecondary.Size = new Size(773, 279);
+            panelSecondary.Size = new Size(1054, 368);
             panelSecondary.TabIndex = 1;
             // 
             // txtComment
             // 
-            txtComment.Location = new Point(131, 147);
-            txtComment.Margin = new Padding(3, 2, 3, 2);
+            txtComment.Font = new Font("Segoe UI", 12F);
+            txtComment.Location = new Point(207, 184);
             txtComment.Name = "txtComment";
-            txtComment.Size = new Size(601, 23);
+            txtComment.Size = new Size(792, 34);
             txtComment.TabIndex = 11;
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(41, 150);
+            label8.Font = new Font("Segoe UI", 13.8F);
+            label8.Location = new Point(47, 184);
             label8.Name = "label8";
-            label8.Size = new Size(74, 15);
+            label8.Size = new Size(144, 31);
             label8.TabIndex = 10;
             label8.Text = "Descripción*";
             // 
             // btnAccept
             // 
             btnAccept.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAccept.BackColor = SystemColors.HotTrack;
-            btnAccept.Font = new Font("Segoe UI", 11F);
-            btnAccept.ForeColor = SystemColors.ControlLightLight;
-            btnAccept.Location = new Point(621, 201);
-            btnAccept.Margin = new Padding(9, 8, 3, 2);
+            btnAccept.BackColor = Color.FromArgb(16, 185, 129);
+            btnAccept.FlatAppearance.BorderSize = 0;
+            btnAccept.FlatStyle = FlatStyle.Flat;
+            btnAccept.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            btnAccept.ForeColor = Color.White;
+            btnAccept.Location = new Point(851, 265);
+            btnAccept.Margin = new Padding(10, 11, 3, 3);
             btnAccept.Name = "btnAccept";
-            btnAccept.Size = new Size(111, 38);
+            btnAccept.Size = new Size(148, 51);
             btnAccept.TabIndex = 12;
             btnAccept.Text = "Crear";
             btnAccept.UseVisualStyleBackColor = false;
@@ -111,180 +117,187 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(434, 28);
+            label7.Font = new Font("Segoe UI", 13.8F);
+            label7.Location = new Point(601, 42);
             label7.Name = "label7";
-            label7.Size = new Size(64, 15);
+            label7.Size = new Size(122, 31);
             label7.TabIndex = 2;
             label7.Text = "Concepto*";
             // 
             // comboConcept
             // 
+            comboConcept.Font = new Font("Segoe UI", 12F);
             comboConcept.FormattingEnabled = true;
-            comboConcept.Location = new Point(505, 25);
-            comboConcept.Margin = new Padding(3, 2, 3, 2);
+            comboConcept.Location = new Point(740, 37);
             comboConcept.Name = "comboConcept";
-            comboConcept.Size = new Size(227, 23);
+            comboConcept.Size = new Size(259, 36);
             comboConcept.TabIndex = 3;
             // 
             // labelSupplier
             // 
             labelSupplier.AutoSize = true;
-            labelSupplier.Location = new Point(42, 28);
+            labelSupplier.Font = new Font("Segoe UI", 13.8F);
+            labelSupplier.Location = new Point(47, 42);
             labelSupplier.Name = "labelSupplier";
-            labelSupplier.Size = new Size(66, 15);
+            labelSupplier.Size = new Size(128, 31);
             labelSupplier.TabIndex = 0;
             labelSupplier.Text = "Proveedor*";
             // 
             // comboSupplier
             // 
+            comboSupplier.Font = new Font("Segoe UI", 12F);
             comboSupplier.FormattingEnabled = true;
-            comboSupplier.Location = new Point(148, 25);
-            comboSupplier.Margin = new Padding(3, 2, 3, 2);
+            comboSupplier.Location = new Point(256, 41);
             comboSupplier.Name = "comboSupplier";
-            comboSupplier.Size = new Size(226, 23);
+            comboSupplier.Size = new Size(258, 36);
             comboSupplier.TabIndex = 1;
             // 
             // txtAmount
             // 
-            txtAmount.Location = new Point(389, 85);
-            txtAmount.Margin = new Padding(3, 2, 3, 2);
+            txtAmount.Font = new Font("Segoe UI", 12F);
+            txtAmount.Location = new Point(520, 114);
             txtAmount.Name = "txtAmount";
-            txtAmount.Size = new Size(140, 23);
+            txtAmount.Size = new Size(171, 34);
             txtAmount.TabIndex = 7;
             txtAmount.KeyPress += txtAmount_KeyPress;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(335, 90);
+            label2.Font = new Font("Segoe UI", 13.8F);
+            label2.Location = new Point(422, 114);
             label2.Name = "label2";
-            label2.Size = new Size(48, 15);
+            label2.Size = new Size(92, 31);
             label2.TabIndex = 6;
             label2.Text = "Monto*";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(41, 88);
+            label1.Font = new Font("Segoe UI", 13.8F);
+            label1.Location = new Point(47, 111);
             label1.Name = "label1";
-            label1.Size = new Size(43, 15);
+            label1.Size = new Size(83, 31);
             label1.TabIndex = 4;
             label1.Text = "Fecha*";
             // 
             // datePicker
             // 
-            datePicker.Location = new Point(93, 85);
-            datePicker.Margin = new Padding(3, 2, 3, 2);
+            datePicker.Font = new Font("Segoe UI", 12F);
+            datePicker.Location = new Point(147, 111);
             datePicker.Name = "datePicker";
-            datePicker.Size = new Size(220, 23);
+            datePicker.Size = new Size(251, 34);
             datePicker.TabIndex = 5;
             // 
             // labelFU
             // 
             labelFU.AutoSize = true;
-            labelFU.Location = new Point(41, 28);
+            labelFU.Font = new Font("Segoe UI", 13.8F);
+            labelFU.Location = new Point(47, 42);
             labelFU.Name = "labelFU";
-            labelFU.Size = new Size(105, 15);
+            labelFU.Size = new Size(203, 31);
             labelFU.TabIndex = 0;
             labelFU.Text = "Unidad Funcional*";
             // 
             // comboFU
             // 
+            comboFU.Font = new Font("Segoe UI", 12F);
             comboFU.FormattingEnabled = true;
-            comboFU.Location = new Point(147, 25);
-            comboFU.Margin = new Padding(3, 2, 3, 2);
+            comboFU.Location = new Point(256, 41);
             comboFU.Name = "comboFU";
-            comboFU.Size = new Size(226, 23);
+            comboFU.Size = new Size(258, 36);
             comboFU.TabIndex = 1;
             // 
             // txtReceipt
             // 
-            txtReceipt.Location = new Point(587, 85);
-            txtReceipt.Margin = new Padding(3, 2, 3, 2);
+            txtReceipt.Font = new Font("Segoe UI", 12F);
+            txtReceipt.Location = new Point(825, 113);
             txtReceipt.Name = "txtReceipt";
-            txtReceipt.Size = new Size(143, 23);
+            txtReceipt.Size = new Size(174, 34);
             txtReceipt.TabIndex = 9;
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(538, 90);
+            label9.Font = new Font("Segoe UI", 13.8F);
+            label9.Location = new Point(721, 114);
             label9.Name = "label9";
-            label9.Size = new Size(43, 15);
+            label9.Size = new Size(83, 31);
             label9.TabIndex = 8;
             label9.Text = "Recibo";
             // 
             // labelForm
             // 
             labelForm.AutoSize = true;
-            labelForm.Font = new Font("Segoe UI", 12F);
-            labelForm.Location = new Point(308, 20);
+            labelForm.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            labelForm.Location = new Point(422, 24);
             labelForm.Name = "labelForm";
-            labelForm.Size = new Size(136, 21);
+            labelForm.Size = new Size(207, 31);
             labelForm.TabIndex = 0;
             labelForm.Text = "Crear movimiento";
             labelForm.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // comboType
             // 
+            comboType.Font = new Font("Segoe UI", 12F);
             comboType.FormattingEnabled = true;
-            comboType.Location = new Point(506, 66);
-            comboType.Margin = new Padding(3, 2, 3, 2);
+            comboType.Location = new Point(736, 89);
             comboType.Name = "comboType";
-            comboType.Size = new Size(231, 23);
+            comboType.Size = new Size(263, 36);
             comboType.TabIndex = 4;
             comboType.SelectedIndexChanged += comboType_SelectedIndexChanged;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(444, 69);
+            label3.Font = new Font("Segoe UI", 13.8F);
+            label3.Location = new Point(654, 94);
             label3.Name = "label3";
-            label3.Size = new Size(35, 15);
+            label3.Size = new Size(69, 31);
             label3.TabIndex = 3;
             label3.Text = "Tipo*";
             // 
             // comboConsortium
             // 
+            comboConsortium.Font = new Font("Segoe UI", 12F);
             comboConsortium.FormattingEnabled = true;
-            comboConsortium.Location = new Point(129, 67);
-            comboConsortium.Margin = new Padding(3, 2, 3, 2);
+            comboConsortium.Location = new Point(178, 91);
             comboConsortium.Name = "comboConsortium";
-            comboConsortium.Size = new Size(244, 23);
+            comboConsortium.Size = new Size(397, 36);
             comboConsortium.TabIndex = 2;
             comboConsortium.SelectedIndexChanged += comboConsortium_SelectedIndexChanged;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(41, 69);
+            label4.Font = new Font("Segoe UI", 13.8F);
+            label4.Location = new Point(47, 92);
             label4.Name = "label4";
-            label4.Size = new Size(66, 15);
+            label4.Size = new Size(125, 31);
             label4.TabIndex = 1;
             label4.Text = "Consorcio*";
             // 
             // panel1
             // 
+            panel1.BackColor = Color.WhiteSmoke;
             panel1.Controls.Add(label4);
             panel1.Controls.Add(comboConsortium);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(comboType);
             panel1.Controls.Add(labelForm);
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(773, 123);
+            panel1.Size = new Size(1051, 164);
             panel1.TabIndex = 0;
             // 
             // MovementForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(771, 382);
+            ClientSize = new Size(1049, 500);
             Controls.Add(panelSecondary);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             Name = "MovementForm";
             StartPosition = FormStartPosition.CenterScreen;

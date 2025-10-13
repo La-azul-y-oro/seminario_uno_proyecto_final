@@ -71,65 +71,72 @@
             panel1.Controls.Add(txtLastName);
             panel1.Controls.Add(labelForm);
             panel1.Dock = DockStyle.Fill;
+            panel1.Font = new Font("Segoe UI", 12F);
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(918, 495);
+            panel1.Size = new Size(1077, 521);
             panel1.TabIndex = 0;
             // 
             // comboRole
             // 
+            comboRole.Font = new Font("Segoe UI", 12F);
             comboRole.FormattingEnabled = true;
-            comboRole.Location = new Point(200, 252);
+            comboRole.Location = new Point(252, 275);
             comboRole.Name = "comboRole";
-            comboRole.Size = new Size(190, 28);
+            comboRole.Size = new Size(223, 36);
             comboRole.TabIndex = 30;
             // 
             // comboDocType
             // 
+            comboDocType.Font = new Font("Segoe UI", 12F);
             comboDocType.FormattingEnabled = true;
-            comboDocType.Location = new Point(200, 169);
+            comboDocType.Location = new Point(252, 192);
             comboDocType.Name = "comboDocType";
-            comboDocType.Size = new Size(190, 28);
+            comboDocType.Size = new Size(223, 36);
             comboDocType.TabIndex = 29;
             // 
             // txtDocNumber
             // 
-            txtDocNumber.Location = new Point(668, 166);
+            txtDocNumber.Font = new Font("Segoe UI", 12F);
+            txtDocNumber.Location = new Point(739, 188);
             txtDocNumber.Name = "txtDocNumber";
-            txtDocNumber.Size = new Size(179, 27);
+            txtDocNumber.Size = new Size(223, 34);
             txtDocNumber.TabIndex = 28;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(624, 337);
+            txtPassword.Font = new Font("Segoe UI", 12F);
+            txtPassword.Location = new Point(739, 357);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(223, 27);
+            txtPassword.Size = new Size(223, 34);
             txtPassword.TabIndex = 27;
             // 
             // txtPhone
             // 
-            txtPhone.Location = new Point(200, 334);
+            txtPhone.Font = new Font("Segoe UI", 12F);
+            txtPhone.Location = new Point(252, 357);
             txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(223, 27);
+            txtPhone.Size = new Size(223, 34);
             txtPhone.TabIndex = 26;
             // 
             // txtMail
             // 
-            txtMail.Location = new Point(624, 249);
+            txtMail.Font = new Font("Segoe UI", 12F);
+            txtMail.Location = new Point(739, 269);
             txtMail.Name = "txtMail";
-            txtMail.Size = new Size(223, 27);
+            txtMail.Size = new Size(223, 34);
             txtMail.TabIndex = 25;
             // 
             // labelPassword
             // 
             labelPassword.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             labelPassword.AutoSize = true;
-            labelPassword.Font = new Font("Segoe UI", 11F);
+            labelPassword.Font = new Font("Segoe UI", 13.8F);
             labelPassword.ForeColor = SystemColors.ControlText;
-            labelPassword.Location = new Point(462, 336);
+            labelPassword.Location = new Point(604, 357);
             labelPassword.Margin = new Padding(3, 11, 3, 0);
             labelPassword.Name = "labelPassword";
-            labelPassword.Size = new Size(108, 25);
+            labelPassword.Size = new Size(129, 31);
             labelPassword.TabIndex = 24;
             labelPassword.Text = "Contraseña";
             labelPassword.TextAlign = ContentAlignment.MiddleCenter;
@@ -138,12 +145,12 @@
             // 
             label3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 11F);
+            label3.Font = new Font("Segoe UI", 13.8F);
             label3.ForeColor = SystemColors.ControlText;
-            label3.Location = new Point(28, 336);
+            label3.Location = new Point(137, 358);
             label3.Margin = new Padding(3, 11, 3, 0);
             label3.Name = "label3";
-            label3.Size = new Size(84, 25);
+            label3.Size = new Size(100, 31);
             label3.TabIndex = 23;
             label3.Text = "Teléfono";
             label3.TextAlign = ContentAlignment.MiddleCenter;
@@ -152,12 +159,12 @@
             // 
             label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 11F);
+            label2.Font = new Font("Segoe UI", 13.8F);
             label2.ForeColor = SystemColors.ControlText;
-            label2.Location = new Point(462, 251);
+            label2.Location = new Point(663, 269);
             label2.Margin = new Padding(3, 11, 3, 0);
             label2.Name = "label2";
-            label2.Size = new Size(58, 25);
+            label2.Size = new Size(70, 31);
             label2.TabIndex = 22;
             label2.Text = "Email";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -165,10 +172,10 @@
             // labelConceptos
             // 
             labelConceptos.AutoSize = true;
-            labelConceptos.Font = new Font("Segoe UI", 11F);
-            labelConceptos.Location = new Point(462, 167);
+            labelConceptos.Font = new Font("Segoe UI", 13.8F);
+            labelConceptos.Location = new Point(513, 189);
             labelConceptos.Name = "labelConceptos";
-            labelConceptos.Size = new Size(182, 25);
+            labelConceptos.Size = new Size(220, 31);
             labelConceptos.TabIndex = 21;
             labelConceptos.Text = "Número documento";
             // 
@@ -176,34 +183,36 @@
             // 
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 11F);
+            label1.Font = new Font("Segoe UI", 13.8F);
             label1.ForeColor = SystemColors.ControlText;
-            label1.Location = new Point(28, 88);
+            label1.Location = new Point(139, 113);
             label1.Margin = new Padding(3, 11, 3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(81, 25);
+            label1.Size = new Size(98, 31);
             label1.TabIndex = 14;
             label1.Text = "Nombre";
             // 
             // txtName
             // 
-            txtName.Font = new Font("Segoe UI", 10F);
-            txtName.Location = new Point(200, 87);
+            txtName.Font = new Font("Segoe UI", 12F);
+            txtName.Location = new Point(252, 110);
             txtName.Margin = new Padding(3, 11, 3, 3);
             txtName.Name = "txtName";
-            txtName.Size = new Size(226, 30);
+            txtName.Size = new Size(226, 34);
             txtName.TabIndex = 13;
             // 
             // btnAccept
             // 
             btnAccept.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAccept.BackColor = SystemColors.HotTrack;
-            btnAccept.Font = new Font("Segoe UI", 11F);
-            btnAccept.ForeColor = SystemColors.ControlLightLight;
-            btnAccept.Location = new Point(727, 410);
+            btnAccept.BackColor = Color.FromArgb(16, 185, 129);
+            btnAccept.FlatAppearance.BorderSize = 0;
+            btnAccept.FlatStyle = FlatStyle.Flat;
+            btnAccept.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            btnAccept.ForeColor = Color.White;
+            btnAccept.Location = new Point(818, 441);
             btnAccept.Margin = new Padding(10, 11, 3, 3);
             btnAccept.Name = "btnAccept";
-            btnAccept.Size = new Size(120, 45);
+            btnAccept.Size = new Size(144, 45);
             btnAccept.TabIndex = 12;
             btnAccept.Text = "Crear";
             btnAccept.UseVisualStyleBackColor = false;
@@ -213,12 +222,12 @@
             // 
             labelPhone.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             labelPhone.AutoSize = true;
-            labelPhone.Font = new Font("Segoe UI", 11F);
+            labelPhone.Font = new Font("Segoe UI", 13.8F);
             labelPhone.ForeColor = SystemColors.ControlText;
-            labelPhone.Location = new Point(28, 251);
+            labelPhone.Location = new Point(191, 275);
             labelPhone.Margin = new Padding(3, 11, 3, 0);
             labelPhone.Name = "labelPhone";
-            labelPhone.Size = new Size(38, 25);
+            labelPhone.Size = new Size(46, 31);
             labelPhone.TabIndex = 15;
             labelPhone.Text = "Rol";
             labelPhone.TextAlign = ContentAlignment.MiddleCenter;
@@ -227,12 +236,12 @@
             // 
             labelCuit.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             labelCuit.AutoSize = true;
-            labelCuit.Font = new Font("Segoe UI", 11F);
+            labelCuit.Font = new Font("Segoe UI", 13.8F);
             labelCuit.ForeColor = SystemColors.ControlText;
-            labelCuit.Location = new Point(28, 168);
+            labelCuit.Location = new Point(53, 192);
             labelCuit.Margin = new Padding(3, 11, 3, 0);
             labelCuit.Name = "labelCuit";
-            labelCuit.Size = new Size(152, 25);
+            labelCuit.Size = new Size(184, 31);
             labelCuit.TabIndex = 16;
             labelCuit.Text = "Tipo Documento";
             // 
@@ -240,31 +249,31 @@
             // 
             labelMail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             labelMail.AutoSize = true;
-            labelMail.Font = new Font("Segoe UI", 11F);
+            labelMail.Font = new Font("Segoe UI", 13.8F);
             labelMail.ForeColor = SystemColors.ControlText;
-            labelMail.Location = new Point(462, 88);
+            labelMail.Location = new Point(633, 113);
             labelMail.Margin = new Padding(3, 11, 3, 0);
             labelMail.Name = "labelMail";
-            labelMail.Size = new Size(82, 25);
+            labelMail.Size = new Size(100, 31);
             labelMail.TabIndex = 17;
             labelMail.Text = "Apellido";
             // 
             // txtLastName
             // 
-            txtLastName.Font = new Font("Segoe UI", 10F);
-            txtLastName.Location = new Point(624, 83);
+            txtLastName.Font = new Font("Segoe UI", 12F);
+            txtLastName.Location = new Point(739, 113);
             txtLastName.Margin = new Padding(3, 11, 3, 3);
             txtLastName.Name = "txtLastName";
-            txtLastName.Size = new Size(223, 30);
+            txtLastName.Size = new Size(223, 34);
             txtLastName.TabIndex = 20;
             // 
             // labelForm
             // 
             labelForm.AutoSize = true;
-            labelForm.Font = new Font("Segoe UI", 12F);
-            labelForm.Location = new Point(352, 26);
+            labelForm.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            labelForm.Location = new Point(466, 31);
             labelForm.Name = "labelForm";
-            labelForm.Size = new Size(127, 28);
+            labelForm.Size = new Size(156, 31);
             labelForm.TabIndex = 11;
             labelForm.Text = "Crear usuario";
             labelForm.TextAlign = ContentAlignment.MiddleCenter;
@@ -273,7 +282,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(918, 495);
+            ClientSize = new Size(1077, 521);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;

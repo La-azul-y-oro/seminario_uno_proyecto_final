@@ -40,6 +40,7 @@
             // 
             // panel1
             // 
+            panel1.BackColor = Color.WhiteSmoke;
             panel1.Controls.Add(comboType);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(labelForm);
@@ -48,28 +49,31 @@
             panel1.Controls.Add(btnAccept);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(843, 400);
+            panel1.Size = new Size(963, 392);
             panel1.TabIndex = 0;
             // 
             // comboType
             // 
+            comboType.Font = new Font("Segoe UI", 12F);
             comboType.FormattingEnabled = true;
-            comboType.Location = new Point(547, 187);
+            comboType.Location = new Point(461, 204);
+            comboType.Margin = new Padding(3, 4, 3, 4);
             comboType.Name = "comboType";
-            comboType.Size = new Size(226, 23);
+            comboType.Size = new Size(258, 36);
             comboType.TabIndex = 11;
             // 
             // label2
             // 
             label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 11F);
+            label2.Font = new Font("Segoe UI", 13.8F);
             label2.ForeColor = SystemColors.ControlText;
-            label2.Location = new Point(502, 190);
-            label2.Margin = new Padding(3, 8, 3, 0);
+            label2.Location = new Point(366, 201);
+            label2.Margin = new Padding(3, 11, 3, 0);
             label2.Name = "label2";
-            label2.Size = new Size(39, 20);
+            label2.Size = new Size(59, 31);
             label2.TabIndex = 10;
             label2.Text = "Tipo";
             label2.UseWaitCursor = true;
@@ -78,45 +82,47 @@
             // 
             labelForm.Anchor = AnchorStyles.Bottom;
             labelForm.AutoSize = true;
-            labelForm.Font = new Font("Segoe UI", 12F);
-            labelForm.Location = new Point(356, 62);
+            labelForm.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            labelForm.Location = new Point(383, 44);
             labelForm.Name = "labelForm";
-            labelForm.Size = new Size(115, 21);
+            labelForm.Size = new Size(175, 31);
             labelForm.TabIndex = 5;
             labelForm.Text = "Crear concepto";
             // 
             // txtName
             // 
-            txtName.Font = new Font("Segoe UI", 10F);
-            txtName.Location = new Point(203, 185);
-            txtName.Margin = new Padding(3, 8, 3, 2);
+            txtName.Font = new Font("Segoe UI", 12F);
+            txtName.Location = new Point(461, 135);
+            txtName.Margin = new Padding(3, 11, 3, 3);
             txtName.Name = "txtName";
-            txtName.Size = new Size(219, 25);
+            txtName.Size = new Size(258, 34);
             txtName.TabIndex = 7;
             // 
             // label1
             // 
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 11F);
+            label1.Font = new Font("Segoe UI", 13.8F);
             label1.ForeColor = SystemColors.ControlText;
-            label1.Location = new Point(42, 186);
-            label1.Margin = new Padding(3, 8, 3, 0);
+            label1.Location = new Point(202, 135);
+            label1.Margin = new Padding(3, 11, 3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(155, 20);
+            label1.Size = new Size(237, 31);
             label1.TabIndex = 8;
             label1.Text = "Nombre del concepto";
             // 
             // btnAccept
             // 
             btnAccept.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAccept.BackColor = SystemColors.HotTrack;
-            btnAccept.Font = new Font("Segoe UI", 11F);
-            btnAccept.ForeColor = SystemColors.ControlLightLight;
-            btnAccept.Location = new Point(702, 310);
-            btnAccept.Margin = new Padding(9, 8, 3, 2);
+            btnAccept.BackColor = Color.FromArgb(16, 185, 129);
+            btnAccept.FlatAppearance.BorderSize = 0;
+            btnAccept.FlatStyle = FlatStyle.Flat;
+            btnAccept.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            btnAccept.ForeColor = Color.White;
+            btnAccept.Location = new Point(735, 305);
+            btnAccept.Margin = new Padding(10, 11, 3, 3);
             btnAccept.Name = "btnAccept";
-            btnAccept.Size = new Size(105, 34);
+            btnAccept.Size = new Size(146, 45);
             btnAccept.TabIndex = 6;
             btnAccept.Text = "Crear";
             btnAccept.UseVisualStyleBackColor = false;
@@ -125,12 +131,11 @@
             // ConceptForm
             // 
             AcceptButton = btnAccept;
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(843, 400);
+            ClientSize = new Size(963, 392);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             Name = "ConceptForm";
             StartPosition = FormStartPosition.CenterScreen;

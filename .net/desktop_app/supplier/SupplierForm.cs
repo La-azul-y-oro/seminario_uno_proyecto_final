@@ -19,10 +19,10 @@ namespace desktop_app.supplier
             _concepts = concepts;
 
             InitConcepts();
-            
+
             if (_supplier != null)
             {
-                labelForm.Text = "Actualizar Supplier";
+                labelForm.Text = "Actualizar Proveedor";
                 btnAccept.Text = "Actualizar";
                 txtName.Text = _supplier.Name;
                 txtCUIT.Text = _supplier.Cuit.ToString();
@@ -42,7 +42,8 @@ namespace desktop_app.supplier
             }
         }
 
-        private void InitConcepts() {
+        private void InitConcepts()
+        {
             checkedConcepts.Items.Clear();
             foreach (var concept in _concepts)
             {

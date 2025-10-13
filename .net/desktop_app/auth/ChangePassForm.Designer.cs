@@ -44,8 +44,8 @@
             // 
             tlpChangePass.ColumnCount = 5;
             tlpChangePass.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 30F));
-            tlpChangePass.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
-            tlpChangePass.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tlpChangePass.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 36.53088F));
+            tlpChangePass.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30.0919838F));
             tlpChangePass.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
             tlpChangePass.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 30F));
             tlpChangePass.Controls.Add(lableTitle, 1, 0);
@@ -74,44 +74,45 @@
             lableTitle.AutoSize = true;
             tlpChangePass.SetColumnSpan(lableTitle, 3);
             lableTitle.Dock = DockStyle.Fill;
+            lableTitle.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
             lableTitle.Location = new Point(34, 0);
             lableTitle.Margin = new Padding(4, 0, 4, 0);
             lableTitle.Name = "lableTitle";
-            lableTitle.Size = new Size(754, 70);
+            lableTitle.Size = new Size(753, 70);
             lableTitle.TabIndex = 0;
             lableTitle.Text = "Cambiar contraseña";
             lableTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // labelCurrentPass
             // 
-            labelCurrentPass.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             labelCurrentPass.AutoSize = true;
-            labelCurrentPass.Location = new Point(129, 75);
+            labelCurrentPass.Font = new Font("Segoe UI", 13.8F);
+            labelCurrentPass.Location = new Point(33, 75);
             labelCurrentPass.Margin = new Padding(3, 5, 3, 0);
             labelCurrentPass.Name = "labelCurrentPass";
-            labelCurrentPass.Size = new Size(152, 25);
+            labelCurrentPass.Size = new Size(197, 31);
             labelCurrentPass.TabIndex = 1;
             labelCurrentPass.Text = "Contraseña actual";
             // 
             // labelNewPass
             // 
-            labelNewPass.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             labelNewPass.AutoSize = true;
-            labelNewPass.Location = new Point(128, 177);
+            labelNewPass.Font = new Font("Segoe UI", 13.8F);
+            labelNewPass.Location = new Point(33, 177);
             labelNewPass.Margin = new Padding(3, 5, 3, 0);
             labelNewPass.Name = "labelNewPass";
-            labelNewPass.Size = new Size(153, 25);
+            labelNewPass.Size = new Size(197, 31);
             labelNewPass.TabIndex = 2;
             labelNewPass.Text = "Nueva contraseña";
             // 
             // labelNewPassRepeat
             // 
-            labelNewPassRepeat.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             labelNewPassRepeat.AutoSize = true;
-            labelNewPassRepeat.Location = new Point(71, 279);
+            labelNewPassRepeat.Font = new Font("Segoe UI", 13.8F);
+            labelNewPassRepeat.Location = new Point(33, 279);
             labelNewPassRepeat.Margin = new Padding(3, 5, 3, 0);
             labelNewPassRepeat.Name = "labelNewPassRepeat";
-            labelNewPassRepeat.Size = new Size(210, 25);
+            labelNewPassRepeat.Size = new Size(272, 31);
             labelNewPassRepeat.TabIndex = 3;
             labelNewPassRepeat.Text = "Repetir nueva contraseña";
             // 
@@ -119,43 +120,49 @@
             // 
             tlpChangePass.SetColumnSpan(tbCurrentPass, 2);
             tbCurrentPass.Dock = DockStyle.Fill;
-            tbCurrentPass.Location = new Point(287, 75);
+            tbCurrentPass.Font = new Font("Segoe UI", 12F);
+            tbCurrentPass.Location = new Point(311, 75);
             tbCurrentPass.Margin = new Padding(3, 5, 3, 3);
             tbCurrentPass.Name = "tbCurrentPass";
             tbCurrentPass.PasswordChar = '*';
-            tbCurrentPass.Size = new Size(502, 31);
+            tbCurrentPass.Size = new Size(477, 34);
             tbCurrentPass.TabIndex = 4;
             // 
             // tbNewPass
             // 
             tlpChangePass.SetColumnSpan(tbNewPass, 2);
             tbNewPass.Dock = DockStyle.Fill;
-            tbNewPass.Location = new Point(287, 177);
+            tbNewPass.Font = new Font("Segoe UI", 12F);
+            tbNewPass.Location = new Point(311, 177);
             tbNewPass.Margin = new Padding(3, 5, 3, 3);
             tbNewPass.Name = "tbNewPass";
             tbNewPass.PasswordChar = '*';
-            tbNewPass.Size = new Size(502, 31);
+            tbNewPass.Size = new Size(477, 34);
             tbNewPass.TabIndex = 5;
             // 
             // tbNewPassRepeat
             // 
             tlpChangePass.SetColumnSpan(tbNewPassRepeat, 2);
             tbNewPassRepeat.Dock = DockStyle.Fill;
-            tbNewPassRepeat.Location = new Point(287, 279);
+            tbNewPassRepeat.Font = new Font("Segoe UI", 12F);
+            tbNewPassRepeat.Location = new Point(311, 279);
             tbNewPassRepeat.Margin = new Padding(3, 5, 3, 3);
             tbNewPassRepeat.Name = "tbNewPassRepeat";
             tbNewPassRepeat.PasswordChar = '*';
-            tbNewPassRepeat.Size = new Size(502, 31);
+            tbNewPassRepeat.Size = new Size(477, 34);
             tbNewPassRepeat.TabIndex = 6;
             // 
             // btnSend
             // 
             btnSend.Anchor = AnchorStyles.Right;
-            btnSend.BackColor = SystemColors.HotTrack;
-            btnSend.ForeColor = SystemColors.ControlLightLight;
-            btnSend.Location = new Point(667, 391);
+            btnSend.BackColor = Color.FromArgb(16, 185, 129);
+            btnSend.FlatAppearance.BorderSize = 0;
+            btnSend.FlatStyle = FlatStyle.Flat;
+            btnSend.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSend.ForeColor = Color.White;
+            btnSend.Location = new Point(631, 385);
             btnSend.Name = "btnSend";
-            btnSend.Size = new Size(122, 40);
+            btnSend.Size = new Size(157, 52);
             btnSend.TabIndex = 7;
             btnSend.Text = "Enviar";
             btnSend.UseVisualStyleBackColor = false;
@@ -164,8 +171,9 @@
             // ChangePassForm
             // 
             AcceptButton = btnSend;
-            AutoScaleDimensions = new SizeF(9F, 23F);
+            AutoScaleDimensions = new SizeF(12F, 30F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.WhiteSmoke;
             ClientSize = new Size(822, 447);
             Controls.Add(tlpChangePass);
             Font = new Font("Segoe UI", 13F);
