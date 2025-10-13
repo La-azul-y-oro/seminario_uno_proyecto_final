@@ -43,6 +43,7 @@
             dvgClients.AllowUserToAddRows = false;
             dvgClients.AllowUserToDeleteRows = false;
             dvgClients.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dvgClients.BackgroundColor = SystemColors.ControlLight;
             dvgClients.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dvgClients.Location = new Point(52, 32);
             dvgClients.Name = "dvgClients";
@@ -54,39 +55,45 @@
             // labelAdd
             // 
             labelAdd.AutoSize = true;
-            labelAdd.Font = new Font("Segoe UI", 12F);
-            labelAdd.Location = new Point(52, 305);
+            labelAdd.Font = new Font("Segoe UI", 13F);
+            labelAdd.Location = new Point(52, 291);
             labelAdd.Name = "labelAdd";
-            labelAdd.Size = new Size(196, 28);
+            labelAdd.Size = new Size(215, 30);
             labelAdd.TabIndex = 2;
             labelAdd.Text = "Usuarios disponibles:";
             // 
             // comboClients
             // 
+            comboClients.Font = new Font("Segoe UI", 10F);
             comboClients.FormattingEnabled = true;
-            comboClients.Location = new Point(52, 345);
+            comboClients.Location = new Point(52, 331);
             comboClients.Name = "comboClients";
-            comboClients.Size = new Size(306, 28);
+            comboClients.Size = new Size(306, 31);
             comboClients.TabIndex = 3;
             // 
             // btnAdd
             // 
-            btnAdd.Font = new Font("Segoe UI", 10F);
-            btnAdd.Location = new Point(52, 379);
+            btnAdd.BackColor = Color.FromArgb(16, 185, 129);
+            btnAdd.FlatAppearance.BorderSize = 0;
+            btnAdd.FlatStyle = FlatStyle.Flat;
+            btnAdd.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAdd.ForeColor = Color.White;
+            btnAdd.Location = new Point(52, 368);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(128, 45);
             btnAdd.TabIndex = 4;
             btnAdd.Text = "Agregar";
-            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
             // 
             // labelNoData
             // 
             labelNoData.AutoSize = true;
-            labelNoData.Font = new Font("Segoe UI", 12F);
+            labelNoData.BackColor = Color.Transparent;
+            labelNoData.Font = new Font("Segoe UI", 13.8F);
             labelNoData.Location = new Point(398, 125);
             labelNoData.Name = "labelNoData";
-            labelNoData.Size = new Size(279, 28);
+            labelNoData.Size = new Size(328, 31);
             labelNoData.TabIndex = 5;
             labelNoData.Text = "No existen usuarios vinculados";
             labelNoData.TextAlign = ContentAlignment.MiddleCenter;
@@ -113,6 +120,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1051, 450);
             Controls.Add(label1);
             Controls.Add(comboOccupantType);

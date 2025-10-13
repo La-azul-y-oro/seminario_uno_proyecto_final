@@ -1,8 +1,6 @@
 using System.Text.Json;
 using api.Auth;
 using desktop_app.auth;
-using desktop_app.concept;
-using desktop_app.services;
 
 namespace PracticaSeminario
 {

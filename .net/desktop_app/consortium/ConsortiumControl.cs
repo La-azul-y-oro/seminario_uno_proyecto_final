@@ -66,9 +66,9 @@ namespace desktop_app.consortium
             dgvEntity.EnableHeadersVisualStyles = false;
             dgvEntity.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
             dgvEntity.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
-            dgvEntity.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            dgvEntity.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 13, FontStyle.Bold);
             dgvEntity.ColumnHeadersDefaultCellStyle.Padding = new Padding(5);
-            dgvEntity.DefaultCellStyle.Font = new Font("Segoe UI", 10);
+            dgvEntity.DefaultCellStyle.Font = new Font("Segoe UI Semilight", 11);
         }
 
         private async Task<List<ConsortiumResponse>> GetAll()

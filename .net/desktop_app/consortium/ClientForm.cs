@@ -24,6 +24,7 @@ namespace desktop_app.consortium
             Text = "Unidad " + unit.Name;
 
             InitializeGrid();
+            SetTableStyle();
             InitializeData();
             InitComboBoxClient();
             InitComboBoxType();
@@ -71,6 +72,16 @@ namespace desktop_app.consortium
             dvgClients.Columns.Add(colAcciones);
 
             dvgClients.CellContentClick += dvgClients_CellContentClick;
+        }
+
+        private void SetTableStyle()
+        {
+            dvgClients.EnableHeadersVisualStyles = false;
+            dvgClients.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
+            dvgClients.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dvgClients.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            dvgClients.ColumnHeadersDefaultCellStyle.Padding = new Padding(5);
+            dvgClients.DefaultCellStyle.Font = new Font("Segoe UI Semilight", 11);
         }
 
         private async void dvgClients_CellContentClick(object sender, DataGridViewCellEventArgs e)

@@ -17,6 +17,7 @@ namespace desktop_app.consortium
         {
             InitializeComponent();
             InitializePanelList();
+            SetTableStyle();
 
             _consortium = consortium;
             _functionalUnitService = functionalUnitService;
@@ -48,6 +49,16 @@ namespace desktop_app.consortium
                 panelAsistida.Visible = false;
                 panelList.Visible = false;
             }
+        }
+
+        private void SetTableStyle()
+        {
+            dgvUnits.EnableHeadersVisualStyles = false;
+            dgvUnits.ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray;
+            dgvUnits.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dgvUnits.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+            dgvUnits.ColumnHeadersDefaultCellStyle.Padding = new Padding(5);
+            dgvUnits.DefaultCellStyle.Font = new Font("Segoe UI Semilight", 11);
         }
 
         private async void GetAllClients()

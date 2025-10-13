@@ -239,13 +239,17 @@
             // 
             // buttonSaveList
             // 
-            buttonSaveList.Font = new Font("Segoe UI", 11F);
+            buttonSaveList.BackColor = Color.FromArgb(16, 185, 129);
+            buttonSaveList.FlatAppearance.BorderSize = 0;
+            buttonSaveList.FlatStyle = FlatStyle.Flat;
+            buttonSaveList.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold);
+            buttonSaveList.ForeColor = Color.White;
             buttonSaveList.Location = new Point(813, 392);
             buttonSaveList.Name = "buttonSaveList";
             buttonSaveList.Size = new Size(120, 46);
             buttonSaveList.TabIndex = 1;
             buttonSaveList.Text = "Guardar";
-            buttonSaveList.UseVisualStyleBackColor = true;
+            buttonSaveList.UseVisualStyleBackColor = false;
             buttonSaveList.Click += buttonSaveList_Click;
             // 
             // dgvUnits
@@ -265,6 +269,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.WhiteSmoke;
             ClientSize = new Size(956, 450);
             Controls.Add(panelList);
             Controls.Add(panelInicial);
