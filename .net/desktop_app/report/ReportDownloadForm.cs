@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using desktop_app.models;
+﻿using desktop_app.models;
 using desktop_app.services;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace desktop_app.report
 {
@@ -11,6 +8,7 @@ namespace desktop_app.report
         private readonly List<Liquidation> _liquidationList;
         private readonly ReportService _reportService;
         private readonly Consortium _consortium;
+        private readonly Size size = new Size(690, 497);
 
         public ReportDownloadForm(List<Liquidation> liquidationList, ReportService reportService, Consortium consortium)
         {
@@ -20,19 +18,30 @@ namespace desktop_app.report
 
             InitializeComponent();
             InitStep1();
+            this.Size = size;
         }
 
         private void InitStep1()
         {
-            nextButton.Enabled = false;
-            downloadButton.Enabled = false;
+            nextButton.Visible = false;
+            nextButton.Location = new Point(530, 3);
+            downloadButton.Visible = false;
+            downloadButton.Location = new Point(530, 3);
 
             comboBoxTipo.Items.Clear();
             comboBoxTipo.Items.Add("Financiero");
             comboBoxTipo.Items.Add("Expensas");
+            
+            panelSelectType.Size = size;
+            panelSelectType.Dock = DockStyle.Fill;
 
             panelFinanciero.Visible = false;
+            panelFinanciero.Size = size;
+            panelFinanciero.Dock = DockStyle.Fill;
+
             panelExpensas.Visible = false;
+            panelExpensas.Size = size;
+            panelExpensas.Dock = DockStyle.Fill;
 
             periodPicker.Format = DateTimePickerFormat.Custom;
             periodPicker.CustomFormat = "MM/yyyy";
@@ -52,13 +61,13 @@ namespace desktop_app.report
             if (comboBoxTipo.SelectedItem?.ToString() == "Financiero")
             {
                 panelFinanciero.Visible = true;
-                nextButton.Enabled = false;
-                downloadButton.Enabled = true;
+                nextButton.Visible = false;
+                downloadButton.Visible = true;
             }
             else
             {
-                nextButton.Enabled = false;
-                downloadButton.Enabled = true;
+                nextButton.Visible = false;
+                downloadButton.Visible = true;
                 panelExpensas.Visible = true;
                 LoadExpensasRadioButtons();
             }
@@ -67,7 +76,7 @@ namespace desktop_app.report
 
         private void comboBoxTipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            nextButton.Enabled = comboBoxTipo.SelectedIndex >= 0;
+            nextButton.Visible = comboBoxTipo.SelectedIndex >= 0;
         }
 
         private void checkYear_CheckedChanged(object sender, EventArgs e)

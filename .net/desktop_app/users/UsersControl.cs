@@ -2,6 +2,7 @@
 using desktop_app.models;
 using desktop_app.services;
 using desktop_app.supplier;
+using PracticaSeminario;
 
 namespace desktop_app.users
 {
@@ -113,9 +114,15 @@ namespace desktop_app.users
 
             using var form = new UsersForm(_apiService, userToProcess);
 
-            if (form.ShowDialog() == DialogResult.OK)
+            var parent = this.FindForm() as FormMain;
+
+            if (parent != null)
             {
-                LoadDataAsync();
+                var result = parent.ShowModalWithOverlay(form);
+                if (result == DialogResult.OK)
+                {
+                    LoadDataAsync();
+                }
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using desktop_app.dto;
 using desktop_app.services;
+using PracticaSeminario;
 
 namespace desktop_app.movement
 {
@@ -177,9 +178,15 @@ namespace desktop_app.movement
         {
             using var form = new MovementForm(_apiService, _concepts, _consortiums, _suppliers);
 
-            if (form.ShowDialog() == DialogResult.OK)
+            var parent = this.FindForm() as FormMain;
+
+            if (parent != null)
             {
-                LoadDataAsync();
+                var result = parent.ShowModalWithOverlay(form);
+                if (result == DialogResult.OK)
+                {
+                    LoadDataAsync();
+                }
             }
         }
 

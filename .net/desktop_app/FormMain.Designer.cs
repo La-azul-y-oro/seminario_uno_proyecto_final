@@ -75,12 +75,13 @@
             // mnsPrincipal
             // 
             mnsPrincipal.BackColor = Color.Gainsboro;
+            mnsPrincipal.Dock = DockStyle.Fill;
             mnsPrincipal.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             mnsPrincipal.ImageScalingSize = new Size(20, 20);
             mnsPrincipal.Items.AddRange(new ToolStripItem[] { mnuArchivo, mnuModulos });
             mnsPrincipal.Location = new Point(0, 0);
             mnsPrincipal.Name = "mnsPrincipal";
-            mnsPrincipal.Size = new Size(800, 39);
+            mnsPrincipal.Size = new Size(800, 40);
             mnsPrincipal.TabIndex = 0;
             mnsPrincipal.Text = "menuStrip1";
             // 
@@ -89,7 +90,7 @@
             mnuArchivo.DropDownItems.AddRange(new ToolStripItem[] { tsmChangePass, tsmSalir });
             mnuArchivo.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             mnuArchivo.Name = "mnuArchivo";
-            mnuArchivo.Size = new Size(108, 35);
+            mnuArchivo.Size = new Size(108, 36);
             mnuArchivo.Text = "Archivo";
             // 
             // tsmChangePass
@@ -113,7 +114,7 @@
             mnuModulos.DropDownItems.AddRange(new ToolStripItem[] { tsmiConceptos, tsmiConsorcios, tsmiSupplier, tsmiUsuarios, tsmiMovimientos });
             mnuModulos.Font = new Font("Segoe UI Semibold", 13.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             mnuModulos.Name = "mnuModulos";
-            mnuModulos.Size = new Size(120, 35);
+            mnuModulos.Size = new Size(120, 36);
             mnuModulos.Text = "Módulos";
             // 
             // tsmiConceptos
@@ -178,7 +179,7 @@
             IsMdiContainer = true;
             Margin = new Padding(5);
             Name = "FormMain";
-            Text = "Consorcio";
+            Text = "Gestión de Consorcios";
             WindowState = FormWindowState.Maximized;
             Load += formMain_Shown;
             layoutPanel.ResumeLayout(false);

@@ -1,6 +1,7 @@
 ﻿using desktop_app.dto;
 using desktop_app.models;
 using desktop_app.services;
+using PracticaSeminario;
 
 namespace desktop_app.concept
 {
@@ -76,12 +77,17 @@ namespace desktop_app.concept
         private void OpenConceptForm(Concept? concept)
         {
             var conceptToProcess = (concept != null) ? concept : null;
-
             using var form = new ConceptForm(_apiService, conceptToProcess);
 
-            if (form.ShowDialog() == DialogResult.OK)
+            var parent = this.FindForm() as FormMain;
+
+            if (parent != null)
             {
-                LoadDataAsync();
+                var result = parent.ShowModalWithOverlay(form);
+                if (result == DialogResult.OK)
+                {
+                    LoadDataAsync();
+                }
             }
         }
 
