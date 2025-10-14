@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             dgvEntity = new DataGridView();
-            tableLayoutPanel1 = new TableLayoutPanel();
+            layoutPanel = new TableLayoutPanel();
             btnUpdateList = new Button();
             btnCreate = new Button();
             labelEntity = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvEntity).BeginInit();
-            tableLayoutPanel1.SuspendLayout();
+            layoutPanel.SuspendLayout();
             SuspendLayout();
             // 
             // dgvEntity
@@ -45,7 +45,7 @@
             dgvEntity.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgvEntity.BackgroundColor = Color.WhiteSmoke;
             dgvEntity.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tableLayoutPanel1.SetColumnSpan(dgvEntity, 4);
+            layoutPanel.SetColumnSpan(dgvEntity, 4);
             dgvEntity.Dock = DockStyle.Fill;
             dgvEntity.Location = new Point(3, 68);
             dgvEntity.Name = "dgvEntity";
@@ -54,25 +54,26 @@
             dgvEntity.Size = new Size(1120, 447);
             dgvEntity.TabIndex = 0;
             // 
-            // tableLayoutPanel1
+            // layoutPanel
             // 
-            tableLayoutPanel1.BackColor = Color.Gainsboro;
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 240F));
-            tableLayoutPanel1.Controls.Add(btnUpdateList, 1, 2);
-            tableLayoutPanel1.Controls.Add(dgvEntity, 0, 1);
-            tableLayoutPanel1.Controls.Add(btnCreate, 1, 0);
-            tableLayoutPanel1.Controls.Add(labelEntity, 0, 0);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 3;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
-            tableLayoutPanel1.Size = new Size(1126, 583);
-            tableLayoutPanel1.TabIndex = 1;
+            layoutPanel.BackColor = Color.Gainsboro;
+            layoutPanel.ColumnCount = 2;
+            layoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            layoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 240F));
+            layoutPanel.Controls.Add(btnUpdateList, 1, 2);
+            layoutPanel.Controls.Add(dgvEntity, 0, 1);
+            layoutPanel.Controls.Add(btnCreate, 1, 0);
+            layoutPanel.Controls.Add(labelEntity, 0, 0);
+            layoutPanel.Dock = DockStyle.Fill;
+            layoutPanel.Location = new Point(0, 0);
+            layoutPanel.Margin = new Padding(3, 4, 3, 4);
+            layoutPanel.Name = "layoutPanel";
+            layoutPanel.RowCount = 3;
+            layoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
+            layoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            layoutPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, 65F));
+            layoutPanel.Size = new Size(1126, 583);
+            layoutPanel.TabIndex = 1;
             // 
             // btnUpdateList
             // 
@@ -127,19 +128,19 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(tableLayoutPanel1);
+            Controls.Add(layoutPanel);
             Name = "ConceptControl";
             Size = new Size(1126, 583);
             ((System.ComponentModel.ISupportInitialize)dgvEntity).EndInit();
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            layoutPanel.ResumeLayout(false);
+            layoutPanel.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
         protected DataGridView dgvEntity;
-        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel layoutPanel;
         private Label labelEntity;
         private Button btnCreate;
         private Button btnUpdateList;

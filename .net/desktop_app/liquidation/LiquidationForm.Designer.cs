@@ -42,11 +42,11 @@
             // 
             tableLayoutPanel1.ColumnCount = 6;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 17F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.2874012F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 29.9212589F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 26.7716541F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 44F));
             tableLayoutPanel1.Controls.Add(labelForm, 1, 0);
             tableLayoutPanel1.Controls.Add(periodoLabel, 1, 2);
             tableLayoutPanel1.Controls.Add(btnAccept, 4, 3);
@@ -61,7 +61,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 109F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 109F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 109F));
-            tableLayoutPanel1.Size = new Size(992, 451);
+            tableLayoutPanel1.Size = new Size(1070, 451);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // labelForm
@@ -69,10 +69,10 @@
             labelForm.AutoSize = true;
             tableLayoutPanel1.SetColumnSpan(labelForm, 4);
             labelForm.Dock = DockStyle.Fill;
-            labelForm.Font = new Font("Segoe UI", 12F);
+            labelForm.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
             labelForm.Location = new Point(20, 0);
             labelForm.Name = "labelForm";
-            labelForm.Size = new Size(934, 109);
+            labelForm.Size = new Size(1001, 109);
             labelForm.TabIndex = 0;
             labelForm.Text = "Generar liquidación";
             labelForm.TextAlign = ContentAlignment.MiddleCenter;
@@ -81,25 +81,27 @@
             // 
             periodoLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             periodoLabel.AutoSize = true;
-            periodoLabel.Font = new Font("Segoe UI", 11F);
+            periodoLabel.Font = new Font("Segoe UI", 13.8F);
             periodoLabel.ForeColor = SystemColors.ControlText;
-            periodoLabel.Location = new Point(78, 229);
+            periodoLabel.Location = new Point(56, 229);
             periodoLabel.Margin = new Padding(3, 11, 3, 0);
             periodoLabel.Name = "periodoLabel";
-            periodoLabel.Size = new Size(77, 25);
+            periodoLabel.Size = new Size(92, 31);
             periodoLabel.TabIndex = 4;
             periodoLabel.Text = "Periodo";
             // 
             // btnAccept
             // 
             btnAccept.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnAccept.BackColor = SystemColors.HotTrack;
-            btnAccept.Font = new Font("Segoe UI", 11F);
-            btnAccept.ForeColor = SystemColors.ControlLightLight;
-            btnAccept.Location = new Point(834, 338);
+            btnAccept.BackColor = Color.FromArgb(16, 185, 129);
+            btnAccept.FlatAppearance.BorderSize = 0;
+            btnAccept.FlatStyle = FlatStyle.Flat;
+            btnAccept.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            btnAccept.ForeColor = Color.White;
+            btnAccept.Location = new Point(841, 338);
             btnAccept.Margin = new Padding(10, 11, 3, 3);
             btnAccept.Name = "btnAccept";
-            btnAccept.Size = new Size(120, 45);
+            btnAccept.Size = new Size(180, 45);
             btnAccept.TabIndex = 1;
             btnAccept.Text = "Generar";
             btnAccept.UseVisualStyleBackColor = false;
@@ -107,32 +109,34 @@
             // 
             // labelExpirationDate
             // 
-            labelExpirationDate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             labelExpirationDate.AutoSize = true;
-            labelExpirationDate.Font = new Font("Segoe UI", 11F);
+            labelExpirationDate.Dock = DockStyle.Fill;
+            labelExpirationDate.Font = new Font("Segoe UI", 13.8F);
             labelExpirationDate.ForeColor = SystemColors.ControlText;
-            labelExpirationDate.Location = new Point(477, 229);
+            labelExpirationDate.Location = new Point(455, 229);
             labelExpirationDate.Margin = new Padding(3, 11, 3, 0);
             labelExpirationDate.Name = "labelExpirationDate";
-            labelExpirationDate.Size = new Size(195, 25);
+            labelExpirationDate.Size = new Size(264, 98);
             labelExpirationDate.TabIndex = 5;
             labelExpirationDate.Text = "Fecha de vencimiento";
             // 
             // periodPicker
             // 
-            periodPicker.Location = new Point(161, 229);
+            periodPicker.Font = new Font("Segoe UI", 12F);
+            periodPicker.Location = new Point(154, 229);
             periodPicker.Margin = new Padding(3, 11, 3, 3);
             periodPicker.Name = "periodPicker";
-            periodPicker.Size = new Size(276, 27);
+            periodPicker.Size = new Size(295, 34);
             periodPicker.TabIndex = 7;
             // 
             // expirationDatePicker
             // 
             expirationDatePicker.Dock = DockStyle.Fill;
-            expirationDatePicker.Location = new Point(678, 229);
+            expirationDatePicker.Font = new Font("Segoe UI", 12F);
+            expirationDatePicker.Location = new Point(725, 229);
             expirationDatePicker.Margin = new Padding(3, 11, 3, 3);
             expirationDatePicker.Name = "expirationDatePicker";
-            expirationDatePicker.Size = new Size(276, 27);
+            expirationDatePicker.Size = new Size(296, 34);
             expirationDatePicker.TabIndex = 8;
             // 
             // LiquidationForm
@@ -140,7 +144,7 @@
             AcceptButton = btnAccept;
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(992, 451);
+            ClientSize = new Size(1070, 451);
             Controls.Add(tableLayoutPanel1);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;

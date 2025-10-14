@@ -71,8 +71,8 @@ namespace PracticaSeminario
 
         private void tsmChangePass_Click(object sender, EventArgs e)
         {
-            var changePassForm = new ChangePassForm(_authService);
-            changePassForm.ShowDialog();
+            using var changePassForm = new ChangePassForm(_authService);
+            ShowModalWithOverlay(changePassForm);
 
         }
 
@@ -100,5 +100,28 @@ namespace PracticaSeminario
         {
             ShowControl(new MovementControl(_apiService));
         }
+
+        public DialogResult ShowModalWithOverlay(Form childForm)
+        {
+            Panel overlay = new Panel
+            {
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(100, Color.GhostWhite), 
+            };
+
+            this.Controls.Add(overlay);
+            overlay.BringToFront();
+            overlay.Visible = true;
+
+            childForm.StartPosition = FormStartPosition.CenterParent;
+
+            var result = childForm.ShowDialog(this);
+
+            this.Controls.Remove(overlay);
+            overlay.Dispose();
+
+            return result;
+        }
+
     }
 }

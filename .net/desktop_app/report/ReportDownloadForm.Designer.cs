@@ -28,18 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tableLayoutPanel1 = new TableLayoutPanel();
-            panelButtons = new Panel();
-            downloadButton = new Button();
-            nextButton = new Button();
-            cancelButton = new Button();
-            panelSelectType = new Panel();
-            comboBoxTipo = new ComboBox();
-            label1 = new Label();
-            panelExpensas = new Panel();
-            labelNoExpenses = new Label();
-            flowLayoutPanelExpenses = new FlowLayoutPanel();
-            label4 = new Label();
             panelFinanciero = new Panel();
             periodPicker = new DateTimePicker();
             checkYear = new CheckBox();
@@ -47,120 +35,109 @@
             buttonExcel = new RadioButton();
             label3 = new Label();
             label2 = new Label();
-            tableLayoutPanel1.SuspendLayout();
-            panelButtons.SuspendLayout();
-            panelSelectType.SuspendLayout();
-            panelExpensas.SuspendLayout();
+            panelExpensas = new Panel();
+            labelNoExpenses = new Label();
+            flowLayoutPanelExpenses = new FlowLayoutPanel();
+            label4 = new Label();
+            panelSelectType = new Panel();
+            comboBoxTipo = new ComboBox();
+            label1 = new Label();
+            panelButtons = new Panel();
+            downloadButton = new Button();
+            nextButton = new Button();
+            cancelButton = new Button();
             panelFinanciero.SuspendLayout();
+            panelExpensas.SuspendLayout();
+            panelSelectType.SuspendLayout();
+            panelButtons.SuspendLayout();
             SuspendLayout();
             // 
-            // tableLayoutPanel1
+            // panelFinanciero
             // 
-            tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Controls.Add(panelButtons, 0, 1);
-            tableLayoutPanel1.Controls.Add(panelSelectType, 0, 0);
-            tableLayoutPanel1.Controls.Add(panelExpensas, 0, 0);
-            tableLayoutPanel1.Controls.Add(panelFinanciero, 0, 0);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 84.6666641F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 15.333333F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(800, 450);
-            tableLayoutPanel1.TabIndex = 0;
+            panelFinanciero.Controls.Add(periodPicker);
+            panelFinanciero.Controls.Add(checkYear);
+            panelFinanciero.Controls.Add(buttonPDF);
+            panelFinanciero.Controls.Add(buttonExcel);
+            panelFinanciero.Controls.Add(label3);
+            panelFinanciero.Controls.Add(label2);
+            panelFinanciero.Location = new Point(0, 249);
+            panelFinanciero.Name = "panelFinanciero";
+            panelFinanciero.Size = new Size(794, 377);
+            panelFinanciero.TabIndex = 2;
+            panelFinanciero.Visible = false;
             // 
-            // panelButtons
+            // periodPicker
             // 
-            panelButtons.Controls.Add(downloadButton);
-            panelButtons.Controls.Add(nextButton);
-            panelButtons.Controls.Add(cancelButton);
-            panelButtons.Dock = DockStyle.Fill;
-            panelButtons.Location = new Point(3, 432);
-            panelButtons.Name = "panelButtons";
-            panelButtons.Size = new Size(794, 15);
-            panelButtons.TabIndex = 0;
+            periodPicker.Font = new Font("Segoe UI", 12F);
+            periodPicker.Location = new Point(194, 275);
+            periodPicker.Name = "periodPicker";
+            periodPicker.Size = new Size(404, 34);
+            periodPicker.TabIndex = 5;
             // 
-            // downloadButton
+            // checkYear
             // 
-            downloadButton.BackColor = Color.MediumSpringGreen;
-            downloadButton.Font = new Font("Segoe UI", 10F);
-            downloadButton.Location = new Point(662, 16);
-            downloadButton.Name = "downloadButton";
-            downloadButton.Size = new Size(114, 38);
-            downloadButton.TabIndex = 2;
-            downloadButton.Text = "Descargar";
-            downloadButton.UseVisualStyleBackColor = false;
-            downloadButton.Click += downloadButton_Click;
+            checkYear.AutoSize = true;
+            checkYear.Font = new Font("Segoe UI", 12F);
+            checkYear.Location = new Point(328, 218);
+            checkYear.Name = "checkYear";
+            checkYear.Size = new Size(112, 32);
+            checkYear.TabIndex = 4;
+            checkYear.Text = "Solo año";
+            checkYear.UseVisualStyleBackColor = true;
+            checkYear.CheckedChanged += checkYear_CheckedChanged;
             // 
-            // nextButton
+            // buttonPDF
             // 
-            nextButton.BackColor = SystemColors.MenuHighlight;
-            nextButton.Font = new Font("Segoe UI", 10F);
-            nextButton.ForeColor = Color.White;
-            nextButton.Location = new Point(528, 16);
-            nextButton.Name = "nextButton";
-            nextButton.Size = new Size(102, 38);
-            nextButton.TabIndex = 1;
-            nextButton.Text = "Siguiente";
-            nextButton.UseVisualStyleBackColor = false;
-            nextButton.Click += nextButton_Click;
+            buttonPDF.AutoSize = true;
+            buttonPDF.Checked = true;
+            buttonPDF.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            buttonPDF.Location = new Point(295, 103);
+            buttonPDF.Name = "buttonPDF";
+            buttonPDF.Size = new Size(70, 32);
+            buttonPDF.TabIndex = 3;
+            buttonPDF.TabStop = true;
+            buttonPDF.Text = "PDF";
+            buttonPDF.UseVisualStyleBackColor = true;
             // 
-            // cancelButton
+            // buttonExcel
             // 
-            cancelButton.Font = new Font("Segoe UI", 10F);
-            cancelButton.Location = new Point(396, 16);
-            cancelButton.Name = "cancelButton";
-            cancelButton.Size = new Size(99, 38);
-            cancelButton.TabIndex = 0;
-            cancelButton.Text = "Cancelar";
-            cancelButton.UseVisualStyleBackColor = true;
-            cancelButton.Click += cancelButton_Click;
+            buttonExcel.AutoSize = true;
+            buttonExcel.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            buttonExcel.Location = new Point(415, 103);
+            buttonExcel.Name = "buttonExcel";
+            buttonExcel.Size = new Size(82, 32);
+            buttonExcel.TabIndex = 2;
+            buttonExcel.Text = "Excel";
+            buttonExcel.UseVisualStyleBackColor = true;
             // 
-            // panelSelectType
+            // label3
             // 
-            panelSelectType.Controls.Add(comboBoxTipo);
-            panelSelectType.Controls.Add(label1);
-            panelSelectType.Dock = DockStyle.Fill;
-            panelSelectType.Location = new Point(3, 412);
-            panelSelectType.Name = "panelSelectType";
-            panelSelectType.Size = new Size(794, 14);
-            panelSelectType.TabIndex = 1;
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 12F);
+            label3.Location = new Point(293, 176);
+            label3.Name = "label3";
+            label3.Size = new Size(199, 28);
+            label3.TabIndex = 1;
+            label3.Text = "Seleccione el periodo";
             // 
-            // comboBoxTipo
+            // label2
             // 
-            comboBoxTipo.Font = new Font("Segoe UI", 12F);
-            comboBoxTipo.FormattingEnabled = true;
-            comboBoxTipo.Location = new Point(293, 190);
-            comboBoxTipo.Name = "comboBoxTipo";
-            comboBoxTipo.Size = new Size(202, 36);
-            comboBoxTipo.TabIndex = 1;
-            comboBoxTipo.SelectedIndexChanged += comboBoxTipo_SelectedIndexChanged;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(272, 101);
-            label1.Name = "label1";
-            label1.Size = new Size(262, 28);
-            label1.TabIndex = 0;
-            label1.Text = "Seleccione el tipo de reporte";
-            label1.TextAlign = ContentAlignment.TopCenter;
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            label2.Location = new Point(276, 50);
+            label2.Name = "label2";
+            label2.Size = new Size(246, 31);
+            label2.TabIndex = 0;
+            label2.Text = "Seleccione el formato";
             // 
             // panelExpensas
             // 
             panelExpensas.Controls.Add(labelNoExpenses);
             panelExpensas.Controls.Add(flowLayoutPanelExpenses);
             panelExpensas.Controls.Add(label4);
-            panelExpensas.Dock = DockStyle.Fill;
-            panelExpensas.Location = new Point(3, 3);
+            panelExpensas.Location = new Point(6, 644);
             panelExpensas.Name = "panelExpensas";
-            panelExpensas.Size = new Size(794, 341);
+            panelExpensas.Size = new Size(794, 300);
             panelExpensas.TabIndex = 6;
             // 
             // labelNoExpenses
@@ -188,132 +165,141 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(223, 41);
+            label4.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            label4.Location = new Point(185, 41);
             label4.Name = "label4";
-            label4.Size = new Size(335, 28);
+            label4.Size = new Size(413, 31);
             label4.TabIndex = 0;
             label4.Text = "Seleccione la liquidación a descargar:";
             // 
-            // panelFinanciero
+            // panelSelectType
             // 
-            panelFinanciero.Controls.Add(periodPicker);
-            panelFinanciero.Controls.Add(checkYear);
-            panelFinanciero.Controls.Add(buttonPDF);
-            panelFinanciero.Controls.Add(buttonExcel);
-            panelFinanciero.Controls.Add(label3);
-            panelFinanciero.Controls.Add(label2);
-            panelFinanciero.Dock = DockStyle.Fill;
-            panelFinanciero.Location = new Point(3, 350);
-            panelFinanciero.Name = "panelFinanciero";
-            panelFinanciero.Size = new Size(794, 56);
-            panelFinanciero.TabIndex = 2;
-            panelFinanciero.Visible = false;
+            panelSelectType.Controls.Add(comboBoxTipo);
+            panelSelectType.Controls.Add(label1);
+            panelSelectType.Location = new Point(0, 3);
+            panelSelectType.Name = "panelSelectType";
+            panelSelectType.Size = new Size(794, 228);
+            panelSelectType.TabIndex = 1;
             // 
-            // periodPicker
+            // comboBoxTipo
             // 
-            periodPicker.Font = new Font("Segoe UI", 12F);
-            periodPicker.Location = new Point(272, 278);
-            periodPicker.Name = "periodPicker";
-            periodPicker.Size = new Size(223, 34);
-            periodPicker.TabIndex = 5;
+            comboBoxTipo.Font = new Font("Segoe UI", 12F);
+            comboBoxTipo.FormattingEnabled = true;
+            comboBoxTipo.Location = new Point(237, 141);
+            comboBoxTipo.Name = "comboBoxTipo";
+            comboBoxTipo.Size = new Size(294, 36);
+            comboBoxTipo.TabIndex = 1;
+            comboBoxTipo.SelectedIndexChanged += comboBoxTipo_SelectedIndexChanged;
             // 
-            // checkYear
+            // label1
             // 
-            checkYear.AutoSize = true;
-            checkYear.Font = new Font("Segoe UI", 12F);
-            checkYear.Location = new Point(328, 218);
-            checkYear.Name = "checkYear";
-            checkYear.Size = new Size(112, 32);
-            checkYear.TabIndex = 4;
-            checkYear.Text = "Solo año";
-            checkYear.UseVisualStyleBackColor = true;
-            checkYear.CheckedChanged += checkYear_CheckedChanged;
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold);
+            label1.Location = new Point(227, 73);
+            label1.Name = "label1";
+            label1.Size = new Size(320, 31);
+            label1.TabIndex = 0;
+            label1.Text = "Seleccione el tipo de reporte";
+            label1.TextAlign = ContentAlignment.TopCenter;
             // 
-            // buttonPDF
+            // panelButtons
             // 
-            buttonPDF.AutoSize = true;
-            buttonPDF.Checked = true;
-            buttonPDF.Font = new Font("Segoe UI", 12F);
-            buttonPDF.Location = new Point(295, 103);
-            buttonPDF.Name = "buttonPDF";
-            buttonPDF.Size = new Size(68, 32);
-            buttonPDF.TabIndex = 3;
-            buttonPDF.TabStop = true;
-            buttonPDF.Text = "PDF";
-            buttonPDF.UseVisualStyleBackColor = true;
+            panelButtons.Controls.Add(downloadButton);
+            panelButtons.Controls.Add(nextButton);
+            panelButtons.Controls.Add(cancelButton);
+            panelButtons.Dock = DockStyle.Bottom;
+            panelButtons.Location = new Point(0, 977);
+            panelButtons.Name = "panelButtons";
+            panelButtons.Size = new Size(800, 78);
+            panelButtons.TabIndex = 0;
             // 
-            // buttonExcel
+            // downloadButton
             // 
-            buttonExcel.AutoSize = true;
-            buttonExcel.Font = new Font("Segoe UI", 12F);
-            buttonExcel.Location = new Point(415, 103);
-            buttonExcel.Name = "buttonExcel";
-            buttonExcel.Size = new Size(76, 32);
-            buttonExcel.TabIndex = 2;
-            buttonExcel.Text = "Excel";
-            buttonExcel.UseVisualStyleBackColor = true;
+            downloadButton.BackColor = Color.FromArgb(16, 185, 129);
+            downloadButton.FlatAppearance.BorderSize = 0;
+            downloadButton.FlatStyle = FlatStyle.Flat;
+            downloadButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            downloadButton.ForeColor = Color.White;
+            downloadButton.Location = new Point(636, 3);
+            downloadButton.Name = "downloadButton";
+            downloadButton.Size = new Size(140, 45);
+            downloadButton.TabIndex = 2;
+            downloadButton.Text = "Descargar";
+            downloadButton.UseVisualStyleBackColor = false;
+            downloadButton.Click += downloadButton_Click;
             // 
-            // label3
+            // nextButton
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(293, 176);
-            label3.Name = "label3";
-            label3.Size = new Size(199, 28);
-            label3.TabIndex = 1;
-            label3.Text = "Seleccione el periodo";
+            nextButton.BackColor = SystemColors.MenuHighlight;
+            nextButton.FlatAppearance.BorderSize = 0;
+            nextButton.FlatStyle = FlatStyle.Flat;
+            nextButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            nextButton.ForeColor = Color.White;
+            nextButton.Location = new Point(469, 3);
+            nextButton.Name = "nextButton";
+            nextButton.Size = new Size(140, 45);
+            nextButton.TabIndex = 1;
+            nextButton.Text = "Siguiente";
+            nextButton.UseVisualStyleBackColor = false;
+            nextButton.Click += nextButton_Click;
             // 
-            // label2
+            // cancelButton
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(295, 48);
-            label2.Name = "label2";
-            label2.Size = new Size(200, 28);
-            label2.TabIndex = 0;
-            label2.Text = "Seleccione el formato";
+            cancelButton.BackColor = SystemColors.ActiveBorder;
+            cancelButton.FlatAppearance.BorderSize = 0;
+            cancelButton.FlatStyle = FlatStyle.Flat;
+            cancelButton.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            cancelButton.Location = new Point(28, 3);
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new Size(140, 45);
+            cancelButton.TabIndex = 0;
+            cancelButton.Text = "Cancelar";
+            cancelButton.UseVisualStyleBackColor = false;
+            cancelButton.Click += cancelButton_Click;
             // 
             // ReportDownloadForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(tableLayoutPanel1);
+            ClientSize = new Size(800, 1055);
+            Controls.Add(panelFinanciero);
+            Controls.Add(panelExpensas);
+            Controls.Add(panelSelectType);
+            Controls.Add(panelButtons);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
             Name = "ReportDownloadForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Descargar Reportes";
-            tableLayoutPanel1.ResumeLayout(false);
-            panelButtons.ResumeLayout(false);
-            panelSelectType.ResumeLayout(false);
-            panelSelectType.PerformLayout();
-            panelExpensas.ResumeLayout(false);
-            panelExpensas.PerformLayout();
             panelFinanciero.ResumeLayout(false);
             panelFinanciero.PerformLayout();
+            panelExpensas.ResumeLayout(false);
+            panelExpensas.PerformLayout();
+            panelSelectType.ResumeLayout(false);
+            panelSelectType.PerformLayout();
+            panelButtons.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private TableLayoutPanel tableLayoutPanel1;
+        private Panel panelFinanciero;
+        private DateTimePicker periodPicker;
+        private CheckBox checkYear;
+        private RadioButton buttonPDF;
+        private RadioButton buttonExcel;
+        private Label label3;
+        private Label label2;
+        private Panel panelExpensas;
+        private Label labelNoExpenses;
+        private FlowLayoutPanel flowLayoutPanelExpenses;
+        private Label label4;
+        private Panel panelSelectType;
+        private ComboBox comboBoxTipo;
+        private Label label1;
         private Panel panelButtons;
         private Button downloadButton;
         private Button nextButton;
         private Button cancelButton;
-        private Panel panelSelectType;
-        private ComboBox comboBoxTipo;
-        private Label label1;
-        private Panel panelFinanciero;
-        private Label label2;
-        private RadioButton buttonPDF;
-        private RadioButton buttonExcel;
-        private Label label3;
-        private DateTimePicker periodPicker;
-        private CheckBox checkYear;
-        private Panel panelExpensas;
-        private Label label4;
-        private FlowLayoutPanel flowLayoutPanelExpenses;
-        private Label labelNoExpenses;
     }
 }

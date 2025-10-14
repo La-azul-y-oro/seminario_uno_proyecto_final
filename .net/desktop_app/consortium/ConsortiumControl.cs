@@ -1,9 +1,9 @@
-﻿using System.Data;
-using desktop_app.dto;
+﻿using desktop_app.dto;
 using desktop_app.liquidation;
 using desktop_app.models;
 using desktop_app.report;
 using desktop_app.services;
+using PracticaSeminario;
 
 namespace desktop_app.consortium
 {
@@ -25,9 +25,13 @@ namespace desktop_app.consortium
             _functionalUnitService = functionalUnitService;
             _userService = userService;
 
-            LoadDataAsync();
-
+            this.Load += ConsortiumControl_Load;
             dgvEntity.CellContentClick += dgvEntity_CellContentClick;
+        }
+
+        private async void ConsortiumControl_Load(object? sender, EventArgs e)
+        {
+            await LoadDataAsync();
         }
 
         private async Task LoadDataAsync()
@@ -90,12 +94,17 @@ namespace desktop_app.consortium
 
             using var form = new ConsortiumForm(_apiService, consortiumToProcess);
 
-            if (form.ShowDialog() == DialogResult.OK)
+            var parent = this.FindForm() as FormMain;
+
+            if (parent != null)
             {
-                LoadDataAsync();
+                var result = parent.ShowModalWithOverlay(form);
+                if (result == DialogResult.OK)
+                {
+                    LoadDataAsync();
+                }
             }
         }
-
 
         private async void DeleteSelectedConsortium(ConsortiumResponse consortium)
         {
@@ -206,7 +215,8 @@ namespace desktop_app.consortium
                 consortium.FunctionalUnits = updatedUnits;
             };
 
-            form.ShowDialog();
+            var parent = this.FindForm() as FormMain;
+            parent?.ShowModalWithOverlay(form);
         }
 
         private void GenerateLiquidation(ConsortiumResponse dto)
@@ -214,7 +224,9 @@ namespace desktop_app.consortium
             var consortium = GenerateConsortium(dto);
 
             using var form = new LiquidationForm(_liquidationService, consortium);
-            form.ShowDialog();
+            
+            var parent = this.FindForm() as FormMain;
+            parent?.ShowModalWithOverlay(form);
         }
 
         private async Task DownloadReportAsync(ConsortiumResponse dto)
@@ -225,7 +237,8 @@ namespace desktop_app.consortium
 
             using var form = new ReportDownloadForm(list, _reportService, consortium);
 
-            form.ShowDialog();
+            var parent = this.FindForm() as FormMain;
+            parent?.ShowModalWithOverlay(form);
         }
 
         private Consortium GenerateConsortium(ConsortiumResponse dto)
@@ -240,12 +253,13 @@ namespace desktop_app.consortium
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            btnCreate.Click += (s, e) => OpenConsortiumForm(null);
+            OpenConsortiumForm(null);
         }
 
         private void btnUpdateList_Click(object sender, EventArgs e)
         {
-            btnUpdateList.Click += (s, e) => LoadDataAsync();
+            _ = LoadDataAsync(); 
         }
+
     }
 }
