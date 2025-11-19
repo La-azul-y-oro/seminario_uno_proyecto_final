@@ -15,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { FunctionalUnitBatchRequest, UnitFunctionalConsortium } from '../../interfaces/model.interfaces';
 import { noWhitespaceValidator } from '../../util/customValidators';
+import { ConfirmDialogService } from '../confirm-dialog/confirm-dialog-service';
 
 @Component({
   selector: 'app-functional-unit-dialog',
@@ -49,7 +50,7 @@ export class FunctionalUnitDialogComponent implements OnChanges {
   totalFactor = 0;
   loadingMethod: 'automatic' | 'manual' | null = null;
   showMainForm: boolean = false;
-  previewUnits: any[] = [];
+
   floorFactors: { floor: number, factor: number }[] = [];
   nomenclatureList = [
     { value: "pisoLetra", label: "Piso + Letra (1A, 1B, 1C...)" },
@@ -68,6 +69,7 @@ export class FunctionalUnitDialogComponent implements OnChanges {
   constructor(
     private readonly fb: FormBuilder,
     private readonly toastService: ToastService,
+    private readonly confirmService: ConfirmDialogService,
     private readonly functionalUnitService: FunctionalUnitService
   ) {
     this.generatorForm = this.initGeneratorForm();
@@ -90,8 +92,8 @@ export class FunctionalUnitDialogComponent implements OnChanges {
     return this.fb.group({
       floors: [null, [Validators.required, Validators.min(1), Validators.max(50)]],
       unitsPerFloor: [null, [Validators.required, Validators.min(1), Validators.max(20)]],
-      nomenclature: ['pisoLetra', Validators.required],
-      baseFactor: [2.5, [Validators.required, Validators.min(0.1), Validators.max(100)]],
+      nomenclature: [, Validators.required],
+      baseFactor: [, [Validators.required, Validators.min(0.1), Validators.max(100)]],
       differentFactorsByFloor: [false]
     });
   }
@@ -110,15 +112,12 @@ export class FunctionalUnitDialogComponent implements OnChanges {
     this.clearFormArray();
     this.form.reset();
     this.generatorForm.reset({
-      nomenclature: 'pisoLetra',
-      baseFactor: 2.5,
       differentFactorsByFloor: false
     });
     
     this.showMainForm = false;
     this.loadingMethod = null;
     this.isManualSelected = false;
-    this.previewUnits = [];
     this.floorFactors = [];
     this.deletedUnitIds = [];
     this.totalFactor = 0;
@@ -190,12 +189,6 @@ export class FunctionalUnitDialogComponent implements OnChanges {
         factor: baseFactor
       });
     }
-  }
-
-  generatePreview() {
-    if (!this.generatorForm.valid) return;
-    const formData = this.generatorForm.value;
-    this.previewUnits = this.createUnitsList(formData);
   }
 
   generateUnits() {
@@ -273,10 +266,25 @@ export class FunctionalUnitDialogComponent implements OnChanges {
     return unit.get('balance')?.value === 0;
   }
 
-  removeUnit(index: number): void {
+  processRemove(index: number): void {
     const unit = this.units.at(index) as FormGroup;
     if (!this.canDelete(unit)) return;
-    
+
+    if(unit.value?.id){
+      this.confirmService.open(
+        {
+          header: `Eliminar unidad funcional ${unit.value.name}`,
+          message: 'La unidad funcional se encuentra activa y puede contener movimientos asociados. ¿Desea continuar?'
+        }
+      ).subscribe(() => {
+        this.removeUnit(index, unit);
+      });
+    }else{
+      this.removeUnit(index, unit);
+    }
+  }
+
+  removeUnit(index: number, unit: FormGroup): void {  
     const id = unit.get('id')?.value;
     if (id) {
       this.deletedUnitIds.push(id);
@@ -359,7 +367,7 @@ export class FunctionalUnitDialogComponent implements OnChanges {
     const unitsPerFloor = this.generatorForm.get('unitsPerFloor')?.value;
     
     if (floors && unitsPerFloor) {
-      return Number(100 / (floors * unitsPerFloor)).toFixed(2);
+      return Number(100 / (floors * unitsPerFloor)).toFixed(2).replace('.', ',').toString();
     } else {
       return null;
     }

@@ -25,3 +25,15 @@
     cursor: default;
     opacity: 0.5;
 }
+
+
+body {
+  overflow-y: scroll;
+  scrollbar-gutter: stable both-edges;
+}
+
+/* 
+body.p-overflow-hidden {
+  overflow-y: scroll !important;
+  padding-right: 0 !important;
+} */
