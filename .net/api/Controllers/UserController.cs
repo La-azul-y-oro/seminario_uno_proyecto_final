@@ -4,6 +4,8 @@ using api.Dto;
 using api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using QuestPDF.Infrastructure;
 
 namespace api.Controllers
 {
@@ -92,6 +94,28 @@ namespace api.Controllers
                 return NoContent();                
             }
             catch(KeyNotFoundException) { 
+                return NotFound();
+            }
+        }
+
+        [HttpPut("{userId}/functional-units")]
+        [Authorize(Roles = "ADMIN,STAFF")]
+        public ActionResult AssignFunctionalUnitsToClient(int userId, [FromBody] List<FunctionalUnitClientDto> functionalUnits)
+        {
+            if (functionalUnits == null)
+                return BadRequest("Units cannot be null");
+
+            try
+            {
+                _userService.UpdateFunctionalUnitsToClient(userId, functionalUnits);
+                return NoContent();
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException)
+            {
                 return NotFound();
             }
         }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GenericComponent } from '../generic-component.class';
-import { UserRequest, UserResponse } from '../../interfaces/model.interfaces';
+import { Client, ConsortiumResponse, FunctionalUnitResponse, Role, UserRequest, UserResponse } from '../../interfaces/model.interfaces';
 import { ActionButtonConfig } from '../../components/action-buttons/action-buttons.component';
 import { UserService } from '../../services/user.service';
 import { PageComponent } from '../../components/page/page.component';
@@ -9,12 +9,16 @@ import { ConfirmDialogService } from '../../components/confirm-dialog/confirm-di
 import { ToastService } from '../../components/toast/toast-service';
 import { AuthService } from '../../auth/auth.service';
 import { hasValidRoles } from '../../util/rolesUtil';
+import { FunctionalUnitService } from '../../services/functional-unit.service';
+import { UserFunctionalunitFormComponent } from '../../components/user-functionalunit-form/user-functionalunit-form.component';
+import { ConsortiumService } from '../../services/consortium.service';
 
 @Component({
   selector: 'app-user',
   standalone: true,
   imports: [
     UserFormComponent,
+    UserFunctionalunitFormComponent,
     PageComponent
   ],
   templateUrl: './user.component.html',
@@ -27,6 +31,13 @@ export class UserComponent extends GenericComponent<UserRequest, UserResponse> {
   canCreate: boolean = hasValidRoles(this.authService.userData, ["ADMIN"]);
   canEdit: boolean = hasValidRoles(this.authService.userData, ["ADMIN"]);
   canRemove: boolean = hasValidRoles(this.authService.userData, ["ADMIN"]);
+
+  clients: Client[] = [];
+  selectedClient!: UserResponse;
+  functionalUnits: FunctionalUnitResponse[] = [];
+  consortiums: ConsortiumResponse[] = [];
+
+  openUserFunctionalUnitForm: boolean = false;
 
   columns = [
     { header: "Nombre", field: "firstName", sortable: true },
@@ -51,16 +62,32 @@ export class UserComponent extends GenericComponent<UserRequest, UserResponse> {
       severity: 'danger',
       hidden: !this.canRemove,
       action: (data: any) => this.canRemove ? this.handleRemoveUser(data) : null
+    },
+    {
+    icon: 'pi pi-home',
+    tooltip: 'Asignar unidades funcionales',
+    severity: 'info',
+    hidden: false,
+    action: (row: any) => this.handleOpenUserFunctionalUnitForm(row)
     }
   ];
 
   constructor(
-    service: UserService,
+    private readonly userService: UserService,
+    private readonly functionalUnitService: FunctionalUnitService,
+    private readonly consortiumService: ConsortiumService,
     confirmService: ConfirmDialogService,
     toastService: ToastService,
     authService: AuthService
   ) {
-    super(service, confirmService, toastService, authService);
+    super(userService, confirmService, toastService, authService);
+  }
+
+  override ngOnInit(): void {
+    super.ngOnInit();
+    this.getClients();
+    this.getFunctionalUnits();
+    this.getConsortiums();
   }
 
   handleRemoveUser(data: any) {
@@ -70,6 +97,48 @@ export class UserComponent extends GenericComponent<UserRequest, UserResponse> {
     } else{
       this.openConfirmDialog(data)
     }
+  }
+
+  getClients(){
+    this.userService.getAllClients().subscribe({
+      next: (response) => {
+        this.clients = response;
+      },      
+      error: (error) => {
+        console.error(error);
+      }
+    })
+  }
+
+  getFunctionalUnits(){
+    this.functionalUnitService.getAll().subscribe({
+      next: (response) => {
+        this.functionalUnits = response;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+  }
+
+  getConsortiums(){
+    this.consortiumService.getAll().subscribe({
+      next: (response) => {
+        this.consortiums = response;
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    })
+  }
+
+  handleOpenUserFunctionalUnitForm(user: UserResponse){
+    this.selectedClient = user;
+    this.openUserFunctionalUnitForm = true;
+  }
+
+  handleCloseUserFunctionalUnitForm(){
+    this.openUserFunctionalUnitForm = false;
   }
 
 }

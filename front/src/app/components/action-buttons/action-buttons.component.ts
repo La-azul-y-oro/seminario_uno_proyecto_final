@@ -38,7 +38,7 @@ export interface ActionButtonConfig {
   severity: Severity;
   action: Function;
   isDisabled?: boolean;
-  hidden?: boolean;
+  hidden?: boolean | ((row: any) => boolean);
   data?: any;
 }
 

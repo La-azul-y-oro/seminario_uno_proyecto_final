@@ -1,0 +1,130 @@
+<p-dialog
+  [header]="getHeader()"
+  [(visible)]="visible"
+  [style]="{ minWidth: '700px', minHeight: '400px' }"
+  (onHide)="closeDialog()"
+>
+  <div class="w-100">
+    <p-table
+      [value]="selectedFunctionalUnits"
+      [tableStyle]="{ 'min-width': '100%' }"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 35%">Consorcio <span class="text-danger">*</span></th>
+          <th style="width: 15%">Unidad Funcional <span class="text-danger">*</span></th>
+          <th style="width: 35%">Tipo <span class="text-danger">*</span></th>
+          <th style="width: 15%">Acciones</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+        <tr>
+          <td>
+            <p-dropdown
+              [(ngModel)]="item.consortiumId"
+              [options]="consortiumList"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="Seleccionar consorcio"
+              [style]="{ width: '100%' }"
+              [filter]="true"
+              appendTo="body"
+              filterBy="name"
+              [styleClass]="!item.consortiumId ? 'ng-invalid ng-dirty' : ''"
+            >
+              <ng-template let-consortium pTemplate="item">
+                {{ consortium.name }}
+              </ng-template>
+              <ng-template let-consortium pTemplate="selectedItem">
+                {{ consortium.name }}
+              </ng-template>
+            </p-dropdown>
+          </td>
+          <td>
+            <p-dropdown
+              [(ngModel)]="item.functionalUnitId"
+              [options]="getUnitsForConsortium(item.consortiumId)"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="Seleccionar unidad funcional"
+              [style]="{ width: '100%' }"
+              [filter]="true"
+              appendTo="body"
+              filterBy="name"
+              [styleClass]="!item.functionalUnitId ? 'ng-invalid ng-dirty' : ''"
+            >
+              <ng-template let-functionalUnit pTemplate="item">
+                {{ functionalUnit.name }}
+              </ng-template>
+              <ng-template let-functionalUnit pTemplate="selectedItem">
+                {{ functionalUnit.name }}
+              </ng-template>
+            </p-dropdown>
+          </td>
+          <td>
+            <p-dropdown
+              [(ngModel)]="item.type"
+              [options]="clientTypes"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Seleccionar tipo"
+              appendTo="body"
+              [style]="{ width: '100%' }"
+              [styleClass]="!item.type ? 'ng-invalid ng-dirty' : ''"
+            />
+          </td>
+          <td class="text-center">
+            <p-button
+              icon="pi pi-trash"
+              severity="danger"
+              [text]="true"
+              (onClick)="removeFunctionalUnit(rowIndex)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="3" class="text-center">No hay unidades funcionales vinculadas.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <div class="d-flex flex-column">
+        <p-button
+          label="Agregar Unidad Funcional"
+          icon="pi pi-plus"
+          size="small"
+          severity="info"
+          (onClick)="addNewFunctionalUnit()"
+          [disabled]="!canAddMoreFunctionalUnits()"
+        />
+        <small
+          class="mt-1 ms-2 text-muted"
+          *ngIf="!canAddMoreFunctionalUnits()"
+        >
+          No hay más unidades funcionales disponibles
+        </small>
+      </div>
+
+      <div class="d-flex gap-2">
+        <p-button
+          label="Cerrar"
+          severity="secondary"
+          size="small"
+          class="me-2"
+          (onClick)="closeDialog()"
+        />
+        <p-button
+          label="Guardar"
+          icon="pi pi-check"
+          size="small"
+          (onClick)="confirmFunctionalUnits()"
+          [disabled]="!canSave"
+        />
+      </div>
+    </div>
+  </div>
+</p-dialog>

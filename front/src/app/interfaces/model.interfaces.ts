@@ -92,6 +92,7 @@ export interface UserRequest {
 export interface UserResponse {
     id: number;
     name: string;
+    role: Role;
     active: boolean;
 }
 
@@ -111,7 +112,7 @@ export enum OccupantType{
 export interface Liquidation {
     id: number;
     consortiumId: number;
-    period: string; // Example: "2025-06"
+    period: string;
     generateAt: Date;
     expirationDate: Date;
     amount: number;
@@ -162,7 +163,14 @@ export interface ClientFunctionalUnit {
     balance: number;
     factor: number;
     consortium: string;
+    consortiumId: number;
+    occupantType: OccupantType;
     liquidations: LiquidationForClient[];
+}
+
+export interface FunctionalUnitClientDto{
+    functionalUnitId: number;
+    occupantType: OccupantType;
 }
 
 export interface LiquidationForClient {
@@ -235,4 +243,12 @@ export interface FunctionalUnitResponse {
     consortiumId: number;
     factor: number;
     active?: boolean;
+}
+
+export interface UIFunctionalUnitItem {
+  consortiumId: number | null;
+  consortiumName: string | null;
+  functionalUnitId: number | null;
+  functionalUnitName: string | null;
+  type: OccupantType | null;
 }

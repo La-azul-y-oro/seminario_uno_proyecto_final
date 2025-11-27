@@ -4,6 +4,8 @@ using api.Mappers;
 using api.Models;
 using api.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
+using System.Linq;
 
 namespace api.Services.Implementations
 {
@@ -261,15 +263,22 @@ namespace api.Services.Implementations
                 .Where(fu => fu.Active)
                 .ToList();
 
-            var result = functionalUnits.Select(fu => new ClientFunctionalUnit
+            var result = functionalUnits.Select(fu =>
             {
-                Id = fu.Id,
-                Name = fu.Name,
-                Balance = fu.Balance,
-                Factor = fu.Factor,
-                Consortium = fu.Consortium.Name,
-                ConsortiumAddress = fu.Consortium.Address,
-                Liquidations = GetLiquidationsForFunctionalUnit(fu.Id, fu.ConsortiumId)
+                var relation = fu.UserFunctionalUnits.First(ufu => ufu.UserId == ClientId);
+
+                return new ClientFunctionalUnit
+                {
+                    Id = fu.Id,
+                    Name = fu.Name,
+                    Balance = fu.Balance,
+                    Factor = fu.Factor,
+                    Consortium = fu.Consortium.Name,
+                    ConsortiumAddress = fu.Consortium.Address,
+                    ConsortiumId = fu.Consortium.Id,
+                    OccupantType = relation.OccupantType,
+                    Liquidations = GetLiquidationsForFunctionalUnit(fu.Id, fu.ConsortiumId)
+                };
             }).ToList();
 
             return result;
