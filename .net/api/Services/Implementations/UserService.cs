@@ -117,5 +117,50 @@ namespace api.Services.Implementations
                 .ToList();
         }
 
+        public void UpdateFunctionalUnitsToClient(int userId, List<FunctionalUnitClientDto> functionalUnits)
+        {
+            var user = _context.User
+                .Include(u => u.UserFunctionalUnits)
+                .FirstOrDefault(u => u.Id == userId && u.Active);
+
+            if (user == null)
+            {
+                throw new ArgumentException($"User with ID {userId} not found or inactive");
+            }
+
+            user.UserFunctionalUnits.Clear();
+
+            if (functionalUnits == null || !functionalUnits.Any())
+            {
+                _context.SaveChanges();
+                return;
+            }
+
+            var unitIds = functionalUnits.Select(u => u.FunctionalUnitId).ToList();
+
+            var units = _context.FunctionalUnit
+                .Where(fu => unitIds.Contains(fu.Id) && fu.Active)
+                .ToList();
+
+            if (units.Count != unitIds.Count)
+            {
+                var foundIds = units.Select(fu => fu.Id).ToList();
+                var missing = unitIds.Except(foundIds).ToList();
+                throw new ArgumentException($"Functional units not found or inactive: {string.Join(", ", missing)}");
+            }
+
+            foreach (var item in functionalUnits)
+            {
+                user.UserFunctionalUnits.Add(new UserFunctionalUnit
+                {
+                    UserId = userId,
+                    FunctionalUnitId = item.FunctionalUnitId,
+                    OccupantType = item.OccupantType
+                });
+            }
+
+            _context.SaveChanges();
+        }
+
     }
 }

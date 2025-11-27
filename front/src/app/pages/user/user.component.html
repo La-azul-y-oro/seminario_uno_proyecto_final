@@ -17,3 +17,11 @@
     (onSave)="save($event)"
     (onUpdate)="update($event)"
     />
+
+<app-user-functionalunit-form
+    [visible]="openUserFunctionalUnitForm"
+    [client]="selectedClient"
+    [functionalUnits]="functionalUnits!"
+    [consortiumList]="consortiums!"
+    (closeEmit)="handleCloseUserFunctionalUnitForm()"
+/>

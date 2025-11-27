@@ -13,5 +13,7 @@ namespace api.Services.Interfaces
 
         List<Client> FindClientsByFunctionalUnitId(int functionalUnitId);
         List<Client> GetAllClients();
+
+        void UpdateFunctionalUnitsToClient(int userId, List<FunctionalUnitClientDto> units);
     }
 }
