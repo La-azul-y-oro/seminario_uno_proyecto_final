@@ -27,6 +27,13 @@ export class ActionButtonsComponent {
     marginRight: '5px'
   };
 
+  isButtonHidden(button: ActionButtonConfig): boolean {
+    if (typeof button.hidden === 'function') {
+      return button.hidden(this.data);
+    }
+    return button.hidden || false;
+  }
+
   onClick(action: Function, data: any) {
     action(data);
   }

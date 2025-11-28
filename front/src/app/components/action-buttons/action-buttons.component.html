@@ -1,7 +1,7 @@
 <div class="d-flex">
     <ng-container *ngFor="let button of buttons">
       <p-button
-        *ngIf="!button.hidden"
+        *ngIf="!isButtonHidden(button)"
         pRipple
         [icon]="button.icon"
         [pTooltip]="button.isDisabled ? 'No permitido':button.tooltip"

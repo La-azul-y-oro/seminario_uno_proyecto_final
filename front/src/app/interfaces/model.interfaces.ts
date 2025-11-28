@@ -94,6 +94,8 @@ export interface UserResponse {
     name: string;
     role: Role;
     active: boolean;
+    firstName: string; 
+    lastName: string;
 }
 
 export interface Client {

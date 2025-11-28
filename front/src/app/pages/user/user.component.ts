@@ -64,11 +64,11 @@ export class UserComponent extends GenericComponent<UserRequest, UserResponse> {
       action: (data: any) => this.canRemove ? this.handleRemoveUser(data) : null
     },
     {
-    icon: 'pi pi-home',
-    tooltip: 'Asignar unidades funcionales',
-    severity: 'info',
-    hidden: false,
-    action: (row: any) => this.handleOpenUserFunctionalUnitForm(row)
+      icon: 'pi pi-home',
+      tooltip: 'Asignar unidades funcionales',
+      severity: 'info',
+      hidden: (row: UserResponse) => (row.role.toString() !== 'CLIENT'),
+      action: (row: any) => this.handleOpenUserFunctionalUnitForm(row)
     }
   ];
 

@@ -54,11 +54,11 @@ export class UserFunctionalunitFormComponent implements OnChanges, OnInit {
     private readonly toastService: ToastService
   ) { }
 
-  ngOnInit(): void{}
+  ngOnInit(): void { }
 
   ngOnChanges(): void {
     if (this.client?.id) {
-    this.getClientFunctionalUnits();
+      this.getClientFunctionalUnits();
     }
     if (this.functionalUnits.length > 0) {
       this.initFunctionalUnitList();
@@ -73,7 +73,7 @@ export class UserFunctionalunitFormComponent implements OnChanges, OnInit {
   }
 
   getHeader(): string | undefined {
-    return `Unidades asociadas - Cliente ${this.client?.name}`;
+    return `Unidades asociadas - Cliente: ${this.client?.firstName || ""} ${this.client?.lastName || ""}`;
   }
 
   initFunctionalUnitList() {
@@ -89,7 +89,7 @@ export class UserFunctionalunitFormComponent implements OnChanges, OnInit {
   }
 
   addNewFunctionalUnit() {
-        this.selectedFunctionalUnits.push({
+    this.selectedFunctionalUnits.push({
       consortiumId: null,
       consortiumName: null,
       functionalUnitId: null,
@@ -108,7 +108,7 @@ export class UserFunctionalunitFormComponent implements OnChanges, OnInit {
     }
 
     const functionalUnits: FunctionalUnitClientDto[] = this.selectedFunctionalUnits.map(fu => ({
-      functionalUnitId: fu.functionalUnitId!, 
+      functionalUnitId: fu.functionalUnitId!,
       occupantType: fu.type as OccupantType
     }))
 
@@ -127,7 +127,7 @@ export class UserFunctionalunitFormComponent implements OnChanges, OnInit {
     const selectedIds = this.selectedFunctionalUnits
       .filter(sfu => sfu.functionalUnitId !== null)
       .map(sfu => sfu.functionalUnitId!);
-    
+
     return this.functionalUnits?.filter(functionalUnit =>
       !selectedIds.includes(functionalUnit.id)
     );
@@ -143,11 +143,11 @@ export class UserFunctionalunitFormComponent implements OnChanges, OnInit {
   }
 
   get canSave(): boolean {
-    if(this.hadFunctionalUnitsOnOpen && this.selectedFunctionalUnits.length === 0){
+    if (this.hadFunctionalUnitsOnOpen && this.selectedFunctionalUnits.length === 0) {
       return true;
     }
 
-    if(this.selectedFunctionalUnits.length === 0){
+    if (this.selectedFunctionalUnits.length === 0) {
       return false;
     }
 
@@ -160,7 +160,7 @@ export class UserFunctionalunitFormComponent implements OnChanges, OnInit {
     return this.availableFunctionalUnitsFiltered && this.availableFunctionalUnitsFiltered.length > 0
   }
 
-  getClientFunctionalUnits(){
+  getClientFunctionalUnits() {
     this.functionalUnitService.getByClientId(this.client.id).subscribe({
       next: (response) => {
         this.bindFunctionalUnits = response;
