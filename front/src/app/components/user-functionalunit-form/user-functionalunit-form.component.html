@@ -44,7 +44,7 @@
           <td>
             <p-dropdown
               [(ngModel)]="item.functionalUnitId"
-              [options]="getUnitsForConsortium(item.consortiumId)"
+              [options]="getAvailableFunctionalUnitsForItem(item)"
               optionLabel="name"
               optionValue="id"
               placeholder="Seleccionar unidad funcional"
