@@ -133,15 +133,6 @@ export class UserFunctionalunitFormComponent implements OnChanges, OnInit {
     );
   }
 
-  getAvailableFunctionalUnitsForItem(currentItem: any) {
-    const selectedIds = this.selectedFunctionalUnits
-      .filter(sfu => sfu.functionalUnitId !== null && sfu !== currentItem)
-      .map(sfu => sfu.functionalUnitId!);
-
-    return this.functionalUnits
-      .filter(functionalUnit => !selectedIds.includes(functionalUnit.id));
-  }
-
   get canSave(): boolean {
     if (this.hadFunctionalUnitsOnOpen && this.selectedFunctionalUnits.length === 0) {
       return true;
@@ -172,10 +163,19 @@ export class UserFunctionalunitFormComponent implements OnChanges, OnInit {
     })
   }
 
-  getUnitsForConsortium(consortiumId: number | null) {
-    if (!consortiumId) return [];
-    return this.functionalUnits.filter(u => u.consortiumId === consortiumId);
-  }
+ getAvailableFunctionalUnitsForItem(item: UIFunctionalUnitItem): FunctionalUnitResponse[] {
+  if (!item.consortiumId) return [];
+
+  const selectedIds = this.selectedFunctionalUnits
+    .filter(sfu => sfu.functionalUnitId !== null && sfu !== item)
+    .map(sfu => sfu.functionalUnitId!);
+
+  return this.functionalUnits
+    .filter(u =>
+      u.consortiumId === item.consortiumId &&
+      !selectedIds.includes(u.id)
+    );
+}
 
   onSelectFunctionalUnit(item: UIFunctionalUnitItem, fu: FunctionalUnitResponse) {
     item.functionalUnitId = fu.id;
