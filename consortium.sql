@@ -34,8 +34,9 @@ CREATE TABLE functional_unit (
     factor DECIMAL(5, 2) NOT NULL,
     consortium_id INT NOT NULL,
     active BOOLEAN NOT NULL DEFAULT TRUE,
+    active_flag VARCHAR(10) AS (IF(active = TRUE, 'ACTIVE', NULL)) VIRTUAL,
     FOREIGN KEY (consortium_id) REFERENCES consortium(id),
-    CONSTRAINT unit_consortium UNIQUE (name, consortium_id, active)
+    UNIQUE INDEX idx_unique_active_unit (name, consortium_id, active_flag)
 );
 
 -- Table: supplier
@@ -102,11 +103,12 @@ CREATE TABLE liquidation (
     expiration_date DATETIME NOT NULL,
     amount DECIMAL(12, 2) NOT NULL,
     generate_by INT NOT NULL,
+    pdf_document LONGBLOB NULL,
+    pdf_file_name VARCHAR(255) NULL,
     FOREIGN KEY (consortium_id) REFERENCES consortium(id),
     FOREIGN KEY (generate_by) REFERENCES user(id),
     CONSTRAINT unique_period_consortium UNIQUE (consortium_id, period)
 );
-
 
 DELIMITER //
 

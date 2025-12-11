@@ -77,25 +77,11 @@ export class LiquidationDialogComponent{
   }
 
   generateMaxDate() {
-    let today = new Date();
-    let month = today.getMonth();
-    let year = today.getFullYear();
-    let nextMonth = (month === 11) ? 0 : month;
-    let nextYear = (nextMonth === 0) ? year + 1 : year;
     this.maxDate = new Date();
-    this.maxDate.setMonth(nextMonth);
-    this.maxDate.setFullYear(nextYear);
   }
 
   generateMinDateExpiration() {
-      let today = new Date();
-      let month = today.getMonth();
-      let year = today.getFullYear();
-      let prevMonth = (month === 0) ? 11 : month;
-      let prevYear = (prevMonth === 11) ? year + 1 : year;
-      this.minDateExpiration = new Date();
-      this.minDateExpiration.setMonth(prevMonth);
-      this.minDateExpiration.setFullYear(prevYear);
+    this.minDateExpiration = new Date();
   }
 
   getLiquidations() {

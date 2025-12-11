@@ -2,7 +2,6 @@
 using api.Models;
 using api.Services.Interfaces;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Vml;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -14,34 +13,35 @@ namespace api.Services.Implementations
         private readonly IMovementService _movementService;
         private readonly IConsortiumService _consortiumService;
         private readonly IFunctionalUnitService _functionalUnitService;
-        private readonly ILiquidationService _liquidationService;
 
         private static readonly string[] _headersFinancialIncomes = ["Fecha", "Concepto", "Monto", "Comentario"];
         private static readonly string[] _headersFinancialExpenses = ["Fecha", "Proveedor", "Concepto", "Monto", "Comentario"];
         private static readonly string[] _headersFunctionalUnits = ["Unidad", "Factor", "A abonar"];
 
-        public ReportService(IMovementService movementService, IConsortiumService consortiumService, IFunctionalUnitService functionalUnitService, ILiquidationService liquidationService)
+        public ReportService(IMovementService movementService, IConsortiumService consortiumService, IFunctionalUnitService functionalUnitService)
         {
             _movementService = movementService;
             _consortiumService = consortiumService;
             _functionalUnitService = functionalUnitService;
-            _liquidationService = liquidationService;
         }
-        
+
         public async Task<byte[]> GenerateFinancialReport(int consortiumId, int month, int year, string format)
         {
             string consortiumName = _consortiumService.GetById(consortiumId).Name;
             string reportTitle;
             List<Movement> movements;
-            
-            if(month <= 0 || month >12){
+
+            if (month <= 0 || month > 12)
+            {
                 movements = _movementService.GetByConsortiumAndYear(consortiumId, year);
                 reportTitle = $"Reporte Financiero Anual - {year}";
-            } else{
-                movements = _movementService.GetByConsortiumAndMonthAndYear(consortiumId, month, year);  
+            }
+            else
+            {
+                movements = _movementService.GetByConsortiumAndMonthAndYear(consortiumId, month, year);
                 reportTitle = $"Reporte Financiero Mensual - {month:D2}/{year}";
             }
-   
+
             var incomes = movements.Where(m => m.Type == MovementType.INGRESO).ToList();
             var expenses = movements.Where(m => m.Type == MovementType.EGRESO).ToList();
 
@@ -69,11 +69,11 @@ namespace api.Services.Implementations
             var functionalUnit = _functionalUnitService.GetById(functionalUnitId);
             var movements = _movementService.GetByConsortiumAndMonthAndYear(functionalUnit.ConsortiumId, month, year);
             var consortiumName = functionalUnit.Consortium.Name;
-            var reportTitle =  $"Liquidación expensas - Unidad {functionalUnit.Name} - Consorcio: {consortiumName} - Período: {month:D2}/{year}";
+            var reportTitle = $"Liquidación expensas - Unidad {functionalUnit.Name} - Consorcio: {consortiumName} - Período: {month:D2}/{year}";
 
             var expenses = movements.Where(m => m.Type == MovementType.EGRESO).ToList();
             var sumExpenses = expenses.Sum(m => m.Amount);
-            var toPay = (sumExpenses * (functionalUnit.Factor/100));
+            var toPay = (sumExpenses * (functionalUnit.Factor / 100));
 
             var reportContent = new ExpensesForFunctionalUnitReportContent()
             {
@@ -88,27 +88,44 @@ namespace api.Services.Implementations
             return GenerateExpensesByFunctionalUnitPdf(reportContent);
         }
 
-        public async Task<byte[]> GenerateExpensesReportByConsortium(int consortiumId, int month, int year)
+        /// <summary>
+        /// Obtiene el PDF de liquidación guardado en la base de datos
+        /// </summary>
+        public async Task<byte[]> GenerateExpensesReportByConsortium(Liquidation liquidation)
         {
-            var movements = _movementService.GetByConsortiumAndMonthAndYear(consortiumId, month, year);
+            if (liquidation == null)
+            {
+                throw new Exception("Liquidación no encontrada para el período indicado");
+            }
+
+            if (liquidation.PdfDocument == null || liquidation.PdfDocument.Length == 0)
+            {
+                throw new Exception("El PDF de la liquidación no está disponible");
+            }
+
+            return liquidation.PdfDocument;
+        }
+
+        /// <summary>
+        /// Genera el PDF de liquidación al momento de crear la liquidación.
+        /// Este método es llamado por LiquidationService.
+        /// </summary>
+        public byte[] CreateExpensesReportPdf(int consortiumId, int month, int year,
+            decimal sumExpenses, DateTime expirationDate, List<Movement> expenses)
+        {
             var consortium = _consortiumService.GetById(consortiumId);
-            var liquidation = _liquidationService.GetByPeriodAndConsortiumIdNotNull($"{year}-{month:D2}", consortiumId);
-            var consortiumName = consortium.Name;
             var functionalUnits = _functionalUnitService.FindByConsortiumId(consortiumId);
-
-
-            var reportTitle =  $"Liquidación expensas - Consorcio: {consortiumName} - Período: {month:D2}/{year}";
-
-            var expenses = movements.Where(m => m.Type == MovementType.EGRESO).ToList();
+            var consortiumName = consortium.Name;
+            var reportTitle = $"Liquidación expensas - Consorcio: {consortiumName} - Período: {month:D2}/{year}";
 
             var reportContent = new ExpensesForConsoritumReportContent()
             {
                 ReportTitle = reportTitle,
                 ConsortiumName = consortiumName,
                 Expenses = expenses,
-                SumExpenses = liquidation.Amount,
+                SumExpenses = sumExpenses,
                 FunctionalUnits = functionalUnits,
-                ExpirationDate = liquidation.ExpirationDate
+                ExpirationDate = expirationDate
             };
 
             return GenerateExpensesByConsortiumPdf(reportContent);
@@ -116,7 +133,6 @@ namespace api.Services.Implementations
 
         private static byte[] GenerateFinancialPdf(FinancialReportContent reportContent)
         {
-
             var document = Document.Create(container =>
             {
                 _ = container.Page(page =>
@@ -188,25 +204,19 @@ namespace api.Services.Implementations
             }
             else
             {
-                if (hasIncomes)
-                {
-                    row = ExcelAddSectionIncomes("Ingresos", reportContent.Incomes, sheet, row);
-                    sheet.Cell(row, 3).Value = "Total Ingresos:";
-                    sheet.Cell(row, 4).Value = reportContent.SumIncomes;
-                    sheet.Cell(row, 3).Style.Font.Bold = true;
-                    sheet.Cell(row, 4).Style.Font.Bold = true;
-                    row += 2;
-                }
+                row = ExcelAddSectionIncomes("Ingresos", reportContent.Incomes, sheet, row);
+                sheet.Cell(row, 3).Value = "Total Ingresos:";
+                sheet.Cell(row, 4).Value = reportContent.SumIncomes;
+                sheet.Cell(row, 3).Style.Font.Bold = true;
+                sheet.Cell(row, 4).Style.Font.Bold = true;
+                row += 2;
 
-                if (hasExpenses)
-                {
-                    row = ExcelAddSectionExpenses("Egresos", reportContent.Expenses, sheet, row);
-                    sheet.Cell(row, 4).Value = "Total Egresos:";
-                    sheet.Cell(row, 5).Value = reportContent.SumExpenses;
-                    sheet.Cell(row, 4).Style.Font.Bold = true;
-                    sheet.Cell(row, 5).Style.Font.Bold = true;
-                    row += 2;
-                }
+                row = ExcelAddSectionExpenses("Egresos", reportContent.Expenses, sheet, row);
+                sheet.Cell(row, 4).Value = "Total Egresos:";
+                sheet.Cell(row, 5).Value = reportContent.SumExpenses;
+                sheet.Cell(row, 4).Style.Font.Bold = true;
+                sheet.Cell(row, 5).Style.Font.Bold = true;
+                row += 2;
 
                 sheet.Cell(row, 4).Value = "Balance:";
                 sheet.Cell(row, 5).Value = reportContent.Balance;
@@ -221,7 +231,8 @@ namespace api.Services.Implementations
             return stream.ToArray();
         }
 
-        private static byte[] GenerateExpensesByFunctionalUnitPdf(ExpensesForFunctionalUnitReportContent reportContent) {
+        private static byte[] GenerateExpensesByFunctionalUnitPdf(ExpensesForFunctionalUnitReportContent reportContent)
+        {
             var document = Document.Create(container =>
             {
                 _ = container.Page(page =>
@@ -264,7 +275,6 @@ namespace api.Services.Implementations
                         }
                     });
 
-
                     PdfBuildFooter(page);
                 });
             });
@@ -290,7 +300,7 @@ namespace api.Services.Implementations
                         });
                         header.Item().Row(row =>
                         {
-                            row.RelativeItem().AlignCenter().Container().MaxWidth(400).PaddingTop(10).Text("Fecha vencimiento: "+reportContent.ExpirationDate.ToShortDateString()).AlignCenter().FontSize(12);
+                            row.RelativeItem().AlignCenter().Container().MaxWidth(400).PaddingTop(10).Text("Fecha vencimiento: " + reportContent.ExpirationDate.ToShortDateString()).AlignCenter().FontSize(12);
                         });
                     });
 
@@ -314,7 +324,6 @@ namespace api.Services.Implementations
                         }
                     });
 
-
                     PdfBuildFooter(page);
                 });
             });
@@ -330,7 +339,7 @@ namespace api.Services.Implementations
             {
                 table.ColumnsDefinition(columns =>
                 {
-                    columns.ConstantColumn(70); // Fecha
+                    columns.ConstantColumn(90); // Fecha
                     columns.RelativeColumn();   // Concepto
                     columns.ConstantColumn(80); // Monto
                     columns.RelativeColumn();   // Descripción
@@ -369,7 +378,7 @@ namespace api.Services.Implementations
             {
                 table.ColumnsDefinition(columns =>
                 {
-                    columns.ConstantColumn(70); // Fecha
+                    columns.ConstantColumn(90); // Fecha
                     columns.RelativeColumn();   // Concepto
                     columns.RelativeColumn();   // Proveedor
                     columns.ConstantColumn(80); // Monto
@@ -434,7 +443,7 @@ namespace api.Services.Implementations
                 foreach (var m in reportContent.FunctionalUnits)
                 {
                     var factorPercent = (m.Factor).ToString("F2") + "%";
-                    var toPay = "$" + (totalExpenses * (m.Factor/100)).ToString("F2");
+                    var toPay = "$" + (totalExpenses * (m.Factor / 100)).ToString("F2");
 
                     void DataCell(string text) => table.Cell().Border(1)
                         .Padding(4).Text(text);
@@ -573,13 +582,13 @@ namespace api.Services.Implementations
             public decimal ToPay { get; set; }
         }
 
-        private sealed class ExpensesForConsoritumReportContent {
+        private sealed class ExpensesForConsoritumReportContent
+        {
             public required string ReportTitle { get; set; }
             public required string ConsortiumName { get; set; }
             public required List<Movement> Expenses { get; set; }
             public decimal SumExpenses { get; set; }
             public required List<FunctionalUnitResponse> FunctionalUnits { get; set; }
-
             public DateTime ExpirationDate { get; set; }
         }
     }

@@ -1,6 +1,4 @@
-﻿using api.Services.Implementations;
-using api.Services.Interfaces;
-using DocumentFormat.OpenXml.Bibliography;
+﻿using api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,7 +48,9 @@ namespace api.Controllers
         [FromQuery] int year,
         [FromQuery] int month)
         {
-            var reportBytes = await _reportService.GenerateExpensesReportByConsortium(consortiumId, month, year);
+            var liquidation = _liquidationService.GetByPeriodAndConsortiumIdNotNull($"{year}-{month:D2}", consortiumId);
+
+            var reportBytes = await _reportService.GenerateExpensesReportByConsortium(liquidation);
 
             var contentType = "application/pdf";
 
@@ -87,7 +87,9 @@ namespace api.Controllers
                 int year = int.Parse(periodSplit[0]);
                 int month = int.Parse(periodSplit[1]);
 
-                var reportBytes = await _reportService.GenerateExpensesReportByConsortium(liquidation.ConsortiumId, month, year);
+                var liquidationToGet = _liquidationService.GetByPeriodAndConsortiumIdNotNull($"{year}-{month:D2}", liquidation.ConsortiumId);
+
+                var reportBytes = await _reportService.GenerateExpensesReportByConsortium(liquidationToGet);
                 var contentType = "application/pdf";
                 string fileName = $"liquidacion_expensas_{month}_{year}.pdf";
 

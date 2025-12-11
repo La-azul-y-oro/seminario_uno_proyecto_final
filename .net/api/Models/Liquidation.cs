@@ -26,5 +26,11 @@ namespace api.Models
 
         [Column("generate_by")]
         public int GenerateBy { get; set; }
+
+        [Column("pdf_document")]
+        public byte[]? PdfDocument { get; set; }
+
+        [Column("pdf_file_name")]
+        public string? PdfFileName { get; set; }
     }
 }

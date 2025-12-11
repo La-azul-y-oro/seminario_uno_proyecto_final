@@ -154,7 +154,7 @@ export class FunctionalUnitDialogComponent implements OnChanges {
       ],
       factor: [
         unit?.factor || 0, 
-        [Validators.required, Validators.min(0), Validators.max(100)]
+        [Validators.required, Validators.min(0.1), Validators.max(100)]
       ],
       balance: [unit?.balance || 0],
       consortiumId: [unit?.consortiumId || this.consortiumId]
@@ -302,9 +302,14 @@ export class FunctionalUnitDialogComponent implements OnChanges {
     this.form.markAsTouched();
   }
 
-  canSave(): boolean {
+  isSumFactorValid(): boolean{
     const totalFactor = Math.round(this.totalFactor * 100) / 100;
-    return totalFactor === 100.00 && this.form.valid;
+    return totalFactor === 100.00
+  }
+
+  canSave(): boolean {
+
+    return this.isSumFactorValid() && this.form.valid;
   }
 
   save() {
@@ -313,7 +318,7 @@ export class FunctionalUnitDialogComponent implements OnChanges {
     const current = this.units.value;
     const toCreate = current.filter((u: any) => !u.id);
     const toUpdate = current.filter((u: any) => {
-      const original = this.functionalUnitList.find(o => o.id === u.id);
+      const original = this.functionalUnitList?.find(o => o.id === u.id);
       return original && (
         original.name !== u.name ||
         (original.factor * 100).toFixed(2) !== (+u.factor).toFixed(2)

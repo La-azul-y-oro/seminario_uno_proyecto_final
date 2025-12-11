@@ -12,23 +12,42 @@ namespace api.Services.Implementations
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserService _userService;
         private readonly IFunctionalUnitService _functionalUnitService;
+        private readonly IReportService _reportService;
 
-        public LiquidationService(ApplicationDbContext context, IMovementService movementService, IHttpContextAccessor httpContextAccessor, IUserService userService, IFunctionalUnitService functionalUnitService)
+        public LiquidationService(
+            ApplicationDbContext context,
+            IMovementService movementService,
+            IHttpContextAccessor httpContextAccessor,
+            IUserService userService,
+            IFunctionalUnitService functionalUnitService,
+            IReportService reportService)
         {
             _context = context;
             _movementService = movementService;
             _httpContextAccessor = httpContextAccessor;
             _userService = userService;
             _functionalUnitService = functionalUnitService;
+            _reportService = reportService;
         }
 
-        public void GenerateLiquidation(int consortiumId, int month, int year, DateTime expirationDate) {
+        public void GenerateLiquidation(int consortiumId, int month, int year, DateTime expirationDate)
+        {
             ValidateDate(month, year, expirationDate);
             if (LiquidationExists(consortiumId, month, year)) return;
 
             var movements = _movementService.GetByConsortiumAndMonthAndYear(consortiumId, month, year);
             var expenses = movements.Where(m => m.Type == MovementType.EGRESO).ToList();
             var sumExpenses = expenses.Sum(m => m.Amount);
+
+            // Generar el PDF ANTES de guardar la liquidación
+            var pdfBytes = _reportService.CreateExpensesReportPdf(
+                consortiumId,
+                month,
+                year,
+                sumExpenses,
+                expirationDate,
+                expenses
+            );
 
             var liquidation = new Liquidation
             {
@@ -37,7 +56,9 @@ namespace api.Services.Implementations
                 GenerateAt = DateTime.Now,
                 ExpirationDate = expirationDate,
                 Amount = sumExpenses,
-                GenerateBy = GetUserId()
+                GenerateBy = GetUserId(),
+                PdfDocument = pdfBytes,
+                PdfFileName = $"liquidacion_expensas_{month:D2}_{year}.pdf"
             };
 
             _context.Liquidation.Add(liquidation);
@@ -61,14 +82,15 @@ namespace api.Services.Implementations
         public Liquidation? GetByPeriodAndConsortiumIdNotNull(string period, int consortiumId)
         {
             var liquidation = _context.Liquidation.FirstOrDefault(l => l.Period == period && l.ConsortiumId == consortiumId);
-            
+
             if (liquidation == null)
                 throw new KeyNotFoundException("Liquidation not found");
 
             return liquidation;
         }
 
-        public Liquidation FindById(int liquidationId) {
+        public Liquidation FindById(int liquidationId)
+        {
             var liquidation = _context.Liquidation.Find(liquidationId);
 
             if (liquidation == null)
@@ -77,7 +99,8 @@ namespace api.Services.Implementations
             return liquidation;
         }
 
-        private static void ValidateDate(int month, int year, DateTime expirationDate) {
+        private static void ValidateDate(int month, int year, DateTime expirationDate)
+        {
             var now = DateTime.Now;
 
             if (year > now.Year || (year == now.Year && month > now.Month))
@@ -99,7 +122,8 @@ namespace api.Services.Implementations
                 .Any(l => l.ConsortiumId == consortiumId && l.Period == period);
         }
 
-        private int GetUserId() {
+        private int GetUserId()
+        {
             var user = _httpContextAccessor.HttpContext?.User;
             var emailClaim = user?.FindFirst(ClaimTypes.NameIdentifier);
 
@@ -124,7 +148,7 @@ namespace api.Services.Implementations
 
             foreach (var item in functionalUnits)
             {
-                var amount = (item.Factor/100) * sumExpenses * (-1);
+                var amount = (item.Factor / 100) * sumExpenses * (-1);
                 _functionalUnitService.UpdateBalance(item.Id, amount);
             }
         }

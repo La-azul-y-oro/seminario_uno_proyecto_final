@@ -229,12 +229,12 @@
       <div
         class="ms-3 mt-3"
         style="font-size: 0.85rem; color: #f97316"
-        *ngIf="!canSave() && units.controls.length > 0"
+        *ngIf="!isSumFactorValid() && units.controls.length > 0"
       >
         <i 
           class="pi pi-exclamation-triangle"
           style="font-size: 0.7rem"> </i>
-        La suma de los factores debe ser igual al 100%
+        La suma debe ser exactamente 100%
       </div>
 
       <div class="d-flex justify-content-between align-items-center mt-4">
